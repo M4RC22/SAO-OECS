@@ -31,7 +31,7 @@
     <div class="wrapper">
 
         <!-- Navbar Start -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="border-bottom: 5px solid #e7ae41">
             <!-- Left navbar Start -->
             <ul class="navbar-nav">
             <li class="nav-item">
@@ -57,7 +57,7 @@
                 @else
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }}
+                            {{ Auth::user()->firstName }}{{ " " }}{{ Auth::user()->lastName }}
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -90,49 +90,27 @@
                         <img src="/img/apc_logo.png" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">SAO-OECS</a>
+                        <a href="#" class="d-block">SAO - OECS</a>
                     </div>
                 </div>
 
                 <!-- Sidebar Menu Start -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-                        with font-awesome or any other icon font library -->
 
-                        @include('layouts.menu')
+                        <!-- Display sidebar content according to user type Start -->
+                        @if(Auth::user()->userType === "Student" or Auth::user()->userType === "Professor")
+                            @include('layouts.sidebar.studOrg') 
+                        @elseif(Auth::user()->userType === "NTP")
+                            @include('layouts.sidebar.staff')
+                        @else
+                            @include('layouts.sidebar.adviser') 
+                        @endif
+                        <!-- changhe the last location depends on your POV EX: 'Adviser' ('layouts.sidebar.adviser')
+                            addtl. file location can be found in layouts > sidebar -->
 
-                        <!-- Dashboard -->
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>DASHBOARD</p>
-                            </a>
-                        </li>
+                        <!-- Display sidebar content according to user type End -->
 
-                        <!-- Submitted Forms -->
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-file-download"></i>
-                                <p>SUBMITTED FORMS<span class="right badge badge-danger">New</span></p>
-                            </a>
-                        </li>
-
-                        <!-- Records -->
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-folder"></i>
-                                <p>RECORDS</p>
-                            </a>
-                        </li>
-
-                         <!-- Applicants -->
-                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-user-clock"></i>
-                                <p>APPLICANTS<span class="right badge badge-danger">New</span></p>
-                            </a>
-                        </li>
                     </ul>
                 </nav>
                 <!-- Sidebar Menu End -->
@@ -168,6 +146,9 @@
 
 <!-- REQUIRED SCRIPTS -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="{{ asset('js/formTable.js')}}"></script>
+
     <script type="text/javascript" src="{{ URL::asset('plugins/jquery/jquery.min.js') }} "></script>
     <script type="text/javascript" src="{{ URL::asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }} "></script>
     <script type="text/javascript" src="{{ URL::asset('dist/js/adminlte.min.js') }} "></script>
