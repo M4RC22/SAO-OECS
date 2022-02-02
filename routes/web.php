@@ -29,15 +29,27 @@ Route::get('/narrative', [App\Http\Controllers\HomeController::class, 'narrative
 Route::get('/liquidation', [App\Http\Controllers\HomeController::class, 'liquidation'])->name('liquidation');
 
 //Submitted Forms
-Route::get('/submittedForms', [App\Http\Controllers\HomeController::class, 'submittedForms'])->name('submittedForms');
+Route::get('/submittedForms', [App\Http\Controllers\SubmittedFormsController::class, 'index'])->name('submittedForms');
 
 //Records
 Route::get('/records', [App\Http\Controllers\HomeController::class, 'records'])->name('records');
 
 //Roles
-Route::get('/roles', [App\Http\Controllers\HomeController::class, 'roles'])->name('roles');
+Route::get('/roles', [App\Http\Controllers\RolesController::class, 'index'])->name('roles');
 
 //Applicants
 Route::get('/applicants', [App\Http\Controllers\HomeController::class, 'applicants'])->name('applicants');
+
+//Applications
+Route::get('/applications', [App\Http\Controllers\HomeController::class, 'applications'])->name('applications');
+
+
+
+//Forms Controllers
+
+//APF
+Route::get('/submittedForms/details/{formId}/si/Kenneth/Lang/Pogi/Sa/bHuOnG/w0rlD', [App\Http\Controllers\SubmittedFormsController::class,'show'])->name('apf');   
+
+Route::get('/submittedForms/details/{formId}', [App\Http\Controllers\SubmittedFormsController::class,'approve'])->name('approve');
 
 

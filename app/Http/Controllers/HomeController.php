@@ -37,13 +37,18 @@ class HomeController extends Controller
             return view('/tabs/dashboard', compact('user', 'userOrg', 'userPos'));
         }
         elseif($user->userType === "Professor"){
-            //Get Faculty Department
-            $userPos = $user->userFaculty()->value('faculties.position');
-            $userDeptId = $user->userFaculty()->value('faculties.department_id');
-            $userOrg = $user->studentOrg()->value("organizations.orgName");
-            $userDept = DB::select('select * from departments where id = ?', [$userDeptId]);
+            if($user->studentOrg()->exists($user->id)){
+             //Get Faculty Department
+                $userPos = $user->userFaculty()->value('faculties.position');
+                $userDeptId = $user->userFaculty()->value('faculties.department_id');
+                $userOrg = $user->studentOrg()->value("organizations.orgName");
+                $userDept = DB::select('select * from departments where id = ?', [$userDeptId]);
 
-            return view('/tabs/dashboard', compact('user', 'userPos', 'userDept', 'userOrg'));
+                return view('/tabs/dashboard', compact('user', 'userPos', 'userDept', 'userOrg'));
+
+            }else{
+                return view('tabs/application');
+            }
         }
         elseif($user->userType === "NTP"){
             //Get Staff Department
@@ -55,7 +60,7 @@ class HomeController extends Controller
 
         }
         else{
-            return view('welcome');
+            return view('tabs/records');
         }
     }
 
@@ -79,45 +84,13 @@ class HomeController extends Controller
         return view('/tabs/forms/liquidation');
     }
 
-    public function submittedForms()
-    {
-        return view('/tabs/submittedForms');
-    }
 
     public function records()
     {
         return view('/tabs/records');
     }
 
-    public function roles()
-    {   
-        $user = auth()->user();
 
-        $userPos = $user->studentOrg()->value("organizations_user.position");
-
-        //Get the list of id that belongs to organization of authenticated user
-        $currUserOrg = $user->studentOrg()->value("organizations.id");
-
-        $orgMemId = DB::select('select * from organizations_user where organizations_id = ?', [$currUserOrg]);
-
-        //Return users that are part of authenticated user's organization
-        $orgMembers = [];
-        
-        foreach($orgMemId as $userId){
-            $orgMember = DB::select('select id, firstName, lastName from users where id = ?', [$userId->user_id]);
-
-            array_push($orgMembers, $orgMember);
-        }
-        
-        $count = 0;
-        foreach($orgMemId as $userId){
-            $orgMember = DB::select('select position from organizations_user where user_id = ?', [$userId->user_id]);
-            array_push($orgMembers[$count], $orgMember[0]);
-            $count++;
-        }
-
-            return view('/tabs/roles', compact('user', 'userPos', 'orgMembers'));
-        }
 
         public function applicants(){
             return view('/tabs/applicants');

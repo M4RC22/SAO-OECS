@@ -58,53 +58,67 @@
                 </form>
       
 
-            {{-- Programs Table Starts --}}
-            
-            <div id="table-wrapper">
-                <table class="table table-striped table-sm mt-3">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Activity</th>
-                            <th scope="col">Start Date</th>
-                            <th scope="col">End Date</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="items">
-                        <tr>
-                            <th scope="row">Help to save the world from devastation</th>
-                            <td>01-22-2022</td>
-                            <td>01-30-2022</td>
-                            <td><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md- pt-3 d-flex align-items-center">
-                <button class="btn btn-primary" id="mainFormBtn" type="submit">Submit</button>
-            </div>
+        {{-- ----------Table: Activity---------- --}}
 
-            {{-- ----------R4---------- --}}
-<!-- 
-            <a href="#" class="btn btn-success mt-2" type="submit">Add</a>
-
-        <div class="form-title mt-5 fw-bold fs-4">
+        <div id="table-wrapper" class="pre-scrollable mt-3">
+            <table class="table table-striped col-md-12">
+                <thead class="table-light sticky-top">
+                    <tr>
+                        <th scope="col">Activity</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="items">
+                    <tr>
+                        {{-- Jquery generated --}} 
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="h3 form-title mt-5">
             Official Poster
         </div>
 
         <div class="mb-5 mt-2 py-1">
-            <label for="officialposter" class="form-label fst-italic fw-lighter opacity-75">Upload a photo. (.jpg .png)</label>
-            <input class="form-control form-control-sm w-25" id="poster" type="file"/>
+            <p for="officialposter" class="fst-italic text-secondary">Upload a photo. (.jpg .png)</p>
+            <input class="form-control-sm w-100" id="officialposter" type="file"/>
         </div>
 
-            <div class="row">
+        <div class="row">
             <div class="col-4 pb-3">
-                <img src="/img/post1.jpg" class="w-100">
+                <img src="" class="w-100">
             </div>
-    <div> -->
-    
-</div>
+            
+            
+        </div>
+        
 
+        <div class="h3 form-title">
+            Photos
+        </div>
+
+        <div class="mb-5 mt-2 py-1">
+            <p for="officialposter" class="fst-italic text-secondary">Upload a photo. (.jpg .png)</p>
+            <input class="form-control-sm w-100" id="photos" type="file"/>
+        </div>
+
+        <div class="row">
+            <div class="row">
+                <div class="col-4 pb-3">
+                    <img src="" class="w-100">
+                </div>
+               
+            </div>
+        
+        </div>
+
+            <button type="button" class="btn btn-primary mt-4" type="submit">Submit</button>
+      </div>
+</div>
+    <hr>
+</div>
 
 
 @endsection

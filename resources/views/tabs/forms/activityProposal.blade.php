@@ -9,6 +9,7 @@
 
     <div class="container shadow p-3 mb-5 bg-#fff rounded mt-3">
 
+        {{-- ----------Form 1: First part---------- --}}
 
         <form action="#" class="row g-3">
 
@@ -60,7 +61,6 @@
                 <label for="orgContactNum" class="form-label">Contact Number</label>
                 <input type="text" class="form-control" id="orgContactNum" placeholder="09123456789" required>
             </div>
-
             
             <div class="form-group col-md-4 ">
                 <label for="orgEmail" class="form-label">Email</label>
@@ -69,7 +69,6 @@
 
             {{-- ----------R4---------- --}}
 
-            
             <div class="form-group col-md-12 d-flex row">
                 <div class="col-md-4">
                     <label for="coorgName">Co-Organization</label>
@@ -79,25 +78,60 @@
                     </select>
                 </div>
             </div>
+        </form>
+        
+        {{-- ----------R5 / Form 2: Coorganizer Add ---------- --}}
+        <hr>
 
-            {{-- ----------R5---------- --}}
+        <div>
+            <form action="" class="row g-3" id="coorgForm">
+                <div class="form-group col-md-4 ">
+                    <label for="coorganizer" class="form-label">Co-Organizer/s</label>
+                    <input type="text" class="form-control" id="coorganizer" placeholder="First Name Last Name" required>
+                </div>
+    
+                <div class="form-group col-md-3 ">
+                    <label for="coorgContactNum" class="form-label">Contact Number</label>
+                    <input type="text" class="form-control" id="coorgContactNum" placeholder="09123456789" required>
+                </div>
+    
+                
+                <div class="form-group col-md-3 ">
+                    <label for="coorgEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="coorgEmail" placeholder="abc@domain.com.ph" required>
+                </div>
+    
+                <div class="col-md-2 pt-3 d-flex align-items-center">
+                    <button class="btn btn-success col-md-12" id="addBtn">Add</button>
+                </div>
+            </form>
+    
+            {{-- ----------Table: Coorganizer---------- --}}
 
-            <div class="form-group col-md-4 ">
-                <label for="coorganizer" class="form-label">Co-Organizer/s</label>
-                <input type="text" class="form-control" id="coorganizer" placeholder="First Name Last Name" required>
+            <div id="table-wrapper"  class="pre-scrollable mt-3">
+                <table class="table table-striped col-md-12">
+                    <thead class="table-light sticky-top">
+                        <tr>
+                            <th scope="col">Co-organizers</th>
+                            <th scope="col">Contact Number</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="coorgItems">
+                        <tr>
+                            
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+        </div>
 
-            <div class="form-group col-md-4 ">
-                <label for="coorgContactNum" class="form-label">Contact Number</label>
-                <input type="text" class="form-control" id="coorgContactNum" placeholder="09123456789" required>
-            </div>
+        <hr>
+        {{-- ----------Form 3: Third part---------- --}}
 
-            
-            <div class="form-group col-md-4 ">
-                <label for="coorgEmail" class="form-label">Email</label>
-                <input type="email" class="form-control" id="coorgEmail" placeholder="abc@domain.com.ph" required>
-            </div>
-            
+        <form action="#" class="row g-3">
+
             {{-- ----------R6---------- --}}
 
             <div class="col-md-12 d-flex row">
@@ -172,44 +206,75 @@
                     <input type="number" class="form-control" id="secondaryNum" required>
                 </div>
             </div>
-
-            {{-- ----------R12---------- --}}
-
-            <div class="form-group form-floating col-md-12">
-                <label for="activities">Activities/Programme</label>
-                <textarea class="form-control" id="activities" style="height: 150px" required></textarea>
-            </div>
-            
-            {{-- ----------R13---------- --}}
-
-            <div class="col-md-12 d-flex row">
-                <div class="form-group col-md-3">
-                    <label for="startDate" class="form-label">Start Date</label>
-                    <input type="date" class="form-control" id="startDate" value="<?php echo date('Y-m-d'); ?>" required>
-                </div>
-
-                <div class="form-group col-md-3">
-                    <label for="endDate" class="form-label">End Date</label>
-                    <input type="date" class="form-control" id="endDate" value="<?php echo date('Y-m-d'); ?>" required>
-                </div>
-            </div>
-
-            {{-- ----------Important Notes---------- --}}
-
-            <p class="col-md-12 fst-italic text-secondary">*IMPORTANT NOTES:
-                <br>1. The Activity Proposal Form must be submitted at least two (2) weeks before the event.
-                <br>2. Activities will not be approved if its date/s falls one (1) week before the midterms or final exams, or if its date falls exactly on the midterms or finals week. Activities with dates falling on term break will be approved provided that participants will be required to submit waivers.
-                <br>3. It is the responsibility of the organization to inquire and prepare for the logistical needs and follow them up after the approval of their proposal.
-                <br>
-            </p>
-
-            {{-- ----------Button---------- --}}
-            
-            <div class="col-md-12">
-                <button type="button" class="btn btn-primary">Submit</button>
-            </div>
         </form>
 
+        {{-- ----------R12 / Form 4: Programme Form Add---------- --}}
+        <hr>
+
+        <div>    
+            <form method="" action="" id="programmeForm" class="row g-3">
+                <div class="form-group col-md-4">
+                    <label for="programme" class="form-label">Activity Title</label>
+                    <input class="form-control" id="programme" type="text" required />
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="progStartDate" class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="progStartDate" value="<?php echo date('Y-m-d'); ?>" required>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="progEndDate" class="form-label">End Date</label>
+                    <input type="date" class="form-control" id="progEndDate" value="<?php echo date('Y-m-d'); ?>" required>
+                </div>
+
+                <div class="col-md-2 pt-3 d-flex align-items-center">
+                    <button class="btn btn-success col-md-12" id="addBtn">Add</button>
+                </div>
+            </form>
+
+            {{-- ----------Table: Activity---------- --}}
+
+            <div id="table-wrapper" class="pre-scrollable mt-3">
+                <table class="table table-striped col-md-12">
+                    <thead class="table-light sticky-top">
+                        <tr>
+                            <th scope="col">Activity</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="programmeItems">
+                        <tr>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr>
+
+        {{-- ----------Important Notes---------- --}}
+
+        <p class="col-md-12 fst-italic text-secondary">*IMPORTANT NOTES:
+            <br>1. The Activity Proposal Form must be submitted at least two (2) weeks before the event.
+            <br>2. Activities will not be approved if its date/s falls one (1) week before the midterms or final exams, or if its date falls exactly on the midterms or finals week. Activities with dates falling on term break will be approved provided that participants will be required to submit waivers.
+            <br>3. It is the responsibility of the organization to inquire and prepare for the logistical needs and follow them up after the approval of their proposal.
+            <br>
+        </p>
+
+        {{-- ----------Button submit all forms---------- --}}
+        
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary" onclick="submitForms()">Submit</button>
+        </div>
+
+        
+
     </div>
+
+
+    
 </div> 
 @endsection

@@ -27,7 +27,7 @@
                         <img src="img/apc_logo.png" class="p-3" style="max-height:150px"/>
                     </div>
                     <div class="col">
-                        <h4 class="text-center" style="font-weight:900; color:#fff;">SAO Event Creation System</h4>
+                        <h4 class="text-center" style="font-weight:900; color:#fff;">SAO Online Event Creation System</h4>
                     </div>
                 </div>
 
@@ -73,7 +73,6 @@
     </div>
 
 </div>
-    
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

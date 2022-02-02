@@ -99,17 +99,24 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                         <!-- Display sidebar content according to user type Start -->
-                        @if(Auth::user()->userType === "Student" or Auth::user()->userType === "Professor")
+                        @if(Auth::user()->userType === "Professor")
+                            @if(Auth::user()->studentOrg()->exists(Auth::user()->id))
+                                @include('layouts.sidebar.studOrg');
+                            @else
+                                @include('layouts.sidebar.prof')
+                            @endif
+                        @endif
+                        @if(Auth::user()->userType === "Student")
                             @include('layouts.sidebar.studOrg') 
                         @elseif(Auth::user()->userType === "NTP")
                             @include('layouts.sidebar.staff')
-                        @else
-                            @include('layouts.sidebar.adviser') 
                         @endif
+                        
                         <!-- changhe the last location depends on your POV EX: 'Adviser' ('layouts.sidebar.adviser')
                             addtl. file location can be found in layouts > sidebar -->
 
                         <!-- Display sidebar content according to user type End -->
+                       
 
                     </ul>
                 </nav>
@@ -145,10 +152,9 @@
 <!-- Wrapper End -->
 
 <!-- REQUIRED SCRIPTS -->
-    <script src="{{ asset('js/app.js') }}"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="{{ asset('js/formTable.js')}}"></script>
-
+    <script src="{{ asset('js/app.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('plugins/jquery/jquery.min.js') }} "></script>
     <script type="text/javascript" src="{{ URL::asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }} "></script>
     <script type="text/javascript" src="{{ URL::asset('dist/js/adminlte.min.js') }} "></script>
