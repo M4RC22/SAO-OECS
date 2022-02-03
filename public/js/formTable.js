@@ -172,4 +172,7 @@ $(window).ready(() => {
         return totalCost;
     }
 
+
+    
+
 });
