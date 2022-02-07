@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateActivitiesTable extends Migration
+class ProposalsExternalCoorganizersPivotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateActivitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('activities', function (Blueprint $table) {
+        Schema::create('external_coorganizer_proposal', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('external_coorganizer_id')->constrained();
             $table->foreignId('proposal_id')->constrained();
-            $table->string('activity');
-            $table->date('startDate');
-            $table->date('endDate');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateActivitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('activities');
+        Schema::dropIfExists('external_coorganizers_proposals');
     }
 }

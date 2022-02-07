@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Forms extends Model
+class Participant extends Model
 {
     use HasFactory;
 
-
-    public function formProposals()
+    public function narrative()
     {
-        return $this->hasOne(Proposals::class);
+        return $this->belongsTo(Narrative::class);
     }
 }

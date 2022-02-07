@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Forms;
-use App\Models\Proposals\Activities;
+use App\Models\ProposalForm\Activities;
+
+use App\Models\Proposals;
+use App\Models\LogisiticalNeeds;
 
 class SubmittedFormsController extends Controller
 {
@@ -60,22 +63,35 @@ class SubmittedFormsController extends Controller
         $form = Forms::findOrFail($form);   
 
         if($form->formType === "APF:B"){
- 
-         // $proposal = DB::table('proposals')->where('forms_id', $form->id)->get();
- 
-            $proposal = $form->formProposals()->find($form);
-            $activities = DB::table('activities')->where('proposals_id', $proposal[0]->id)->get(); 
- 
-            return view('submittedForms/activityProposal', compact('form', 'proposal', 'activities'));
+            $proposal = $form->proposal;
+            $logisticalNeeds = $proposal->logisticalNeed;
+            $activities = $proposal->activity;
+            $externalCoorganizers = $proposal->externalCoorganizer;
+
+            return view('submittedForms/activityProposal', compact('form', 'proposal', 'logisticalNeeds', 'activities', 'externalCoorganizers'));
              
         }
         else if($form->formType === 'Requisition'){
- 
+            
         }
         elseif ($form->formType === 'Narrative'){
- 
+            $narrative = $form->narrative;
+            $programs = $narrative->program;
+            $participants = $narrative->participant;
+            $posters = $narrative->narrativeImage->where('type', 'poster');
+            $eventImages = $narrative->narrativeImage->where('type', 'eventImage');
+            $comments = $narrative->commentSuggestion->where('type', 'comment');
+            $suggestions = $narrative->commentSuggestion->where('type', 'suggestion');
+
+            return view ('submittedForms/narrative', compact('form', 'narrative', 'programs', 'participants', 'posters', 'eventImages', 'comments', 'suggestions'));
         }
         else if($form->formType === 'Liquidation'){
+
+            $liquidation = $form->liquidation;
+            $liquidationItems = $liquidation->liquidationItem;
+            $proofOfPayments = $liquidation->proofOfPayment;
+
+            return view('submittedForms/liquidation', compact('form', 'liquidation', 'liquidationItems', 'proofOfPayments'));
  
         }
     }
@@ -117,6 +133,8 @@ class SubmittedFormsController extends Controller
                     $form->adviserIsApprove = 1;
                     $form->adviserDateApproved = $dateTime;
                     $form->save();
+
+                    return redirect('submittedForms');
                 }
                 else{
 
@@ -125,6 +143,8 @@ class SubmittedFormsController extends Controller
                     $form->adviserIsApprove = 1;
                     $form->adviserDateApproved = $dateTime;
                     $form->save();
+
+                    return redirect('submittedForms');
                     
                 }
             }
@@ -135,13 +155,9 @@ class SubmittedFormsController extends Controller
                 $form->adviserIsApprove = 1;
                 $form->adviserDateApproved = $dateTime;
                 $form->save();
+
+                return redirect('submittedForms');
             }    
         }
     }
 }
-
-
-
-//To change format of DATE TIME
-
-//{{ \Carbon\Carbon::parse($user->from_date)->format('d/m/Y')}} ----> Apply this in balde file

@@ -32,7 +32,7 @@ class HomeController extends Controller
         if($user->userType === "Student"){
              //Get Student Organization User
             $userOrg = $user->studentOrg()->value("organizations.orgName");
-            $userPos = auth()->user()->studentOrg()->value("organizations_user.position");
+            $userPos = auth()->user()->studentOrg()->value("organization_user.position");
 
             return view('/tabs/dashboard', compact('user', 'userOrg', 'userPos'));
         }
@@ -69,19 +69,36 @@ class HomeController extends Controller
         return view('/tabs/forms/activityProposal');
     }
 
+    public function activityProposalAdd(Request $request)
+    {
+        dd($request->all());
+    }
+
     public function requisition()
     {
         return view('/tabs/forms/requisition');
+    }
+    public function requisitionAdd(Request $request)
+    {
+        dd($request->all());
     }
 
     public function narrative()
     {
         return view('/tabs/forms/narrative');
     }
+    public function narrativeAdd(Request $request)
+    {
+        dd($request->all());
+    }
 
     public function liquidation()
     {
         return view('/tabs/forms/liquidation');
+    }
+    public function liquidationAdd(Request $request)
+    {
+        dd($request->all());
     }
 
 

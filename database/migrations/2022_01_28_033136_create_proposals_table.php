@@ -15,18 +15,21 @@ class CreateProposalsTable extends Migration
     {
         Schema::create('proposals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('forms_id')->constrained();
-            $table->string('activityTitle');
+            $table->foreignId('form_id')->constrained();
+            $table->foreignId('organizer');
+            $table->date('targetDate');
+            $table->integer('durationVal');
+            $table->string('durationUnit');
             $table->string('actClassificationA');
             $table->string('actClassificationB');
             $table->string('description');
-            $table->string('raationale');
             $table->string('outcome');
+            $table->string('rationale');
             $table->string('primaryAudience');
             $table->integer('numPrimaryAudience');
             $table->string('secondaryAudience')->nullable();
             $table->integer('numSecondaryAudience')->nullable();
-            $table->foreignId('organizer');
+            $table->timestamps();
             
         });
     }

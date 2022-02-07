@@ -47,7 +47,7 @@ class User extends Authenticatable
 
     public function studentOrg()
     {
-        return $this->belongsToMany(Organizations::class);
+        return $this->belongsToMany(Organization::class);
     }
 
     public function userFaculty()
