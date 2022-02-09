@@ -33,9 +33,8 @@ class HomeController extends Controller
              //Get Student Organization User
             $userOrg = $user->studentOrg()->value("organizations.orgName");
             $userPos = auth()->user()->studentOrg()->value("organization_user.position");
-            $dispForm = DB::select('select * from forms where orgName = ?', [$userOrg]);
-
-
+            $dispForm = DB::table('forms')->where('orgName', $userOrg)->where('status', 'pending')->get();
+   
             return view('/tabs/dashboard', compact('user', 'userOrg', 'userPos', 'dispForm'));
         }
         elseif($user->userType === "Professor"){

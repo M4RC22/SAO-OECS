@@ -9,6 +9,12 @@ class Activity extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'activity',
+        'startDate',
+        'endDate'
+    ];
+
     public function proposal()
     {
         return $this->belongsTo(Proposal::class);

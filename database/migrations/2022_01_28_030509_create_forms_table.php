@@ -15,7 +15,7 @@ class CreateFormsTable extends Migration
     {
         Schema::create('forms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("createdBy");
+            $table->integer("createdBy");
             $table->string('formType');
             $table->string('orgName');
             $table->string('controlNumber');
@@ -24,19 +24,19 @@ class CreateFormsTable extends Migration
             $table->string('status');
             //Adviser
             $table->foreignId('adviserFacultyId')->nullable();
-            $table->boolean('adviserIsApprove');
+            $table->boolean('adviserIsApprove')->defealt(0);
             $table->dateTime('adviserDateApproved', $precision= 0)->nullable();
             //SAO
             $table->foreignId('saoFacultyId')->nullable();
-            $table->boolean('saoIsApprove');
+            $table->boolean('saoIsApprove')->defealt(0);
             $table->dateTime('saoDateApproved', $precision= 0)->nullable();
             //Academic Services
             $table->foreignId('acadServFacultyId')->nullable();
-            $table->boolean('acadServIsApprove');
+            $table->boolean('acadServIsApprove')->defealt(0);
             $table->dateTime('acadServDateApproved', $precision= 0)->nullable();
             //Finance
             $table->foreignId('financeStaffId')->nullable();
-            $table->boolean('financeIsApprove');
+            $table->boolean('financeIsApprove')->defealt(0);
             $table->dateTime('financeDateApproved', $precision= 0)->nullable();
 
             $table->timestamps();

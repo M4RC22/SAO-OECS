@@ -101,30 +101,25 @@
             <div class="row g-3">
                 <div class="col-md-12 d-flex row">
                     <div class="form-group col-md-4">
-                        <label for="actClassificationB">Activity Classification</label>
+                    <label for="actClassificationB">Activity Classification</label>
                         <select class="form-control" name="actClassificationB">
-                            <option hidden>Select Activity Classification</option>
+                            <option hidden>Select Here</option>
                             <option value="t1">Workshop/Seminar/Training/Symposium/Forum/Team Building</option>
                             <option value="t2">Games/Competition</option>
                             <option value="t3">Social Event/Party/Celebration</option>
-                            <option value="t2">CSR/Community Service</option>
-                            <option value="t2">Marketing</option>
+                            <option value="t4">CSR/Community Service</option>
+                            <option value="t5">Marketing</option>
                         </select>
                     </div>
 
                     <div class="form-group col-md-4 ml-3">
-                        <label for="eventType" class="form-label"> </label>
-                        <div>
-                            <div class="form-check form-check-inline align-self-end">
-                                <input class="form-check-input" type="radio" name="eventType" id="incampus" value="incampus">
-                                <label class="form-check-label" for="payment">In-Campus</label>
-                            </div>
-                            <div class="form-check form-check-inline align-self-end">
-                                <input class="form-check-input" type="radio" name="eventType" id="offcampus" value="offcampus">
-                                <label class="form-check-label" for="purchase">Off-Campus</label>
-                            </div>
-                        </div>
-                    </div>   
+                        <label for="actClassificationA">Activity Classification</label>
+                            <select class="form-control" name="actClassificationA">
+                                <option hidden>Select Here</option>
+                                <option value="In-Campus">In-Campus</option>
+                                <option value="Off-Campus">Off-Campus</option>
+                            </select>
+                    </div>
                 </div>
 
                 {{-- ----------R7---------- --}}

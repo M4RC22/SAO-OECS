@@ -18,14 +18,16 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach($dispForm as $item)
                 <tr>
-                    <td>{{$dispForm[0] -> eventTitle}}</th>
-                    <td>{{$dispForm[0] -> formType}}</td>
-                    <td>{{ \Carbon\Carbon::parse($dispForm[0]->created_at)->format('F d, Y  - h:i A') }}</td>
+                    <td>{{$item -> eventTitle}}</th>
+                    <td>{{$item -> formType}}</td>
+                    <td>{{ \Carbon\Carbon::parse($item->created_at)->format('F d, Y  - h:i A') }}</td>
                     <td>Sample President</td>
-                    <td>{{$dispForm[0] -> status}}</td>
-                    <td>{{$dispForm[0] -> currApprover}}</td>
+                    <td>{{$item -> status}}</td>
+                    <td>{{$item -> currApprover}}</td>
                 </tr>
+                @endforeach
             </tbody>   
         </table>
     </div>

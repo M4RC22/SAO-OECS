@@ -10,6 +10,50 @@ class Proposal extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'organizer',
+        'targetDate',
+        'durationVal',
+        'durationUnit',
+        'venue',
+        'actClassificationA',
+        'actClassificationB',
+        'description',
+        'outcome',
+        'rationale',
+        'primaryAudience',
+        'numPrimaryAudience',
+    ];
+
+    public static function boot(){
+
+        parent::boot();
+
+        static::created(function ($proposal){
+
+            $request = request();
+
+            for($i = 0; $i < count($request->programme); $i++){
+
+                $proposal->activity()->create([
+                    'activity' => $request->programme[$i],
+                    'startDate' => $request->progStartDate[$i],
+                    'endDate' => $request->progEndDate[$i],
+
+                ]);
+            }
+
+            for($i = 0; $i < count($request->coorgName); $i++){
+                $proposal->externalCoorganizer()->create([
+                        'coorganization' => $request->coorgName[$i],
+                        'coorganizer' => $request->coorganizer[$i],
+                        'email' => $request->coorgEmail[$i],
+                        'phoneNumber' => $request->coorgContact[$i],
+                ]);
+            }
+        });
+    }
+
     
     public function form()
     {
