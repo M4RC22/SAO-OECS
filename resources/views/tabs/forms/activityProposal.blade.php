@@ -41,16 +41,18 @@
             {{-- ----------R2---------- --}}
 
                 <div class="form-group col-md-4">
-                    <label for="activityTitle" class="form-label">Activity Title</label>
-                    <input type="text" class="form-control" id="activityTitle" name="activityTitle">
+                    <label for="eventTitle" class="form-label">Event Title</label>
+                    <input type="text" class="form-control @error('eventTitle') is-invalid @enderror" id="eventTitle" name="eventTitle" value="{{ old('eventTitle') }}">
+                    @error('eventTitle')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
 
                 <div class="form-group col-md-4">
                     <label for="orgName">Name of Organization</label>
-                    <select class="form-control" id="orgName" name="orgName">
-                        <option selected disabled>Select one</option>
-                        <option>...</option>
-                    </select>
+                    <input type="text" class="form-control" id="orgName" name="orgName" value="{{$org[0] -> orgName}}" disabled/>
                 </div>
 
                 <div class="form-group col md-4">
@@ -62,17 +64,12 @@
 
                 <div class="form-group col-md-4 ">
                     <label for="organizerName" class="form-label">Name of Organizer</label>
-                    <input type="text" class="form-control" id="organizerName" placeholder="First Name Last Name" name="organizerName">
-                </div>
-
-                <div class="form-group col-md-4 ">
-                    <label for="orgContactNum" class="form-label">Contact Number</label>
-                    <input type="text" class="form-control" id="orgContactNum" placeholder="09123456789" name="orgContactNum">
-                </div>
-                    
-                <div class="form-group col-md-4 ">
-                    <label for="orgEmail" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="orgEmail" placeholder="abc@domain.com.ph" name="orgEmail">
+                    <select class="form-control" id="organizer" name="organizer">
+                        <option selected disabled>Select one</option>
+                        @foreach($orgMembers as $member)
+                        <option>{{$member[0] -> firstName}} {{$member[0] -> lastName}}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
 
@@ -134,7 +131,12 @@
 
                 <div class="form-group form-floating col-md-12">
                     <label for="description">Description</label>
-                    <textarea class="form-control" id="description" style="height: 150px" name="description"></textarea>
+                    <textarea class="form-control @error('description') is-invalid @enderror" id="description" style="height: 150px" name="description"></textarea>
+                    @error('description')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
 
                 {{-- ----------R8---------- --}}
@@ -226,7 +228,7 @@
             {{-- ----------Submit---------- --}}
 
             <div class="form-group">
-                <button class="btn btn-primary" id="apfSubmit">Submit</button>
+                <button class="btn btn-primary" id="apfSubmit" type="submit">Submit</button>
             </div>
         </form>
     </div>

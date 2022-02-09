@@ -20,6 +20,7 @@ class CreateProposalsTable extends Migration
             $table->date('targetDate');
             $table->integer('durationVal');
             $table->string('durationUnit');
+            $table->string('venue');
             $table->string('actClassificationA');
             $table->string('actClassificationB');
             $table->string('description');

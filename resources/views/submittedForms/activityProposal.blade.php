@@ -20,7 +20,7 @@
                 <p><b>Date Submitted:</b> {{\Carbon\Carbon::parse($form -> created_at)->format('F d, Y - h:i A')}}</p>
             </div>
             <div class="col-md-12">
-                <p><b>Duration of Event:</b> 2 Days *DB</p>
+                <p><b>Duration of Event:</b> {{$proposal -> durationVal}} {{$proposal -> durationUnit}}</p>
             </div>
             <div class="col-md-5">
                 <p><b>Activity Classification:</b> {{$proposal -> actClassificationB}} ({{$proposal -> actClassificationA}})</p>
@@ -35,7 +35,7 @@
 
         <div class="row">
             <div class="col-md-3">
-                <p><b>Organizer:</b> John Doe</p>
+                <p><b>Organizer:</b> Sample President</p>
             </div>
             <div class="col-md-3">
                 <p><b>Email: </b> jdoe@gmail.com</p>
@@ -48,21 +48,22 @@
             </div>
         </div>
 
-        
+        @foreach($externalCoorganizers as $item)
         <div class="row">
             <div class="col-md-3">
-                <p><b>Co-Organizer:</b> APC Dance Company</p>
+                <p><b>Co-Organizer:</b> {{$item -> lastName}}</p>
             </div>
             <div class="col-md-3">
-                <p><b>Email: </b> apcdc@gmail.com</p>
+                <p><b>Email: </b> {{$item -> email}}</p>
             </div>
             <div class="col-md-3">
-                <p><b>Contact Number: </b> 09123456789</p>
+                <p><b>Contact Number: </b> {{$item -> phoneNumber}}</p>
             </div>
             <div class="col-md-3">
-                <p><b>Co-Organization: </b> Internal</p>
+                <p><b>Co-Organization: </b> {{$item -> firstName}}</p>
             </div>
         </div>
+        @endforeach
         
 
         <hr style="height:3px; margin-top:0px">
@@ -106,7 +107,7 @@
 
         <div class="row  d-flex justify-content-between">
             <div class="col-md-12">
-                <p><b>Rationale:</b> {{$proposal -> raationale}}</p>
+                <p><b>Rationale:</b> {{$proposal -> rationale}}</p>
             </div>
         </div>
 
@@ -157,7 +158,7 @@
             <table class="table table-striped col-md-12">
                 <thead class="table-light sticky-top">
                     <tr>
-                        <th style="width: 33.33%" scope="col">Service</th>
+                        <th style="width: 33.33%" scope="col">Service/Equipment</th>
                         <th style="width: 33.33%" scope="col">Venue</th>
                         <th style="width: 33.33%" scope="col">Date Needed</th>
                     </tr>
@@ -166,7 +167,7 @@
                     @foreach($logisticalNeeds as $item) 
                     <tr>
                         <td>{{$item -> service}}</td>
-                        <td>venue *DB</td>
+                        <td>{{$item -> venue}}</td>
                         <td>{{$item -> dateNeeded}}</td>
                     </tr>
                     @endforeach
@@ -177,7 +178,7 @@
         {{-- ------Row 11------ --}}
         <div class="row">
             <div class="col-md-12">
-                <button type="btn" class="btn btn-primary col-md-3 mt-md-5" >Approve</button>
+                <button type="btn" class="btn btn-primary col-md-3 mt-md-5" onclick="window.location.href='/submittedForms/details/{{$form->id}}';">Approve</button>
                 <button type="btn" class="btn btn-danger col-md-3 mt-md-5">Deny</button> 
             </div>
         </div>      

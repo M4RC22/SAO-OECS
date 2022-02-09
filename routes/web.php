@@ -27,7 +27,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 //Activity Proposal
 Route::get('/activityProposal', [App\Http\Controllers\HomeController::class, 'activityProposal'])->name('activityProposal');
-Route::post('/activityProposalAdd', [App\Http\Controllers\HomeController::class, 'activityProposalAdd'])->name('activityProposalAdd');
+Route::post('/activityProposalAdd', [App\Http\Controllers\FormValidation::class, 'activityProposalAdd'])->name('activityProposalAdd');
 
 //Requisition
 Route::get('/requisition', [App\Http\Controllers\HomeController::class, 'requisition'])->name('requisition');

@@ -15,8 +15,8 @@ class CreateExternalCoorganizersTable extends Migration
     {
         Schema::create('external_coorganizers', function (Blueprint $table) {
             $table->id();
-            $table->string('firstName');
-            $table->string('lastName');
+            $table->string('coorganization');
+            $table->string('coorganizer');
             $table->string('email');
             $table->string('phoneNumber');  
             $table->timestamps();

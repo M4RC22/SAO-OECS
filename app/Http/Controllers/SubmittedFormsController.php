@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use App\Models\Forms;
-use App\Models\ProposalForm\Activities;
+use App\Models\Form;
+use App\Models\ProposalForm\Activity;
 
-use App\Models\Proposals;
-use App\Models\LogisiticalNeeds;
+use App\Models\Proposal;
+use App\Models\LogisiticalNeed;
 
 class SubmittedFormsController extends Controller
 {
@@ -24,7 +24,7 @@ class SubmittedFormsController extends Controller
 
         if($user->userType === "Professor"){
             if($user->studentOrg()->exists($user->id)){
-                $orgId = $user->studentOrg()->value('organizations_id');
+                $orgId = $user->studentOrg()->value('organization_id');
                 $orgName = DB::table('organizations')->where('id', $orgId)->pluck('orgName');
 
                 $forms = DB::table('forms')->where('currApprover', 'adviser')->where('orgName', $orgName)->get();
@@ -50,7 +50,7 @@ class SubmittedFormsController extends Controller
                     }
                 }
                 else if($userDept[0]->name === "Finance"){
-                    $forms = DB::table('forms')->where('currApprover', 'finance')->get();
+                    $forms = DB::table('forms')->where('currApprover', 'finance')->where('status', 'pending')->get();
 
                     return view('/tabs/submittedForms', compact('forms'));
             }
@@ -60,7 +60,7 @@ class SubmittedFormsController extends Controller
     //View Details
     public function show($form){
 
-        $form = Forms::findOrFail($form);   
+        $form = Form::findOrFail($form);   
 
         if($form->formType === "APF:B"){
             $proposal = $form->proposal;
@@ -72,6 +72,8 @@ class SubmittedFormsController extends Controller
              
         }
         else if($form->formType === 'Requisition'){
+
+            return view('file path');
             
         }
         elseif ($form->formType === 'Narrative'){
@@ -86,7 +88,6 @@ class SubmittedFormsController extends Controller
             return view ('submittedForms/narrative', compact('form', 'narrative', 'programs', 'participants', 'posters', 'eventImages', 'comments', 'suggestions'));
         }
         else if($form->formType === 'Liquidation'){
-
             $liquidation = $form->liquidation;
             $liquidationItems = $liquidation->liquidationItem;
             $proofOfPayments = $liquidation->proofOfPayment;
@@ -100,11 +101,9 @@ class SubmittedFormsController extends Controller
 
         $user = auth()->user();
 
-        // $dateTime = Carbon::now()->setTimezone('Asia/Manila')->format('F j, Y h:i A');
-
         $dateTime = Carbon::now()->setTimezone('Asia/Manila')->format('m-d-y H:i');
 
-        $form = Forms::findOrFail($form); 
+        $form = Form::findOrFail($form); 
 
         if($user->userType === "Professor"){
             if($user->studentOrg()->exists($user->id)){
@@ -124,14 +123,13 @@ class SubmittedFormsController extends Controller
             $userDeptId = $user->userStaff()->value('staff.department_id');
             $userDept = DB::select('select * from departments where id = ?', [$userDeptId]);
 
-            
             if($userDept[0]->name === "Academic Services"){
                 if($userPos === "SAO Head"){
 
                     $form->currApprover = "acadServ";
-                    $form->adviserFacultyId = $user->id;
-                    $form->adviserIsApprove = 1;
-                    $form->adviserDateApproved = $dateTime;
+                    $form->saoFacultyId = $user->id;
+                    $form->saoISApprove = 1;
+                    $form->saoDateApproved = $dateTime;
                     $form->save();
 
                     return redirect('submittedForms');
@@ -139,9 +137,9 @@ class SubmittedFormsController extends Controller
                 else{
 
                     $form->currApprover = "finance";
-                    $form->adviserFacultyId = $user->id;
-                    $form->adviserIsApprove = 1;
-                    $form->adviserDateApproved = $dateTime;
+                    $form->acadServFacultyId = $user->id;
+                    $form->acadServIsApprove = 1;
+                    $form->acadServDateApproved = $dateTime;
                     $form->save();
 
                     return redirect('submittedForms');
@@ -150,10 +148,11 @@ class SubmittedFormsController extends Controller
             }
             else if($userDept[0]->name === "Finance"){
 
+                $form->currApprover = "finance";
                 $form->status = 'Approved';
-                $form->adviserFacultyId = $user->id;
-                $form->adviserIsApprove = 1;
-                $form->adviserDateApproved = $dateTime;
+                $form->financeStaffId = $user->id;
+                $form->financeIsApprove = 1;
+                $form->financeDateApproved = $dateTime;
                 $form->save();
 
                 return redirect('submittedForms');

@@ -135,7 +135,7 @@
                     <tbody>
                         @foreach($suggestions as $suggestion)
                         <tr>
-                            <td>{{$suggestion -> message}}}</td>
+                            <td>{{$suggestion -> message}}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -152,7 +152,7 @@
                 
             <div class="row">
                 <div class="col-md-12">
-                    <button type="button" class="btn btn-primary col-md-2 mt-4" type="submit">
+                    <button type="button" class="btn btn-primary col-md-2 mt-4" onclick="window.location.href='/submittedForms/details/{{$form->id}}';">
                         Approve
                     </button>
                     <button type="button" class="btn btn-danger col-md-2 mt-4" type="submit">

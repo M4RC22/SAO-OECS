@@ -84,9 +84,7 @@
 
         {{-- ----------IMAGE SECTION---------- --}}
         <div class="d-block">
-            <div class="h3 form-title mt-5 pb-3">
-                Receipt
-            </div>
+            <h5 class="mt-5">Reciept:</h5>
 
             <div class="row" id="poster">
                 @foreach($proofOfPayments as $item)
@@ -96,7 +94,7 @@
                 @endforeach 
             </div>
 
-            <button type="button" class="btn btn-primary col-md-2 mt-4" type="submit">
+            <button type="button" class="btn btn-primary col-md-2 mt-4" onclick="window.location.href='/submittedForms/details/{{$form->id}}';">
                 Approve
             </button>
             <button type="button" class="btn btn-danger col-md-2 mt-4" type="submit">

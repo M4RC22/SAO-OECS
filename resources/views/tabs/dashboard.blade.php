@@ -13,17 +13,18 @@
                 <th scope="col">Date Submitted</th>
                 <th scope="col">Submitted By:</th>
                 <th scope="col">Status</th>
+                <th scope="col">Current Approver</th>
                 
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>High Street Dance Competition 2021</th>
-                    <td>APF:B</td>
-                    <td>October 21, 2021</td>
-                    <td>Meruem Daking</td>
-                    <td>Pending</td>
-                    <td><a href="" class="text-decoration-none">View</a></td>
+                    <td>{{$dispForm[0] -> eventTitle}}</th>
+                    <td>{{$dispForm[0] -> formType}}</td>
+                    <td>{{ \Carbon\Carbon::parse($dispForm[0]->created_at)->format('F d, Y  - h:i A') }}</td>
+                    <td>Sample President</td>
+                    <td>{{$dispForm[0] -> status}}</td>
+                    <td>{{$dispForm[0] -> currApprover}}</td>
                 </tr>
             </tbody>   
         </table>

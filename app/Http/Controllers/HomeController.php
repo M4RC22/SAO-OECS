@@ -33,8 +33,10 @@ class HomeController extends Controller
              //Get Student Organization User
             $userOrg = $user->studentOrg()->value("organizations.orgName");
             $userPos = auth()->user()->studentOrg()->value("organization_user.position");
+            $dispForm = DB::select('select * from forms where orgName = ?', [$userOrg]);
 
-            return view('/tabs/dashboard', compact('user', 'userOrg', 'userPos'));
+
+            return view('/tabs/dashboard', compact('user', 'userOrg', 'userPos', 'dispForm'));
         }
         elseif($user->userType === "Professor"){
             if($user->studentOrg()->exists($user->id)){
@@ -66,12 +68,33 @@ class HomeController extends Controller
 
     public function activityProposal()
     {
-        return view('/tabs/forms/activityProposal');
+        $user = auth()->user();
+
+        $org = $user->studentOrg;
+
+
+        $orgMem = DB::table('organization_user')->where('organization_id', $org[0]->id)->get();
+
+        $orgMembers = [];
+
+        foreach($orgMem as $member){
+            $orgMember = DB::table('users')->where('id', $member->user_id)->get();
+        
+            array_push($orgMembers, $orgMember);
+        }
+       
+        return view('/tabs/forms/activityProposal', compact('orgMembers', 'org'));
     }
 
     public function activityProposalAdd(Request $request)
     {
-        dd($request->all());
+    
+        $validate = $request->validate([
+            'eventTitle' => 'required',
+            'description' => 'required'
+        ]);
+
+        
     }
 
     public function requisition()
@@ -81,6 +104,7 @@ class HomeController extends Controller
     public function requisitionAdd(Request $request)
     {
         dd($request->all());
+
     }
 
     public function narrative()
@@ -113,3 +137,46 @@ class HomeController extends Controller
             return view('/tabs/applicants');
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // public function index()
+    // {   
+    //     $user = auth()->user();
+
+    //     $userPos = $user->studentOrg()->value("organization_user.position");
+
+    //     //Get the list of id that belongs to organization of authenticated user
+    //     $currUserOrg = $user->studentOrg()->value("organizations.id");
+
+    //     $orgMemId = DB::select('select * from organization_user where organization_id = ?', [$currUserOrg]);
+
+    //     //Return users that are part of authenticated user's organization
+    //     $orgMembers = [];
+        
+    //     foreach($orgMemId as $userId){
+    //         $orgMember = DB::select('select id, firstName, lastName from users where id = ?', [$userId->user_id]);
+
+    //         array_push($orgMembers, $orgMember);
+    //     }
+        
+    //     $count = 0;
+    //     foreach($orgMemId as $userId){
+    //         $orgMember = DB::select('select position from organization_user where user_id = ?', [$userId->user_id]);
+    //         array_push($orgMembers[$count], $orgMember[0]);
+    //         $count++;
+    //     }
+
+    //         return view('/tabs/roles', compact('user', 'userPos', 'orgMembers'));
+    //     }
