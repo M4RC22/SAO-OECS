@@ -8,8 +8,7 @@ class FormValidation extends Controller
 {
     
     public function activityProposalAdd(Request $request)
-    {
-        
+    {   
         $validate = $request->validate([
             'eventTitle' => 'required',
             'description' => 'required'

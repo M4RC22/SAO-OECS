@@ -43,12 +43,21 @@ class Proposal extends Model
                 ]);
             }
 
+
             for($i = 0; $i < count($request->coorgName); $i++){
                 $proposal->externalCoorganizer()->create([
                         'coorganization' => $request->coorgName[$i],
                         'coorganizer' => $request->coorganizer[$i],
                         'email' => $request->coorgEmail[$i],
                         'phoneNumber' => $request->coorgContact[$i],
+                ]);
+            }
+
+            for($i = 0; $i < count($request->service); $i++){
+                $proposal->logisticalNeed()->create([
+                    'service' => $request->service[$i],
+                    'dateNeeded' => $request->dateNeeded[$i],
+                    'venue' => $request->serviceVenue[$i],
                 ]);
             }
         });

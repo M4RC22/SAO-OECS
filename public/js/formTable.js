@@ -24,7 +24,7 @@ $(window).ready(() => {
                </td>
                <td><input type="text" class="form-control" id="coorganizer" placeholder="APC Org" name="coorganizer[]" required></td>
                <td><input type="text" class="form-control" id="coorgContact" placeholder="09123456789" name="coorgContact[]" required></td>
-               <td><input type="email" class="form-control" id="coorgEmail" placeholder="abc@domain.com.ph" name="coorgEmail" required></td>
+               <td><input type="text" class="form-control" id="coorgEmail" placeholder="abc@domain.com.ph" name="coorgEmail[]" required></td>
                <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
@@ -66,10 +66,9 @@ $(window).ready(() => {
         $("#logisticsItems").append(
         `
         <tr>
-            <th scope="col"><input class="form-control" name="service[]" type="string" id="service" required/></th>
-            <th scope="col"><input class="form-control" name="dateNeeded[]" type="date" id="dateNeeded" required/></th>
-            <th scope="col"><input class="form-control" name="venue[]" type="string" id="venue" required/></th>
-            
+            <td><input type="text" class="form-control" id="service" name="service[]" required/></td>
+            <td><input type="date" class="form-control" id="dateNeeded" name="dateNeeded[]" required/></td>
+            <td><input type="text" class="form-control" id="venue" name="serviceVenue[]" required/></td>
             <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
         </tr>
         `

@@ -9,6 +9,12 @@ class LogisticalNeed extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+            'service',
+            'dateNeeded',
+            'venue',
+    ];
+
     public function proposal()
     {
         return $this->belongsTo(Proposal::class);
