@@ -11,6 +11,6 @@ class Activity extends Model
 
     public function proposal()
     {
-        return $this->belongsTo(Proposal::class);
+        return $this->belongsTo(Proposal::class);   
     }
 }

@@ -20,4 +20,4 @@ class Form extends Model
     {
         return $this->hasOne(Narrative::class);
     }
-}
+} 
