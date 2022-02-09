@@ -93,7 +93,7 @@ class HomeController extends Controller
             'eventTitle' => 'required',
             'description' => 'required'
         ]);
-
+        
         
     }
 
