@@ -69,11 +69,13 @@ class SubmittedFormsController extends Controller
             $externalCoorganizers = $proposal->externalCoorganizer;
 
             return view('submittedForms/activityProposal', compact('form', 'proposal', 'logisticalNeeds', 'activities', 'externalCoorganizers'));
-             
+            
         }
         else if($form->formType === 'Requisition'){
+            $requisition = $form->requisition;
+            $requisitionItem = $requisition->requisitionItem;
 
-            return view('file path');
+            return view('submittedForms/requisition', compact('form', 'requisition', 'requisitionItem'));
             
         }
         elseif ($form->formType === 'Narrative'){

@@ -23,7 +23,7 @@
 
                 <div class="form-group col-md-3 ">
                     <div class="row g-3">
-                    <label for="durationVal" class="form-label col-md-12">Duration of Activity</label>
+                    <label for="durationVal" class="form-label col-md-12">Duration of Event</label>
                     <input type="number" class="form-control col-md-5" id="durationVal" min="0" name="durationVal">
                     <select class="form-control col-md-7" id="durationUnit" name="durationUnit">
                         <option value="days">Days</option>
@@ -89,7 +89,7 @@
                         </tr>
                     </thead>
                     <tbody id="coorgItems">
-                       {{-- Generated Items --}}
+                        {{-- Generated Items --}}
                     </tbody>
                 </table>
             </div>
@@ -121,9 +121,39 @@
                             </select>
                     </div>
                 </div>
+            </div>
+
+            {{-- ----------Table: Logistics---------- --}}
+            <hr>
+            
+
+            <div id="table-wrapper" class="pre-scrollable mt-3">
+                <table class="table table-hover col-md-12">
+                    <thead class="table-light sticky-top">
+                        <tr>
+                            <th scope="col">Items/Service/Support</th>
+                            <th scope="col">Date Needed</th>
+                            <th scope="col">Venue</th>
+                            <th scope="col" class="text-right"><a href="javascript:void(0)" class="btn btn-success" id="apfLogisticsAddBtn"><i class="fas fa-plus"></i></a></th>
+                        </tr>
+                    </thead>
+                    <tbody id="logisticsItems">
+                        {{-- Generated Items --}}
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+        {{-- ----------End of Coorg table---------- --}}
+
+
+
+
+
+
+
 
                 {{-- ----------R7---------- --}}
-
+            <div class="row g-3">
                 <div class="form-group form-floating col-md-12">
                     <label for="description">Description</label>
                     <textarea class="form-control @error('description') is-invalid @enderror" id="description" style="height: 150px" name="description"></textarea>
@@ -179,6 +209,7 @@
                     </div>
                 </div>
             </div>
+        
 
             {{-- ----------Table: Activity---------- --}}
 
@@ -219,7 +250,6 @@
                 <br>3. It is the responsibility of the organization to inquire and prepare for the logistical needs and follow them up after the approval of their proposal.
                 <br>
             </p>
-   
             {{-- ----------Submit---------- --}}
 
             <div class="form-group">

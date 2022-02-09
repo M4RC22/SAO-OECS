@@ -64,4 +64,8 @@ class Form extends Model
     {
         return $this->hasOne(Narrative::class);
     }
-}
+    public function requisition()
+    {
+        return $this->hasOne(Requisition::class);
+    }
+} 

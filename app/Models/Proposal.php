@@ -72,4 +72,9 @@ class Proposal extends Model
     {
         return $this->belongsToMany(ExternalCoorganizer::class);
     }
+
+    public function requisition()
+    {
+        return $this->hasMany(Requisition::class);
+    }
 }

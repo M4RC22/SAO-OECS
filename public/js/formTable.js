@@ -1,24 +1,19 @@
 $(window).ready(() => {
-
-    
-
     //--------------------------------------ACTIVITY PF----------------------------------------------
 
     //For dates
 
-   var eventDate = $('#eventDate');
+    var eventDate = $("#eventDate");
 
-   //Activity Proposal Forms: Coorg Table
-   let coorgName = $('#coorgName');
-   let coorganizer = $('#coorganizer');
-   let coorgContactNum = $('#coorgContactNum');
-   let coorgEmail = $('#coorgEmail');
-   
+    //Activity Proposal Forms: Coorg Table
+    let coorgName = $("#coorgName");
+    let coorganizer = $("#coorganizer");
+    let coorgContactNum = $("#coorgContactNum");
+    let coorgEmail = $("#coorgEmail");
 
-   $('#apfForms').on('click','#apfCoorgAddBtn', function(e){
-
-       $('#coorgItems').append(
-           `
+    $("#apfForms").on("click", "#apfCoorgAddBtn", function (e) {
+        $("#coorgItems").append(
+            `
            <tr>
                <td>
                    <select class="form-control" name="coorgName[]" required>
@@ -33,24 +28,21 @@ $(window).ready(() => {
                <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
-       )
-           $('.removeBtn').on('click', function(){
-               $(this).closest('tr').remove();
-           });
-       })
+        );
+        $(".removeBtn").on("click", function () {
+            $(this).closest("tr").remove();
+        });
+    });
 
+    //Activity Proposal Forms: Activity Table
 
-   //Activity Proposal Forms: Activity Table
+    let programme = $("#programme");
+    let progStartDate = $("#progStartDate");
+    let progEndDate = $("#progEndDate");
 
-   let programme = $('#programme');
-   let progStartDate = $('#progStartDate');
-   let progEndDate = $('#progEndDate');
-
-
-   $('#apfForms').on('click','#apfActAddBtn', function(e){
-
-       $('#programmeItems').append(
-           `
+    $("#apfForms").on("click", "#apfActAddBtn", function (e) {
+        $("#programmeItems").append(
+            `
            <tr>
                <td><input class="form-control" id="programme" type="text" name="programme[]"/></td>
                <td><input type="date" class="form-control" id="progStartDate" value="${eventDate.val()};" name="progStartDate[]" ></td>
@@ -58,26 +50,46 @@ $(window).ready(() => {
                <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
-       )
-           $('.removeBtn').on('click', function(){
-               $(this).closest('tr').remove();
-           });
-   })
+        );
+        $(".removeBtn").on("click", function () {
+            $(this).closest("tr").remove();
+        });
+    });
+
+    //Activity Proposal Forms: Logistics Table
+
+    let service = $("#service");
+    let dateNeeded = $("#dateNeeded");
+    let venue = $("#venue");
+
+    $("#apfForms").on("click", "#apfLogisticsAddBtn", function (e) {
+        $("#logisticsItems").append(
+        `
+        <tr>
+            <th scope="col"><input class="form-control" name="service[]" type="string" id="service" required/></th>
+            <th scope="col"><input class="form-control" name="dateNeeded[]" type="date" id="dateNeeded" required/></th>
+            <th scope="col"><input class="form-control" name="venue[]" type="string" id="venue" required/></th>
+            
+            <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
+        </tr>
+        `
+        );
+        $(".removeBtn").on("click", function () {
+            $(this).closest("tr").remove();
+        });
+    });
 
     //--------------------------------------REQUISITION----------------------------------------------
-       
 
-   //Requisitions
-   
-   let qty = $('#qty');
-   let particulars = $('#particulars');
-   let cost = $('#cost');
+    //Requisitions
 
-   $('#reqForms').on('click','#reqAddBtn', function(e){
+    let qty = $("#qty");
+    let particulars = $("#particulars");
+    let cost = $("#cost");
 
-
-       $('#reqItems').append(
-           `
+    $("#reqForms").on("click", "#reqAddBtn", function (e) {
+        $("#reqItems").append(
+            `
            <tr>
                <td><input class="form-control" name="qty[]" type="number" id="qty"/></td>
                <td><input class="form-control" name="particulars[]" type="text" id="particulars"></td>
@@ -86,31 +98,28 @@ $(window).ready(() => {
                <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
-       )
+        );
 
-       getTotalCost();
+        getTotalCost();
 
-       $('.removeBtn').on('click', function(){
-           $(this).closest('tr').remove();
-           getTotalCost();
-       });
-       
-   });
+        $(".removeBtn").on("click", function () {
+            $(this).closest("tr").remove();
+            getTotalCost();
+        });
+    });
 
-   //--------------------------------------lIQUIDATION----------------------------------------------
+    //--------------------------------------lIQUIDATION----------------------------------------------
 
-   //Liquidation
+    //Liquidation
 
-   let dateBought = $('#datebought');
-   let itemQty = $('#qty');
-   let items = $('#particulars');
-   let amount = $('#amount');
+    let dateBought = $("#datebought");
+    let itemQty = $("#qty");
+    let items = $("#particulars");
+    let amount = $("#amount");
 
-   $('#liqForms').on('click','#liqAddBtn', function(e){
-
-
-       $('#liqItems').append(
-           `
+    $("#liqForms").on("click", "#liqAddBtn", function (e) {
+        $("#liqItems").append(
+            `
            <tr>
                <td><input class="form-control" id="datebought" type="date" name="datebought[]" "${eventDate.val()};" required /></td>
                <td><input class="form-control" id="qty" type="number" name="qty[]" required /></td>
@@ -120,30 +129,26 @@ $(window).ready(() => {
                <<td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
-       )
+        );
 
-       getTotalCost();
+        getTotalCost();
 
-       $('.removeBtn').on('click', function(){
-           $(this).closest('tr').remove();
-           getTotalCost();
-       });
-       
-   });
+        $(".removeBtn").on("click", function () {
+            $(this).closest("tr").remove();
+            getTotalCost();
+        });
+    });
 
-   //--------------------------------------NARRATIVE----------------------------------------------
+    //--------------------------------------NARRATIVE----------------------------------------------
 
+    //Narrative Programs
+    let actTitle = $("#actTitle");
+    let startDate = $("#startDate");
+    let endDate = $("#endDate");
 
-   //Narrative Programs
-   let actTitle = $('#actTitle');
-   let startDate = $('#startDate');
-   let endDate = $("#endDate");
-
-   $('#narrativeForms').on('click','#narrActAddBtn', function(e){
-
-
-       $('#programsItem').append(
-           `
+    $("#narrativeForms").on("click", "#narrActAddBtn", function (e) {
+        $("#programsItem").append(
+            `
            <tr>
                <td><input class="form-control" id="actTitle" name="actTitle[]" required type="text"/></td>
                <td><input class="form-control w-100" id="startDate" type="date" name="targetdate" "${eventDate.val()};" name="startDate[]" required/>
@@ -151,29 +156,26 @@ $(window).ready(() => {
                <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
-       )
+        );
 
-       getTotalCost();
+        getTotalCost();
 
-       $('.removeBtn').on('click', function(){
-           $(this).closest('tr').remove();
-           getTotalCost();
-       });
-       
-   });
+        $(".removeBtn").on("click", function () {
+            $(this).closest("tr").remove();
+            getTotalCost();
+        });
+    });
 
-   //Narrative Participants
+    //Narrative Participants
 
-   let firstName = $('#firstName');
-   let lastName = $('#lastName');
-   let section = $('#section');
-   let participatedDate = $("#participatedDate");
+    let firstName = $("#firstName");
+    let lastName = $("#lastName");
+    let section = $("#section");
+    let participatedDate = $("#participatedDate");
 
-   $('#narrativeForms').on('click','#participantsAddBtn', function(e){
-
-
-       $('#participantsItem').append(
-           `
+    $("#narrativeForms").on("click", "#participantsAddBtn", function (e) {
+        $("#participantsItem").append(
+            `
            <tr>
                <td><input class="form-control" id="firstName" type="text" name="firstName[]" required/></td>
                <td><input class="form-control" id="lastName" type="text" name="lastName[]" required/></td>
@@ -182,28 +184,24 @@ $(window).ready(() => {
                <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
-       )
+        );
 
-       getTotalCost();
+        getTotalCost();
 
-       $('.removeBtn').on('click', function(){
-           $(this).closest('tr').remove();
-           getTotalCost();
-       });
-       
-   });
+        $(".removeBtn").on("click", function () {
+            $(this).closest("tr").remove();
+            getTotalCost();
+        });
+    });
 
-   //Narrative Comments/Suggestions
+    //Narrative Comments/Suggestions
 
+    let message = $("#message");
+    let type = $("#type");
 
-   let message = $('#message');
-   let type = $('#type');
-
-   $('#narrativeForms').on('click','#messageAddBtn', function(e){
-
-
-       $('#messageItem').append(
-           `
+    $("#narrativeForms").on("click", "#messageAddBtn", function (e) {
+        $("#messageItem").append(
+            `
            <tr>
                <td><input class="form-control" id="message" type="text" name="message[]" required/></td>
                <td><select class="form-control" id="type" name="type" required>
@@ -214,53 +212,49 @@ $(window).ready(() => {
                <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
-       )
-       getTotalCost();
+        );
+        getTotalCost();
 
-       $('.removeBtn').on('click', function(){
-           $(this).closest('tr').remove();
-           getTotalCost();
-       });
-       
-   });
+        $(".removeBtn").on("click", function () {
+            $(this).closest("tr").remove();
+            getTotalCost();
+        });
+    });
 
-   
+    //--------------------------------------COMPUTE----------------------------------------------
 
+    //For Requisition Form
+    function getTotalCost() {
+        let items = [];
 
-   //--------------------------------------COMPUTE----------------------------------------------
+        $(".itemCost").each(function () {
+            if (this.textContent.length != 0) {
+                items.push(this.textContent);
+            }
+        });
+        $("#totalCost").html(computeTotal(items));
+    }
 
-   //For Requisition Form
-   function getTotalCost(){
-       let items = [];
+    //For Liquidation Form
+    function getTotalExpense() {
+        let items = [];
 
-       $('.itemCost').each(function () {
-           if(this.textContent.length != 0) {
-               items.push(this.textContent);
-           }
-       });
-       $('#totalCost').html(computeTotal(items));
-   }
+        $(".itemExpense").each(function () {
+            if (this.textContent.length != 0) {
+                items.push(this.textContent);
+            }
+        });
+        $("#totalExpense").html(computeTotal(itemsArray));
+    }
 
-   //For Liquidation Form
-   function getTotalExpense(){
-       let items = [];
-       
-       $('.itemExpense').each(function () {
-           if(this.textContent.length != 0) {
-               items.push(this.textContent);
-           }
-       });
-       $('#totalExpense').html(computeTotal(itemsArray));
-   }
+    //Compute the sum of Items for requisition and liquidation table
+    function computeTotal(items) {
+        let totalCost = 0;
 
-   //Compute the sum of Items for requisition and liquidation table
-   function computeTotal(items){
-       let totalCost = 0;
-       
-       for(let i = 0; i < items.length; i++){
-           let item = items[i] * 1;
-           totalCost += item;
-       }
-       return totalCost;
-   }
+        for (let i = 0; i < items.length; i++) {
+            let item = items[i] * 1;
+            totalCost += item;
+        }
+        return totalCost;
+    }
 });

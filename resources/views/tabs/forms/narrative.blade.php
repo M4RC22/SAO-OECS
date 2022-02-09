@@ -12,12 +12,18 @@
         <form action="{{ route('narrativeAdd') }}" method="POST" id="narrativeForms">
             {{ csrf_field() }}
 
-            {{-- ----------R1---------- --}}
 
+            {{-- ----------R1---------- --}}
+            {{-- Event --}}
             <div class="row g-3">
-                <div class="form-group col-md-6">
-                    <label for="title" class="form-label">Event Title</label>
-                    <input type="text" class="form-control" id="title" name="title">
+
+                <div class="form-group col-md-3">
+                    <label for="eventTitle">Event Title</label>
+                    <select class="form-control" name="chargeTo">
+                        {{-- @foreach($eventTitle as $event)
+                        <option>{{$event[0] -> eventName}}</option>
+                        @endforeach --}}
+                    </select>
                 </div>
 
                 <div class="form-group col-md-6">

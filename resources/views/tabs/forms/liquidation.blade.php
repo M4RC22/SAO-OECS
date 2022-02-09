@@ -12,12 +12,20 @@
             {{ csrf_field() }}
 
             {{-- ----------R1---------- --}}
-
+            
+            {{-- Event --}}
             <div class="row g-3">
+
                 <div class="form-group col-md-4">
-                    <label for="event" class="form-label">Event Name</label>
-                    <input type="text" class="form-control w-100" id="event" name="event" placeholder="Event Name">
+                    <label for="eventTitle">Event Title</label>
+                    <select class="form-control" name="chargeTo">
+                        {{-- @foreach($eventTitle as $event)
+                        <option>{{$event[0] -> eventName}}</option>
+                        @endforeach --}}
+                    </select>
                 </div>
+
+                
                 <div class="form-group col-md-4">
                     <label for="enddate" class="form-label">Event Date</label>
                     <input type="date" class="form-control w-100" id="enddate" name="targetdate">
