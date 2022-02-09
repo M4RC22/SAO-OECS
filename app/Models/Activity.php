@@ -14,3 +14,5 @@ class Activity extends Model
         return $this->belongsTo(Proposal::class);
     }
 }
+
+//HEllo World
