@@ -20,11 +20,16 @@
             <div class="row g-3">
                 <div class="form-group col-md-3">
                     <label for="eventTitle">Event Title</label>
-                    <select class="form-control" name="chargeTo">
+                    <select class="form-control  @error('eventTitle') is-invalid @enderror" name="eventTitle">
                         {{-- @foreach($eventTitle as $event)
                         <option>{{$event[0] -> eventName}}</option>
                         @endforeach --}}
                     </select>
+                    @error('eventTitle')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
                     
             </div>
@@ -35,34 +40,46 @@
             <div class="row g-3">
                 <div class="form-group col-md-3 ">
                     <label for="controlNum" class="form-label">Control Number</label>
-                    <input type="text" class="form-control" id="controlNum" name="controlNum">
+                    <input type="text" class="form-control @error('controlNum') is-invalid @enderror" id="controlNum" name="controlNum">
+                    @error('controlNum')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
 
                 <div class="form-group col-md-3">
                     <label for="dateFiled" class="form-label">Date Filed</label>
-                    <input type="date" class="form-control" id="dateFiled" value="<?php echo date('Y-m-d'); ?>" name="dateFiled">
+                    <input type="date" class="form-control @error('dateFiled') is-invalid @enderror" id="dateFiled" value="<?php echo date('Y-m-d'); ?>" name="dateFiled">
+                    @error('dateFiled')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
 
                 <div class="form-group col-md-3">
                     <label for="dateNeeded" class="form-label">Date Needed</label>
-                    <input type="date" class="form-control" id="dateNeeded" value="<?php echo date('Y-m-d'); ?>" name="dateNeeded">
+                    <input type="date" class="form-control @error('dateNeeded') is-invalid @enderror" id="dateNeeded" value="<?php echo date('Y-m-d'); ?>" name="dateNeeded">
+                    @error('dateNeeded')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
 
-
-                {{-- ----------R2 Radio Buttons---------- --}}
-
                 <div class="form-group col-md-3">
-                    <label for="paymentMethod" class="form-label">Payment Method</label>
-                    <div>
-                        <div class="form-check form-check-inline align-self-end">
-                            <input class="form-check-input" type="radio" name="paymentMethod" id="payment" value="payment">
-                            <label class="form-check-label" for="payment">Payment</label>
-                        </div>
-                        <div class="form-check form-check-inline align-self-end">
-                            <input class="form-check-input" type="radio" name="paymentMethod" id="purchase" value="purchase">
-                            <label class="form-check-label" for="purchase">Purchase</label>
-                        </div>
-                    </div>
+                    <label for="paymentMethod">Payment</label>
+                    <select class="form-control @error('paymentMethod') is-invalid @enderror" name="paymentMethod">
+                        <option selected disabled>Select Here</option>
+                        <option value="payment">Payment</option>
+                        <option value="purchase">Purchase</option>
+                    </select>
+                    @error('paymentMethod')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
             </div>
 
@@ -82,9 +99,9 @@
                     </thead>
                     <tbody id="reqItems">
                         {{-- <tr>
-                            <td><input class="form-control" name="qty[]" type="number" id="qty"/></td>
-                            <td><input class="form-control" name="particulars[]" type="text" id="particulars"></td>
-                            <td><input class="form-control" name="cost[]" type="number" step="0.01" id="cost" ></td>
+                            <td><input class="form-control" name="qty[]" type="number" id="qty" required/></td>
+                            <td><input class="form-control" name="particulars[]" type="text" id="particulars" required></td>
+                            <td><input class="form-control" name="cost[]" type="number" step="0.01" id="cost" required ></td>
                             <td></td>
                             <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
                         </tr> --}}
@@ -116,11 +133,16 @@
 
                 <div class="form-group col-md-4">
                         <label for="chargeTo">Charge to</label>
-                        <select class="form-control" name="chargeTo">
-                            <option hidden>Department/Unit</option>
+                        <select class="form-control @error('chargeTo') is-invalid @enderror" name="chargeTo">
+                            <option selected disabled>Department/Unit</option>
                             <option value="t1">Test 1</option>
                             <option value="t2">Test 2</option>
                         </select>
+                        @error('chargeTo')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
             </div>
 

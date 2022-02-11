@@ -16,34 +16,54 @@
             {{-- Event --}}
             <div class="row g-3">
 
-                <div class="form-group col-md-4">
+                {{-- <div class="form-group col-md-4">
                     <label for="eventTitle">Event Title</label>
                     <select class="form-control" name="chargeTo">
-                        {{-- @foreach($eventTitle as $event)
+                         @foreach($eventTitle as $event)
                         <option>{{$event[0] -> eventName}}</option>
-                        @endforeach --}}
+                        @endforeach 
                     </select>
-                </div>
+                </div>  --}}
 
                 
                 <div class="form-group col-md-4">
                     <label for="enddate" class="form-label">Event Date</label>
-                    <input type="date" class="form-control w-100" id="enddate" name="targetdate">
+                    <input type="date" class="form-control w-100 @error('eventDate') is-invalid @enderror" id="eventDate" name="eventDate">
+                    @error('eventDate')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
                 <div class="form-group col-md-4">
                     <label for="name" class="form-label">Cash Advance</label>
-                    <input type="number" class="form-control w-100" id="name" name="name" placeholder="PHP">
+                    <input type="number" class="form-control w-100 @error('cashAdvance') is-invalid @enderror" id="cashAdvance" name="cashAdvance" placeholder="PHP">
+                    @error('cashAdvance')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
             
                 {{-- ----------R2---------- --}}
         
                 <div class="form-group col-md-4">
                     <label for="event" class="form-label">Cv Number</label>
-                    <input type="number" class="form-control w-100" id="event" name="event">
+                    <input type="number" class="form-control w-100 @error('cvNumber') is-invalid @enderror" id="cvNumber" name="cvNumber">
+                    @error('cvNumber')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
                 <div class="form-group col-md-4">
                     <label for="event" class="form-label">Deduct</label>
-                    <input type="number" class="form-control w-100" id="event" name="event" placeholder="PHP">
+                    <input type="number" class="form-control w-100 @error('deduct') is-invalid @enderror" id="deduct" name="deduct" placeholder="PHP">
+                    @error('deduct')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>  
 
                 <div class="col-md-4"></div>

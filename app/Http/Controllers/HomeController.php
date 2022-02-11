@@ -81,30 +81,50 @@ class HomeController extends Controller
         
             array_push($orgMembers, $orgMember);
         }
-       
         return view('/tabs/forms/activityProposal', compact('orgMembers', 'org'));
     }
 
-    public function activityProposalAdd(Request $request)
-    {
+    // public function activityProposalAdd(Request $request)
+    // {
     
-        $validate = $request->validate([
-            'eventTitle' => 'required',
-            'description' => 'required'
-        ]);
+    //     $validate = $request->validate([
+    //         'eventTitle' => 'required',
+    //         'description' => 'required'
+    //     ]);
         
         
-    }
+    // }
 
     public function requisition()
     {
+        // $user = auth()->user();
+        // $org = $user->studentOrg;
+
+        // // $data = DB::table('forms')->get();
+
+        // $orgMem = DB::table('organization_user')->where('organization_id', $org[0]->id)->get();
+
+        // $eventTitle = [];
+
+        // foreach($eventTitle as $ev){
+        //     $eventTitle = DB::table('forms')->get()->where('id', $member->user_id)->get();
+        // }
+
+        
+
+
+        
+
+
+    //    return dd($id);
+        
         return view('/tabs/forms/requisition');
     }
-    public function requisitionAdd(Request $request)
-    {
-        dd($request->all());
+    // public function requisitionAdd(Request $request)
+    // {
+    //     dd($request->all());
 
-    }
+    // }
 
     public function narrative()
     {

@@ -17,25 +17,35 @@
             {{-- Event --}}
             <div class="row g-3">
 
-                <div class="form-group col-md-3">
+                {{-- <div class="form-group col-md-3">
                     <label for="eventTitle">Event Title</label>
                     <select class="form-control" name="chargeTo">
-                        {{-- @foreach($eventTitle as $event)
+                        @foreach($eventTitle as $event)
                         <option>{{$event[0] -> eventName}}</option>
-                        @endforeach --}}
+                        @endforeach 
                     </select>
-                </div>
+                </div> --}}
 
                 <div class="form-group col-md-6">
                     <label for="eventDate" class="form-label">Event Date</label>
-                    <input type="date" class="form-control" id="eventDate" value="<?php echo date('Y-m-d'); ?>" name="eventDate">
+                    <input type="date" class="form-control @error('eventDate') is-invalid @enderror" id="eventDate" value="<?php echo date('Y-m-d'); ?>" name="eventDate">
+                    @error('eventDate')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
                 
                 {{-- ----------R2---------- --}}
                 
                 <div class="form-group col-md-12">
                     <label for="eventdesc" class="form-label">Narration</label>
-                    <textarea class="form-control" id="narration" style="height: 150px" name="narration"></textarea>
+                    <textarea class="form-control @error('narration') is-invalid @enderror" id="narration" style="height: 150px" name="narration"></textarea>
+                    @error('narration')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
             </div>
 
@@ -146,7 +156,12 @@
                 <div class="col-md-12">
                     <div class="form-group col-md-2">
                         <label for="rating" class="form-label">Rating</label>
-                        <input type="number" class="form-control" id="rating" min="0" max="5" name="rating">
+                        <input type="number" class="form-control  @error('rating') is-invalid @enderror" id="rating" min="0" max="5" name="rating">
+                        @error('rating')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                     </div>
                 </div>
             </div>

@@ -20,7 +20,7 @@ $(window).ready(() => {
                        <option hidden>Coorganization</option>
                        <option value="Internal">Internal</option>
                        <option value="External">External</option>
-                   </select>
+                    </select>
                </td>
                <td><input type="text" class="form-control" id="coorganizer" placeholder="APC Org" name="coorganizer[]" required></td>
                <td><input type="text" class="form-control" id="coorgContact" placeholder="09123456789" name="coorgContact[]" required></td>
@@ -44,9 +44,9 @@ $(window).ready(() => {
         $("#programmeItems").append(
             `
            <tr>
-               <td><input class="form-control" id="programme" type="text" name="programme[]"/></td>
-               <td><input type="date" class="form-control" id="progStartDate" value="${eventDate.val()};" name="progStartDate[]" ></td>
-               <td><input type="date" class="form-control" id="progEndDate" value="${eventDate.val()};" name="progEndDate[]"></td>
+               <td><input class="form-control" id="programme" type="text" name="programme[]" required/></td>
+               <td><input type="date" class="form-control" id="progStartDate" value="${eventDate.val()};" name="progStartDate[]" required></td>
+               <td><input type="date" class="form-control" id="progEndDate" value="${eventDate.val()};" name="progEndDate[]" required></td>
                <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
@@ -64,7 +64,7 @@ $(window).ready(() => {
 
     $("#apfForms").on("click", "#apfLogisticsAddBtn", function (e) {
         $("#logisticsItems").append(
-        `
+            `
         <tr>
             <td><input type="text" class="form-control" id="service" name="service[]" required/></td>
             <td><input type="date" class="form-control" id="dateNeeded" name="dateNeeded[]" required/></td>
@@ -90,9 +90,9 @@ $(window).ready(() => {
         $("#reqItems").append(
             `
            <tr>
-               <td><input class="form-control" name="qty[]" type="number" id="qty"/></td>
-               <td><input class="form-control" name="particulars[]" type="text" id="particulars"></td>
-               <td><input class="form-control" name="cost[]" type="number" step="0.01" id="cost" ></td>
+               <td><input class="form-control" name="qty[]" type="number" id="qty" required/></td>
+               <td><input class="form-control" name="particulars[]" type="text" id="particulars" required></td>
+               <td><input class="form-control" name="cost[]" type="number" step="0.01" id="cost" required ></td>
                <td></td>
                <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
