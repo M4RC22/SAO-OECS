@@ -26,9 +26,9 @@
                     <label for="durationVal" class="form-label col-md-12">Duration of Event</label>
                     <input type="number" class="form-control col-md-5" id="durationVal" min="0" name="durationVal">
                     <select class="form-control col-md-7" id="durationUnit" name="durationUnit">
-                        <option value="days">Days</option>
-                        <option value="weeks">Weeks</option>
-                        <option value="months">Months</option>
+                        <option value="day(s)">Day(s)</option>
+                        <option value="week(s)">Week(s)</option>
+                        <option value="month(s)">Month(s)</option>
                         </select>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
 
                 <div class="form-group col-md-4">
                     <label for="eventTitle" class="form-label">Event Title</label>
-                    <input type="text" class="form-control @error('eventTitle') is-invalid @enderror" id="eventTitle" name="eventTitle" value="{{ old('eventTitle') }}">
+                    <input type="text" class="form-control @error('eventTitle') is-invalid @enderror" id="eventTitle" name="eventTitle"  >
                     @error('eventTitle')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -55,11 +55,6 @@
                     <input type="text" class="form-control" id="orgName" name="orgName" value="{{$org[0] -> orgName}}" disabled/>
                 </div>
 
-                <div class="form-group col md-4">
-                    <label for="dateSubmitted" class="form-label">Date Submitted</label>
-                    <input type="date" class="form-control" id="dateSubmitted" value="<?php echo date('Y-m-d'); ?>" name="dateSubmitted">
-                </div>
-
                 {{-- ----------R3---------- --}}
 
                 <div class="form-group col-md-4 ">
@@ -67,7 +62,7 @@
                     <select class="form-control" id="organizer" name="organizer">
                         <option selected disabled>Select one</option>
                         @foreach($orgMembers as $member)
-                        <option>{{$member[0] -> firstName}} {{$member[0] -> lastName}}</option>
+                        <option value="{{$member[0] -> id}}">{{$member[0] -> firstName}} {{$member[0] -> lastName}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -95,7 +90,6 @@
             </div>
             <hr>
         {{-- ----------End of Coorg table---------- --}}
-
 
             {{-- ----------R6---------- --}}
             <div class="row g-3">

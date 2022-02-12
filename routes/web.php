@@ -23,7 +23,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-//---------------Start Forms---------------//
+//---------------Start - Forms---------------//
 
 //Activity Proposal
 Route::get('/activityProposal', [App\Http\Controllers\HomeController::class, 'activityProposal'])->name('activityProposal');
@@ -42,13 +42,12 @@ Route::get('/liquidation', [App\Http\Controllers\HomeController::class, 'liquida
 Route::post('/liquidationAdd', [App\Http\Controllers\HomeController::class, 'liquidationAdd'])->name('liquidationAdd');
 
 
-//---------------End Forms---------------//
+//---------------End - Forms---------------//
 
 //Submitted Forms
 Route::get('/submittedForms', [App\Http\Controllers\SubmittedFormsController::class, 'index'])->name('submittedForms');
 
-//Records
-Route::get('/records', [App\Http\Controllers\HomeController::class, 'records'])->name('records');
+
 
 //Roles
 Route::get('/roles', [App\Http\Controllers\RolesController::class, 'index'])->name('roles');
@@ -61,11 +60,30 @@ Route::get('/applications', [App\Http\Controllers\HomeController::class, 'applic
 
 
 
-//Forms Controllers
+//---------------Start - Submitted Forms---------------//
 
 //APF
 Route::get('/submittedForms/details/{formId}/si/Kenneth/Lang/Pogi/Sa/bHuOnG/w0rlD', [App\Http\Controllers\SubmittedFormsController::class,'show'])->name('apf');   
 
-Route::get('/submittedForms/details/{formId}', [App\Http\Controllers\SubmittedFormsController::class,'approve'])->name('approve');
+
+//Forms Approve and Deny
+Route::get('/submittedForms/details/{formId}/approve', [App\Http\Controllers\SubmittedFormsController::class,'approve'])->name('approve');
+
+Route::get('/submittedForms/details/{formId}/deny', [App\Http\Controllers\SubmittedFormsController::class,'deny'])->name('deny');
 
 
+//---------------End - Submitted Forms---------------//
+
+
+
+
+//---------------Start - Generate Forms---------------//
+
+//Records
+Route::get('/records', [App\Http\Controllers\RecordsController::class, 'index'])->name('records');
+
+//Generate Forms
+Route::get('/records/downloadForm/{formId}', [App\Http\Controllers\RecordsController::class, 'downloadForm'])->name('downloadForm');
+
+
+//---------------End - Generate Forms---------------//

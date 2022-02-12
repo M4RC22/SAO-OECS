@@ -1,6 +1,6 @@
 $(window).ready(() => {
     //--------------------------------------ACTIVITY PF----------------------------------------------
-
+  
     //For dates
 
     var eventDate = $("#eventDate");
@@ -23,7 +23,7 @@ $(window).ready(() => {
                    </select>
                </td>
                <td><input type="text" class="form-control" id="coorganizer" placeholder="APC Org" name="coorganizer[]" required></td>
-               <td><input type="text" class="form-control" id="coorgContact" placeholder="09123456789" name="coorgContact[]" required></td>
+               <td><input type="text" class="form-control" id="coorgContact" placeholder="09123456789" maxlength="11" name="coorgContact[]" required></td>
                <td><input type="text" class="form-control" id="coorgEmail" placeholder="abc@domain.com.ph" name="coorgEmail[]" required></td>
                <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>

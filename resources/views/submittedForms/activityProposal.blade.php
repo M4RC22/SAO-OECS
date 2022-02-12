@@ -5,7 +5,29 @@
 <div class="container">
             
     <h3>Activity Proposal Form - For Checking</h3>
-        
+
+    @if(session()->has('errorInApproval'))
+    <script>
+        $(window).ready(() => {
+            $('#modalApprove').modal('show');
+            $("#closeModalApprove").on('click', function(){
+                $("#modalApprove").modal('hide');
+            });
+        });
+    </script>
+    @elseif(session()->has('errorInDeny'))
+    <script>
+
+        $(window).ready(() => {
+            $('#modalDeny').modal('show');
+
+            $("#closeModalDeny").on('click', function(){
+                $("#modalDeny").modal('hide');
+            });
+        });
+    </script>
+    @endif
+
     <hr style="height:3px;">
 
     <div class="container shadow p-3 mb-5 bg-#fff rounded mt-3">
@@ -35,23 +57,23 @@
 
         <div class="row">
             <div class="col-md-3">
-                <p><b>Organizer:</b> Sample President</p>
+                <p><b>Organizer:</b> {{$organizer[0] -> firstName}} {{$organizer[0] -> lastName}}</p>
             </div>
             <div class="col-md-3">
-                <p><b>Email: </b> jdoe@gmail.com</p>
+                <p><b>Email: </b> {{$organizer[0] -> email}}</p>
             </div>
             <div class="col-md-3">
-                <p><b>Contact Number: </b> 09123456789</p>
+                <p><b>Contact Number: </b> {{$organizer[0] -> phoneNumber}}</p>
             </div>
             <div class="col-md-3">
-                <p><b>Organization: </b> APC Chorale</p>
+                <p><b>Organization: </b> {{$form -> orgName}}</p>
             </div>
         </div>
 
         @foreach($externalCoorganizers as $item)
         <div class="row">
             <div class="col-md-3">
-                <p><b>Co-Organizer:</b> {{$item -> lastName}}</p>
+                <p><b>Co-Organizer:</b> {{$item -> coorganizer}}</p>
             </div>
             <div class="col-md-3">
                 <p><b>Email: </b> {{$item -> email}}</p>
@@ -60,7 +82,7 @@
                 <p><b>Contact Number: </b> {{$item -> phoneNumber}}</p>
             </div>
             <div class="col-md-3">
-                <p><b>Co-Organization: </b> {{$item -> firstName}}</p>
+                <p><b>Co-Organization: </b> {{$item -> coorganization}}</p>
             </div>
         </div>
         @endforeach
@@ -175,11 +197,10 @@
             </table>
         </div>
 
-        {{-- ------Row 11------ --}}
+        {{-- ------Row 11(Approve and Deny Button)------ --}}
         <div class="row">
             <div class="col-md-12">
-                <button type="btn" class="btn btn-primary col-md-3 mt-md-5" onclick="window.location.href='/submittedForms/details/{{$form->id}}';">Approve</button>
-                <button type="btn" class="btn btn-danger col-md-3 mt-md-5">Deny</button> 
+               @include('layouts.modal')
             </div>
         </div>      
     </div>

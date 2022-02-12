@@ -33,7 +33,7 @@ class Form extends Model
 
         
             $form->proposal()->create([
-                'organizer' => 1,
+                'organizer' =>  $request->organizer,
                 'targetDate' => $request->eventDate,
                 'durationVal' => $request->durationVal,
                 'durationUnit' => $request->durationUnit,
@@ -45,8 +45,9 @@ class Form extends Model
                 'rationale' => $request->rationale,
                 'primaryAudience' => $request->primaryAud,
                 'numPrimaryAudience' => $request->primaryNum,
-                'primaryAudience' => $request->secondaryAud,
-                'numPrimaryAudience' => $request->secondaryNum,
+                'secondaryAudience' => $request->secondaryAud,
+                'numSecondaryAudience' => $request->secondaryNum,
+                
 
             ]);
         });

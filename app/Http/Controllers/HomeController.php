@@ -85,17 +85,6 @@ class HomeController extends Controller
         return view('/tabs/forms/activityProposal', compact('orgMembers', 'org'));
     }
 
-    public function activityProposalAdd(Request $request)
-    {
-    
-        $validate = $request->validate([
-            'eventTitle' => 'required',
-            'description' => 'required'
-        ]);
-        
-        
-    }
-
     public function requisition()
     {
         return view('/tabs/forms/requisition');

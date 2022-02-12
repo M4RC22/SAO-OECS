@@ -18,7 +18,6 @@ class FormValidationController extends Controller
         ]);
 
 
-    
 
         $form->create([
             'createdBy' => auth()->user()->id,
