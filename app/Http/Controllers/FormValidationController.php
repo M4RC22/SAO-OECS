@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Form;
+use Intervention\Image\Facades\Image;
 
 class FormValidationController extends Controller
 {
@@ -17,11 +18,9 @@ class FormValidationController extends Controller
             'description' => 'required'
         ]);
 
-
-
         $form->create([
             'createdBy' => auth()->user()->id,
-            'formType' => 'APF:B',
+            'formType' => 'APF',
             'orgName' =>  auth()->user()->studentOrg[0]->orgName,
             'controlNumber' => '123123123',
             'eventTitle' => $request['eventTitle'],
@@ -35,6 +34,25 @@ class FormValidationController extends Controller
         ]);
         
         return redirect('/home');
+
+
+    }
+
+    public function narrativeAdd(Request $request){
+        
+        $form = new Form;
+
+        foreach($request->poster as $image){
+
+            $posterPath = $image->store('uploads/posters', 'public');
+
+            dd(public_path("storage/{$posterPath}"));
+
+            $poster = Image::make(public_path("storage/{$posterPath}"))->resize(1200,1200);
+    
+            $poster->save();
+        }
+    
 
 
     }

@@ -155,6 +155,7 @@
 <!-- REQUIRED SCRIPTS -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="{{ asset('js/formTable.js')}}"></script>
+    <script src="{{ asset('js/imageUploading.js')}}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('plugins/jquery/jquery.min.js') }} "></script>
     <script type="text/javascript" src="{{ URL::asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }} "></script>

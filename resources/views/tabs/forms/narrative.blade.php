@@ -9,33 +9,38 @@
 
     <div class="container shadow p-3 mb-5 bg-#fff rounded mt-3">
 
-        <form action="{{ route('narrativeAdd') }}" method="POST" id="narrativeForms">
+        <form action="{{ route('narrativeAdd') }}" method="POST" id="narrativeForms" enctype="multipart/form-data">
             {{ csrf_field() }}
 
 
             {{-- ----------R1---------- --}}
-            {{-- Event --}}
             <div class="row g-3">
 
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-6">
                     <label for="eventTitle">Event Title</label>
-                    <select class="form-control" name="chargeTo">
-                        {{-- @foreach($eventTitle as $event)
-                        <option>{{$event[0] -> eventName}}</option>
-                        @endforeach --}}
-                    </select>
+                    <input type="text" class="form-control" id="eventTitle" name="eventTitle"/>
                 </div>
 
                 <div class="form-group col-md-6">
                     <label for="eventDate" class="form-label">Event Date</label>
-                    <input type="date" class="form-control" id="eventDate" value="<?php echo date('Y-m-d'); ?>" name="eventDate">
+                    <input type="date" class="form-control @error('eventDate') is-invalid @enderror" id="eventDate" value="<?php echo date('Y-m-d'); ?>" name="eventDate">
+                    @error('eventDate')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
                 
                 {{-- ----------R2---------- --}}
                 
                 <div class="form-group col-md-12">
                     <label for="eventdesc" class="form-label">Narration</label>
-                    <textarea class="form-control" id="narration" style="height: 150px" name="narration"></textarea>
+                    <textarea class="form-control @error('narration') is-invalid @enderror" id="narration" style="height: 150px" name="narration"></textarea>
+                    @error('narration')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
             </div>
 
@@ -96,11 +101,11 @@
                 </div>
                             
                 <div class="mb-5 mt-2 py-1">
-                    <p for="officialposter" class="fst-italic text-secondary">Upload a photo. (.jpg .png)</p>
-                    <input class="form-control-sm w-100" id="officialPoster" type="file" onchange="image_selectPoster()" multiple/>
+                    <p for="officialposter" class="fst-italic text-secondary" >Upload a photo. (.jpg .png)</p>
+                    <input type="file" class="form-control-sm w-100"  name="poster[]" id="poster" required=""multiple/>
                 </div>
 
-                <div class="row" id="poster">
+                <div class="row" id="posterHolder">
                                     
                 </div>
 
@@ -110,10 +115,10 @@
 
                 <div class="mb-5 mt-2 py-1">
                     <p for="uploadPhotos" class="fst-italic text-secondary">Upload a photo. (.jpg .png)</p>
-                    <input class="form-control-sm w-100" id="uploadPhotos" type="file" onchange="image_selectPhotos()" multiple/>
+                    <input class="form-control-sm w-100" type="file" name="photos[]" id="photos" required=""multiple/>
                 </div>
 
-                <div class="row" id="photos">
+                <div class="row" id="photosHolder">
                             
                 </div>
             
@@ -146,7 +151,12 @@
                 <div class="col-md-12">
                     <div class="form-group col-md-2">
                         <label for="rating" class="form-label">Rating</label>
-                        <input type="number" class="form-control" id="rating" min="0" max="5" name="rating">
+                        <input type="number" class="form-control  @error('rating') is-invalid @enderror" id="rating" min="0" max="5" name="rating">
+                        @error('rating')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                     </div>
                 </div>
             </div>

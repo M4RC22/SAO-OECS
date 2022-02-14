@@ -57,7 +57,7 @@ class RecordsController extends Controller
 
         $form = Form::findOrFail($form);
         
-        if($form->formType === "APF:B"){
+        if($form->formType === "APF"){
             $proposal = $form->proposal;
             $logisticalNeeds = $proposal->logisticalNeed;
             $activities = $proposal->activity;

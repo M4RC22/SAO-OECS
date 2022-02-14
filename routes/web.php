@@ -31,15 +31,15 @@ Route::post('/activityProposalAdd', [App\Http\Controllers\FormValidationControll
 
 //Requisition
 Route::get('/requisition', [App\Http\Controllers\HomeController::class, 'requisition'])->name('requisition');
-Route::post('/requisitionAdd', [App\Http\Controllers\HomeController::class, 'requisitionAdd'])->name('requisitionAdd');
+Route::post('/requisitionAdd', [App\Http\Controllers\FormValidationController::class, 'requisitionAdd'])->name('requisitionAdd');
 
 //Narrative
 Route::get('/narrative', [App\Http\Controllers\HomeController::class, 'narrative'])->name('narrative');
-Route::post('/narrativeAdd', [App\Http\Controllers\HomeController::class, 'narrativeAdd'])->name('narrativeAdd');
+Route::post('/narrativeAdd', [App\Http\Controllers\FormValidationController::class, 'narrativeAdd'])->name('narrativeAdd');
 
 //Liquidation
 Route::get('/liquidation', [App\Http\Controllers\HomeController::class, 'liquidation'])->name('liquidation');
-Route::post('/liquidationAdd', [App\Http\Controllers\HomeController::class, 'liquidationAdd'])->name('liquidationAdd');
+Route::post('/liquidationAdd', [App\Http\Controllers\FormValidationController::class, 'liquidationAdd'])->name('liquidationAdd');
 
 
 //---------------End - Forms---------------//

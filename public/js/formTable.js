@@ -1,6 +1,9 @@
 $(window).ready(() => {
     //--------------------------------------ACTIVITY PF----------------------------------------------
-  
+
+
+
+
     //For dates
 
     var eventDate = $("#eventDate");
@@ -256,4 +259,5 @@ $(window).ready(() => {
         }
         return totalCost;
     }
+
 });

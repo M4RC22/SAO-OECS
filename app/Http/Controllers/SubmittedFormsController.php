@@ -64,7 +64,7 @@ class SubmittedFormsController extends Controller
 
         $form = Form::findOrFail($form);   
 
-        if($form->formType === "APF:B"){
+        if($form->formType === "APF"){
             //Get Whole Row
             $proposal = $form->proposal;
             $logisticalNeeds = $proposal->logisticalNeed;
