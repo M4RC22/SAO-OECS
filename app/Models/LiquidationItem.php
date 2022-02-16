@@ -9,6 +9,12 @@ class LiquidationItem extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'dateBought',
+        'particulars',
+        'amountPerDay',
+    ];
+
     public function liquidation()
     {
         return $this->belongsTo(Liquidation::class);

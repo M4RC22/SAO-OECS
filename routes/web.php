@@ -87,3 +87,7 @@ Route::get('/records/downloadForm/{formId}', [App\Http\Controllers\RecordsContro
 
 
 //---------------End - Generate Forms---------------//
+
+
+
+Route::post('/search', [App\Http\Controllers\RecordsController::class, 'activityProposalAdd'])->name('search');

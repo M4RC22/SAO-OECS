@@ -1,6 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
+
+
+{{-- ----------Search Bar---------- --}}
+<div class="container">
+    <form action="{{ route('records') }}" method="GET"> 
+        <div class="input-group">
+            <input type="search" class="form-control rounded" id="searchTerm" name="searchTerm" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+            <button type="submit" class="btn btn-outline-primary">search</button>
+        </div>
+    </form>
+</div>
+
+
 <div class="container">
 
 <div class="shadow mb-5 rounded-0 mt-3">

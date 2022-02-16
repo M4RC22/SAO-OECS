@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class ProofOfPayment extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'image',
+    ]; 
     public function liquidation()
     {
         return $this->belongsTo(Liquidation::class);

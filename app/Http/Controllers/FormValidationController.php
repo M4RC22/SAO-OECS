@@ -13,10 +13,36 @@ class FormValidationController extends Controller
     {
         $form = new Form;
 
-        $validate = $request->validate([
-            'eventTitle' => 'required',
-            'description' => 'required'
-        ]);
+        // $validate = $request->validate([
+        //     'eventTitle' => 'required|max:45',
+        //     'description' => 'required|max:200',
+        //     'eventDate' =>'required',
+        //     'durationVal' => 'required',
+        //     'durationUnit' =>'required',
+        //     'venue' => 'required',
+        //     'eventTitle' => 'required',
+        //     'dateSubmitted' => 'required',
+        //     'organizer' => 'required', //heeree
+        //     'coorgName' => 'required',
+        //     'coorganizer' =>'required',
+        //     'coorgContact' => 'required',
+        //     'coorgEmail' => 'required',
+        //     'actClassificationB' => 'required',
+        //     'actClassificationA' => 'required',
+        //     'service' => 'required',
+        //     'dateNeeded' => 'required',
+        //     'serviceVenue' =>'required',
+        //     'description' =>'required',
+        //     'rationale' => 'required',
+        //     'outcome' => 'required',
+        //     'primaryAud' => 'required',
+        //     'primaryNum' => 'required',
+        //     'secondaryAud' => 'required',
+        //     'secondaryNum' => 'required',
+        //     'programme' => 'required',
+        //     'programStartDate' => 'required',
+        //     'progEndDate' => 'required',
+        // ]);
 
         $form->create([
             'createdBy' => auth()->user()->id,
@@ -42,20 +68,65 @@ class FormValidationController extends Controller
         
         $form = new Form;
 
-        foreach($request->poster as $image){
+        // $validate = $request->validate([
+        //     'eventDate' => 'required',
+        //     'narration' =>'required',
+        //     'actTitle' => 'required',
+        //     'targetDate' =>'required',
+        //     'firstName' => 'required',
+        //     'lastName' => 'required',
+        //     'section' => 'required',
+        //     'message' => 'required',
+        //     'type' => 'required',
+        //     'rating' => 'required',
+        // ]);
 
-            $posterPath = $image->store('uploads/posters', 'public');
+            $form->create([
+                'createdBy' => auth()->user()->id,
+                'formType' => 'Narrative',
+                'orgName' =>  auth()->user()->studentOrg[0]->orgName,
+                'controlNumber' => '123123123',
+                'eventTitle' => $request['eventTitle'],
+                'currApprover' => 'adviser',
+                'status' => 'pending',
+                'adviserIsApprove' => 0,
+                'saoIsApprove' => 0,
+                'acadServIsApprove' => 0,
+                'financeIsApprove' => 0,
+            ]);
 
-            dd(public_path("storage/{$posterPath}"));
-
-            $poster = Image::make(public_path("storage/{$posterPath}"))->resize(1200,1200);
-    
-            $poster->save();
+            return redirect('/home');
+           
         }
-    
 
+        public function liquidationAdd(Request $request){
 
-    }
+            $form = new Form;
 
+            // $validate = $request->validate([
+            //     'eventDate' => 'required',
+            //     'cashAdvance' =>'required',
+            //     'cvNumber' => 'required',
+            //     'deduct' =>'required',
+            //     'qty' => 'required',
+            //     'particulars' => 'required',
+            //     'amount' => 'required',
+            // ]);
 
+            $form->create([
+                'createdBy' => auth()->user()->id,
+                'formType' => 'Liquidation',
+                'orgName' =>  auth()->user()->studentOrg[0]->orgName,
+                'controlNumber' => '123123123',
+                'eventTitle' => $request['eventTitle'],
+                'currApprover' => 'adviser',
+                'status' => 'pending',
+                'adviserIsApprove' => 0,
+                'saoIsApprove' => 0,
+                'acadServIsApprove' => 0,
+                'financeIsApprove' => 0,
+            ]);
+            
+            return redirect('/home');
+        }
 }

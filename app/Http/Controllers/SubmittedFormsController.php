@@ -90,7 +90,7 @@ class SubmittedFormsController extends Controller
             $programs = $narrative->program;
             $participants = $narrative->participant;
             $posters = $narrative->narrativeImage->where('type', 'poster');
-            $eventImages = $narrative->narrativeImage->where('type', 'eventImage');
+            $eventImages = $narrative->narrativeImage->where('type', 'photo');
             $comments = $narrative->commentSuggestion->where('type', 'comment');
             $suggestions = $narrative->commentSuggestion->where('type', 'suggestion');
 
@@ -100,7 +100,6 @@ class SubmittedFormsController extends Controller
             $liquidation = $form->liquidation;
             $liquidationItems = $liquidation->liquidationItem;
             $proofOfPayments = $liquidation->proofOfPayment;
-
             return view('submittedForms/liquidation', compact('form', 'liquidation', 'liquidationItems', 'proofOfPayments'));
  
         }
@@ -112,7 +111,6 @@ class SubmittedFormsController extends Controller
 
         $dateTime = Carbon::now()->setTimezone('Asia/Manila')->format('m-d-y H:i');
 
-            
         $form = Form::findOrFail($form); 
 
         if(Hash::check($request->confirmPass, $user->password)) {
@@ -122,7 +120,7 @@ class SubmittedFormsController extends Controller
                     $form->currApprover = "saoHead";
                     $form->adviserFacultyId = $user->id;
                     $form->adviserIsApprove = 1;
-                    $form->adviserDateApproved = $dateTime;
+                    // $form->adviserDateApproved = $dateTime;
                     $form->save();
             
                     return redirect('submittedForms');
@@ -138,7 +136,7 @@ class SubmittedFormsController extends Controller
 
                         $form->saoFacultyId = $user->id;
                         $form->saoISApprove = 1;
-                        $form->saoDateApproved = $dateTime;
+                        // $form->saoDateApproved = $dateTime;
 
                         if($form->formType === "Narrative"){
                             $form->status = 'Approved';
@@ -157,7 +155,7 @@ class SubmittedFormsController extends Controller
                         $form->currApprover = "finance";
                         $form->acadServFacultyId = $user->id;
                         $form->acadServIsApprove = 1;
-                        $form->acadServDateApproved = $dateTime;
+                        // $form->acadServDateApproved = $dateTime;
                         $form->save();
     
                         return redirect('submittedForms');
@@ -170,7 +168,7 @@ class SubmittedFormsController extends Controller
                     $form->status = 'Approved';
                     $form->financeStaffId = $user->id;
                     $form->financeIsApprove = 1;
-                    $form->financeDateApproved = $dateTime;
+                    // $form->financeDateApproved = $dateTime;
                     $form->save();
     
                     return redirect('submittedForms');

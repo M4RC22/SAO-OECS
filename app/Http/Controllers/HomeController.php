@@ -61,7 +61,7 @@ class HomeController extends Controller
 
         }
         else{
-            return view('tabs/records');
+            return view('tabs/dashboard');
         }
     }
 

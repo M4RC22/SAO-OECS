@@ -9,6 +9,13 @@ class Participant extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'firstName',
+        'lastName',
+        'section',
+        'participatedDate',
+    ];
+
     public function narrative()
     {
         return $this->belongsTo(Narrative::class);

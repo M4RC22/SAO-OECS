@@ -125,9 +125,9 @@
             </div>
 
 
-            {{-- ----------Table: Programs Table---------- --}}
+            {{-- ----------Table: Comments Table---------- --}}
             
-            <h3 class="col-md-12">Comments/Suggestion</h3>
+            <h3 class="col-md-12">Comments</h3>
             <hr>
 
             <div id="table-wrapper" class="pre-scrollable mt-3">
@@ -135,17 +135,37 @@
                     <thead class="table-light sticky-top">
                         <tr>
                             <th scope="col">Message</th>
-                            <th scope="col">Type</th>
-                            <th scope="col" class="text-right"><a href="javascript:void(0)" class="btn btn-success" id="messageAddBtn"><i class="fas fa-plus"></i></a></th>
+                            <th scope="col" class="text-right"><a href="javascript:void(0)" class="btn btn-success" id="commentAddBtn"><i class="fas fa-plus"></i></a></th>
                         </tr>
                     </thead>
-                    <tbody id="messageItem">
+                    <tbody id="commentItems">
                         {{-- Generated Items --}}
                     </tbody>
                 </table>
             </div>
             <hr>
-            {{-- ----------End of Programs table---------- --}}
+            {{-- ----------End of Comments table---------- --}}
+
+            {{-- ----------Table: Suggestions Table---------- --}}
+            
+            <h3 class="col-md-12">Suggestions</h3>
+            <hr>
+
+            <div id="table-wrapper" class="pre-scrollable mt-3">
+                <table class="table table-hover col-md-12">
+                    <thead class="table-light sticky-top">
+                        <tr>
+                            <th scope="col">Message</th>
+                            <th scope="col" class="text-right"><a href="javascript:void(0)" class="btn btn-success" id="suggestionAddBtn"><i class="fas fa-plus"></i></a></th>
+                        </tr>
+                    </thead>
+                    <tbody id="suggestionItems">
+                        {{-- Generated Items --}}
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+            {{-- ----------End of Suggestions table---------- --}}
 
             <div class="row g-3">
                 <div class="col-md-12">

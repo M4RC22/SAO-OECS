@@ -1,9 +1,6 @@
 $(window).ready(() => {
     //--------------------------------------ACTIVITY PF----------------------------------------------
 
-
-
-
     //For dates
 
     var eventDate = $("#eventDate");
@@ -123,11 +120,9 @@ $(window).ready(() => {
         $("#liqItems").append(
             `
            <tr>
-               <td><input class="form-control" id="datebought" type="date" name="datebought[]" "${eventDate.val()};" required /></td>
-               <td><input class="form-control" id="qty" type="number" name="qty[]" required /></td>
+               <td><input class="form-control" id="dateBought" type="date" name="dateBought[]" "${eventDate.val()};" required /></td>
                <td><input type="text" class="form-control" id="particulars" name="particulars[]" required></td>
                <td><input type="number" step="0.01"class="form-control" name="amount[]" id="amount" required></td>
-               <td></td>
                <<td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
@@ -153,8 +148,8 @@ $(window).ready(() => {
             `
            <tr>
                <td><input class="form-control" id="actTitle" name="actTitle[]" required type="text"/></td>
-               <td><input class="form-control w-100" id="startDate" type="date" name="targetdate" "${eventDate.val()};" name="startDate[]" required/>
-               <td><input class="form-control w-100" id="endDate" type="date" name="targetdate" "${eventDate.val()};" name="endDate[]" required/></td>
+               <td><input class="form-control w-100" id="startDate" type="date" "${eventDate.val()};" name="startDate[]" required/>
+               <td><input class="form-control w-100" id="endDate" type="date" "${eventDate.val()};" name="endDate[]" required/></td>
                <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
@@ -169,12 +164,6 @@ $(window).ready(() => {
     });
 
     //Narrative Participants
-
-    let firstName = $("#firstName");
-    let lastName = $("#lastName");
-    let section = $("#section");
-    let participatedDate = $("#participatedDate");
-
     $("#narrativeForms").on("click", "#participantsAddBtn", function (e) {
         $("#participantsItem").append(
             `
@@ -182,44 +171,47 @@ $(window).ready(() => {
                <td><input class="form-control" id="firstName" type="text" name="firstName[]" required/></td>
                <td><input class="form-control" id="lastName" type="text" name="lastName[]" required/></td>
                <td><input class="form-control" id="section" type="text" name="section[]" required/></td>
-               <td><input class="form-control w-100" id="participatedDate" type="date" name="targetdate" "${eventDate.val()};" name="participatedDate[]" required  /></td>
+               <td><input class="form-control w-100" id="participatedDate" type="date" name="participatedDate[]" "${eventDate.val()};" required  /></td>
                <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
         );
 
-        getTotalCost();
-
         $(".removeBtn").on("click", function () {
             $(this).closest("tr").remove();
-            getTotalCost();
         });
     });
 
-    //Narrative Comments/Suggestions
-
-    let message = $("#message");
-    let type = $("#type");
-
-    $("#narrativeForms").on("click", "#messageAddBtn", function (e) {
-        $("#messageItem").append(
+    //Narrative Commnets
+    $("#narrativeForms").on("click", "#commentAddBtn", function (e) {
+        $("#commentItems").append(
             `
            <tr>
-               <td><input class="form-control" id="message" type="text" name="message[]" required/></td>
-               <td><select class="form-control" id="type" name="type" required>
-                   <option hidden>Select one</option>
-                   <option>Comment</option>
-                   <option>Suggestion</option>
-               </select></td>
+               <td><textarea class="form-control" id="comments" type="text" name="comments[]" required></textarea></td>comment
                <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
         );
-        getTotalCost();
 
         $(".removeBtn").on("click", function () {
             $(this).closest("tr").remove();
-            getTotalCost();
+        });
+    });
+
+
+    //Narrative Suggestions
+    $("#narrativeForms").on("click", "#suggestionAddBtn", function (e) {
+        $("#suggestionItems").append(
+            `
+            <tr>
+                <td><textarea class="form-control" id="suggestions" type="text" name="suggestions[]" required></textarea></td>
+                <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
+            </tr>
+            `
+        );
+
+        $(".removeBtn").on("click", function () {
+            $(this).closest("tr").remove();
         });
     });
 

@@ -9,6 +9,11 @@ class CommentSuggestion extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'message',
+        'type',
+    ];
+
     public function narrative(){
         return $this->belongsTo(Narrative::class);
     }

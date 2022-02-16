@@ -5,6 +5,28 @@
 
     <h3>Narrative Report - For Checking</h3>
 
+    @if(session()->has('errorInApproval'))
+    <script>
+        $(window).ready(() => {
+            $('#modalApprove').modal('show');
+            $("#closeModalApprove").on('click', function(){
+                $("#modalApprove").modal('hide');
+            });
+        });
+    </script>
+    @elseif(session()->has('errorInDeny'))
+    <script>
+
+        $(window).ready(() => {
+            $('#modalDeny').modal('show');
+
+            $("#closeModalDeny").on('click', function(){
+                $("#modalDeny").modal('hide');
+            });
+        });
+    </script>
+    @endif
+
     <hr style="height:3px;">
 
     <div class="container shadow p-3 mb-5 bg-#fff rounded mt-3">
@@ -39,8 +61,8 @@
                     @foreach($programs as $program)
                     <tr>
                         <td>{{$program -> activity}}</td>
-                        <td>{{$program -> startDate}}</td>
-                        <td>{{$program -> endDate}}</td>
+                        <td>{{\Carbon\Carbon::parse($program -> startDate)->format('F d, Y ')}}</td>
+                        <td>{{\Carbon\Carbon::parse($program -> endDate)->format('F d, Y ')}}</td>
                     </tr>      
                     @endforeach
                 </tbody>
@@ -85,7 +107,7 @@
             <div class="row" id="poster">
                 @foreach($posters as $poster)
                 <div class="col-4 pb-3">
-                    <img src="{{$poster -> image}}" class="w-100"> 
+                    <img src="/storage/{{$poster -> image}}" class="w-100"> 
                 </div>      
                 @endforeach
             </div>
@@ -95,7 +117,7 @@
             <div class="row" id="photos">
                 @foreach($eventImages as $image)
                 <div class="col-4 pb-3">
-                    <img src="{{$image -> image}}" class="w-100"> 
+                    <img src="/storage/{{$image -> image}}" class="w-100"> 
                 </div>      
                 @endforeach
             </div>
@@ -148,16 +170,11 @@
                 <p><b>Rating: </b>{{$narrative -> evalRating}}</p>
             </div>
 
-            {{-- ----------Button---------- --}}
                 
+            {{-- ------Approve and Deny Button------ --}}
             <div class="row">
                 <div class="col-md-12">
-                    <button type="button" class="btn btn-primary col-md-2 mt-4" onclick="window.location.href='/submittedForms/details/{{$form->id}}';">
-                        Approve
-                    </button>
-                    <button type="button" class="btn btn-danger col-md-2 mt-4" type="submit">
-                        Deny
-                    </button>
+                    @include('layouts.modal')
                 </div>
             </div>  
         </div>

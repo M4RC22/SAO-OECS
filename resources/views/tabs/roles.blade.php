@@ -43,7 +43,9 @@
                     <tr>
                     <th class="d-none d-sm-table-cell p-4 fs-5">Name</th>
                     <th class="d-none d-sm-table-cell p-4 fs-5">Position</th>
+                    @if($userPos === "President" or $userPos === "Adviser")
                     <th class="d-none d-sm-table-cell p-4 fs-5">Action</th>
+                    @endif
                     
                     </tr>
                 </thead>
@@ -52,7 +54,9 @@
                     <tr>
                     <td class="p-4 d-block d-sm-table-cell">{{$member[0]-> firstName}} {{$member[0]->lastName}}</th>
                     <td class="p-4 d-block d-sm-table-cell">{{$member[1]->position}}</td>
+                    @if($userPos === "President" or $userPos === "Adviser")
                     <td class="p-4 d-block d-sm-table-cell"><a href="" class="text-decoration-none">Remove</a></td>
+                    @endif
                     </tr>
                 @endforeach
                 </tbody>   

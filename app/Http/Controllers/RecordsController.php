@@ -10,16 +10,31 @@ use PDF;
 
 class RecordsController extends Controller
 {
-    public function index()
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    public function index(Request $request)
     {
         $user = auth()->user();
+
+        $searchTerm = $request->input('searchTerm');
+        
 
         if($user->userType === "Professor" || $user->userType === "Student" ){
             if($user->studentOrg()->exists($user->id)){
                 $orgId = $user->studentOrg()->value('organization_id');
                 $orgName = DB::table('organizations')->where('id', $orgId)->pluck('orgName');
 
-                $records = DB::table('forms')->where('orgName', $orgName)->where('status', 'Approved')->get();
+                $records = DB::table('forms')
+                                    ->where('orgName', $orgName)
+                                    ->where('status', 'Approved')
+                                    ->where('eventTitle', 'LIKE', '%' . $searchTerm . '%')
+                                    ->orWhere('orgName', 'LIKE', '%' . $searchTerm . '%')
+                                    ->orWhere('formType', 'LIKE', '%' . $searchTerm . '%')
+                                    ->get();
 
 
                 return view('tabs/records', compact('records')); 
@@ -34,26 +49,50 @@ class RecordsController extends Controller
              
                 if($userDept[0]->name === "Academic Services"){
                     if($userPos === "SAO Head"){
-                     
 
+                        $records = DB::table('forms')
+                                            ->where('saoIsApprove', true)
+                                            ->where('status', 'Approved')
+                                            ->where('status', 'Approved')
+                                            ->where('eventTitle', 'LIKE', '%' . $searchTerm . '%')
+                                            ->orWhere('orgName', 'LIKE', '%' . $searchTerm . '%')
+                                            ->orWhere('formType', 'LIKE', '%' . $searchTerm . '%')
+                                            ->get();
+                     
+                        return view('tabs/records', compact('records')); 
                     }
                     else{
+
+                        $records = DB::table('forms')
+                                            ->where('acadServIsApprove', true)
+                                            ->where('status', 'Approved')
+                                            ->where('status', 'Approved')
+                                            ->where('eventTitle', 'LIKE', '%' . $searchTerm . '%')
+                                            ->orWhere('orgName', 'LIKE', '%' . $searchTerm . '%')
+                                            ->orWhere('formType', 'LIKE', '%' . $searchTerm . '%')
+                                            ->get();
                     
-             
+                        return view('tabs/records', compact('records')); 
                     }
                 }
                 else if($userDept[0]->name === "Finance"){
-                  
 
-        
+                    $records = DB::table('forms')
+                                            ->where('financeIsApprove', true)
+                                            ->where('status', 'Approved')
+                                            ->where('status', 'Approved')
+                                            ->where('eventTitle', 'LIKE', '%' . $searchTerm . '%')
+                                            ->orWhere('orgName', 'LIKE', '%' . $searchTerm . '%')
+                                            ->orWhere('formType', 'LIKE', '%' . $searchTerm . '%')
+                                            ->get();
+                  
+                    return view('tabs/records', compact('records'));
             }
         }
     }
 
     public function downloadForm($form)
     {
-
-
 
         $form = Form::findOrFail($form);
         
@@ -109,5 +148,9 @@ class RecordsController extends Controller
     
         }
     
+    }
+
+    public function search(){
+
     }
 }

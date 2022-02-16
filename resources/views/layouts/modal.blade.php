@@ -17,7 +17,7 @@
                     <div class="header-btn">
                         <div id="div-physical">
                             <label for="confirmPass">Please Enter Your Password:</label>
-                            <input type="text" class="form-control col-md-12" id="confirmPass" name ="confirmPass">
+                            <input type="password" class="form-control col-md-12" id="confirmPass" name ="confirmPass">
                             @if(session()->has('errorInApproval'))
                                 <div class="alert alert-danger mt-2">
                                     {{ session()->get('errorInApproval') }}
@@ -50,7 +50,7 @@
                             <label for="feedback">Please give feedback:</label>
                             <textarea class="form-control col-md-12" id="feedback" name="feedback"></textarea>
                             <label for="confirmPass">Please Enter Your Password:</label>
-                            <input type="text" class="form-control col-md-12" id="confirmPass" name="confirmPass">
+                            <input type="password" class="form-control col-md-12" id="confirmPass" name="confirmPass">
                             @if(session()->has('errorInDeny'))
                                 <div class="alert alert-danger mt-2">
                                     {{ session()->get('errorInDeny') }}

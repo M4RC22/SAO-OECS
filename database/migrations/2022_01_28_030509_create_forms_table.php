@@ -22,22 +22,23 @@ class CreateFormsTable extends Migration
             $table->string('eventTitle');
             $table->string('currApprover');
             $table->string('status');
+            $table->string('remarks')->nullable();
             //Adviser
             $table->foreignId('adviserFacultyId')->nullable();
-            $table->boolean('adviserIsApprove')->defealt(0);
-            $table->dateTime('adviserDateApproved', $precision= 0)->nullable();
+            $table->boolean('adviserIsApprove')->default(0);
+            $table->dateTime('adviserDateApproved')->nullable();
             //SAO
             $table->foreignId('saoFacultyId')->nullable();
-            $table->boolean('saoIsApprove')->defealt(0);
-            $table->dateTime('saoDateApproved', $precision= 0)->nullable();
+            $table->boolean('saoIsApprove')->default(0);
+            $table->dateTime('saoDateApproved')->nullable();
             //Academic Services
             $table->foreignId('acadServFacultyId')->nullable();
-            $table->boolean('acadServIsApprove')->defealt(0);
-            $table->dateTime('acadServDateApproved', $precision= 0)->nullable();
+            $table->boolean('acadServIsApprove')->default(0);
+            $table->dateTime('acadServDateApproved')->nullable();
             //Finance
             $table->foreignId('financeStaffId')->nullable();
-            $table->boolean('financeIsApprove')->defealt(0);
-            $table->dateTime('financeDateApproved', $precision= 0)->nullable();
+            $table->boolean('financeIsApprove')->default(0);
+            $table->dateTime('financeDateApproved')->nullable();
 
             $table->timestamps();
         });

@@ -29,27 +29,41 @@ class Form extends Model
 
         static::created(function ($form){
 
-            $request = request();
+            $request = request();  
 
-        
-            $form->proposal()->create([
-                'organizer' =>  $request->organizer,
-                'targetDate' => $request->eventDate,
-                'durationVal' => $request->durationVal,
-                'durationUnit' => $request->durationUnit,
-                'venue' => $request->venue,
-                'actClassificationA' => $request->actClassificationA,
-                'actClassificationB' => $request->actClassificationB,
-                'description' => $request->description,
-                'outcome' => $request->outcome,
-                'rationale' => $request->rationale,
-                'primaryAudience' => $request->primaryAud,
-                'numPrimaryAudience' => $request->primaryNum,
-                'secondaryAudience' => $request->secondaryAud,
-                'numSecondaryAudience' => $request->secondaryNum,
-                
+            if($form->formType === 'APF'){
+                $form->proposal()->create([
+                    'organizer' =>  $request->organizer,
+                    'targetDate' => $request->eventDate,
+                    'durationVal' => $request->durationVal,
+                    'durationUnit' => $request->durationUnit,
+                    'venue' => $request->venue,
+                    'actClassificationA' => $request->actClassificationA,
+                    'actClassificationB' => $request->actClassificationB,
+                    'description' => $request->description,
+                    'outcome' => $request->outcome,
+                    'rationale' => $request->rationale,
+                    'primaryAudience' => $request->primaryAud,
+                    'numPrimaryAudience' => $request->primaryNum,
+                    'secondaryAudience' => $request->secondaryAud,
+                    'numSecondaryAudience' => $request->secondaryNum,
+                ]);
+            }else if($form->formType === 'Narrative'){
 
-            ]);
+                $form->narrative()->create([
+                    'narration' => $request->narration,
+                    'evalrating' => $request->rating,
+                    'eventDate' => $request->eventDate,              
+                 ]);
+
+            }else if($form->formType === 'Liquidation'){
+                $form->liquidation()->create([
+                    'eventDate' => $request->eventDate,
+                    'cashAdvance' => $request->cashAdvance,
+                    'cvNumber' => $request->cvNumber,
+                    'deduct' => $request->deduct
+                ]);
+            }
         });
 
     }

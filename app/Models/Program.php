@@ -9,6 +9,11 @@ class Program extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'activity',
+        'startDate',
+        'endDate',
+    ];
     public function narrative()
     {
         return $this->belongsTo(Narrative::class);

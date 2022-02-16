@@ -19,8 +19,6 @@ class CreateRequisitionsTable extends Migration
             $table->foreignId('proposal_id')->constrained();
             $table->string('type');
             $table->integer('controlNum');
-            $table->date('created_at');
-            $table->date('dateNeeded');
             $table->string('remarks');
             $table->string('chargedDepartment');
             $table->timestamps();

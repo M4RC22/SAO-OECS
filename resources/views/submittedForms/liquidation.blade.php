@@ -5,6 +5,28 @@
 
     <h3>Liquidation Form - For Checking</h3>
 
+    @if(session()->has('errorInApproval'))
+    <script>
+        $(window).ready(() => {
+            $('#modalApprove').modal('show');
+            $("#closeModalApprove").on('click', function(){
+                $("#modalApprove").modal('hide');
+            });
+        });
+    </script>
+    @elseif(session()->has('errorInDeny'))
+    <script>
+
+        $(window).ready(() => {
+            $('#modalDeny').modal('show');
+
+            $("#closeModalDeny").on('click', function(){
+                $("#modalDeny").modal('hide');
+            });
+        });
+    </script>
+    @endif
+
     <hr style="height:3px;">
 
     <div class="container shadow p-3 mb-5 bg-#fff rounded mt-3">
@@ -27,7 +49,7 @@
 
         <div class="row d-flex justify-content-between">
             <div class="col-md-5">
-                <p><b>Cash Advance:</b> &#8369;{{$liquidation -> cashAdvance}}}</p>
+                <p><b>Cash Advance:</b> &#8369;{{$liquidation -> cashAdvance}}</p>
             </div>
             <div class="col-md-5">
                 <p><b>CV Number:</b> {{$liquidation -> cvNumber}}</p>
@@ -65,7 +87,7 @@
                     <tr>
                         <td>{{\Carbon\Carbon::parse($item -> dateBought)->format('F d, Y')}}</td>
                         <td>{{$item -> particulars}}</td>
-                        <td>{{$item -> amountPerDay}}</td>
+                        <td><span>&#8369;</span>{{$item -> amountPerDay}}</td>
                     </tr>    
                     @endforeach
                 </tbody>
@@ -75,7 +97,7 @@
                         <tr>
                             <td></td>
                             <td class="text-right"><strong>Total:</strong></td>
-                            <td><span>&#8369;</span><span id="totalExpense">{{$item -> sum('amountPerDay')}}</span></td>
+                            <td><span>&#8369;</span><span id="totalExpense">{{$liquidationItems -> sum('amountPerDay') }}</span></td>
                         </tr>
                     </tfoot>
             </table>
@@ -89,18 +111,17 @@
             <div class="row" id="poster">
                 @foreach($proofOfPayments as $item)
                 <div class="col-4 pb-3">
-                    <img src="{{$item -> image}}" class="w-100"> 
+                    <img src="/storage/{{$item -> image}}" class="w-100"> 
                 </div>      
                 @endforeach 
             </div>
-
-            <button type="button" class="btn btn-primary col-md-2 mt-4" onclick="window.location.href='/submittedForms/details/{{$form->id}}';">
-                Approve
-            </button>
-            <button type="button" class="btn btn-danger col-md-2 mt-4" type="submit">
-                Deny
-            </button>
         </div>
+        {{-- ------Row 11(Approve and Deny Button)------ --}}
+        <div class="row">
+            <div class="col-md-12">
+               @include('layouts.modal')
+            </div>
+        </div> 
     </div>
 </div>
 @endsection
