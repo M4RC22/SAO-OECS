@@ -29,7 +29,7 @@ class SubmittedFormsController extends Controller
                 $orgId = $user->studentOrg()->value('organization_id');
                 $orgName = DB::table('organizations')->where('id', $orgId)->pluck('orgName');
 
-                $forms = DB::table('forms')->where('currApprover', 'adviser')->where('orgName', $orgName)->get();
+                $forms = DB::table('forms')->where('currApprover', 'adviser')->where('orgName', $orgName)->where('status', 'Pending')->get();
 
                     return view('/tabs/submittedForms', compact('forms'));
                 }
@@ -41,18 +41,18 @@ class SubmittedFormsController extends Controller
              
                 if($userDept[0]->name === "Academic Services"){
                     if($userPos === "SAO Head"){
-                        $forms = DB::table('forms')->where('currApprover', 'saoHead')->get();
+                        $forms = DB::table('forms')->where('currApprover', 'saoHead')->where('status', 'Pending')->get();
 
                         return view('/tabs/submittedForms', compact('forms'));
                     }
                     else{
-                        $forms = DB::table('forms')->where('currApprover', 'acadServ')->get();
+                        $forms = DB::table('forms')->where('currApprover', 'acadServ')->where('status', 'Pending')->get();
 
                         return view('/tabs/submittedForms', compact('forms'));
                     }
                 }
                 else if($userDept[0]->name === "Finance"){
-                    $forms = DB::table('forms')->where('currApprover', 'finance')->where('status', 'pending')->get();
+                    $forms = DB::table('forms')->where('currApprover', 'finance')->where('status', 'Pending')->get();
 
                     return view('/tabs/submittedForms', compact('forms'));
             }
@@ -109,7 +109,7 @@ class SubmittedFormsController extends Controller
 
         $user = auth()->user();
 
-        $dateTime = Carbon::now()->setTimezone('Asia/Manila')->format('m-d-y H:i');
+        $dateTime = Carbon::now()->setTimezone('Asia/Manila')->format('y-m-d H:i');
 
         $form = Form::findOrFail($form); 
 
@@ -120,7 +120,7 @@ class SubmittedFormsController extends Controller
                     $form->currApprover = "saoHead";
                     $form->adviserFacultyId = $user->id;
                     $form->adviserIsApprove = 1;
-                    // $form->adviserDateApproved = $dateTime;
+                    $form->adviserDateApproved = $dateTime;
                     $form->save();
             
                     return redirect('submittedForms');
@@ -136,9 +136,10 @@ class SubmittedFormsController extends Controller
 
                         $form->saoFacultyId = $user->id;
                         $form->saoISApprove = 1;
-                        // $form->saoDateApproved = $dateTime;
+                        $form->saoDateApproved = $dateTime;
 
                         if($form->formType === "Narrative"){
+                            dd('Im Narrative');
                             $form->status = 'Approved';
                             $form->currApprover = "saoHead";
                             $form->save();
@@ -155,7 +156,7 @@ class SubmittedFormsController extends Controller
                         $form->currApprover = "finance";
                         $form->acadServFacultyId = $user->id;
                         $form->acadServIsApprove = 1;
-                        // $form->acadServDateApproved = $dateTime;
+                        $form->acadServDateApproved = $dateTime;
                         $form->save();
     
                         return redirect('submittedForms');
@@ -168,7 +169,7 @@ class SubmittedFormsController extends Controller
                     $form->status = 'Approved';
                     $form->financeStaffId = $user->id;
                     $form->financeIsApprove = 1;
-                    // $form->financeDateApproved = $dateTime;
+                    $form->financeDateApproved = $dateTime;
                     $form->save();
     
                     return redirect('submittedForms');
@@ -184,9 +185,19 @@ class SubmittedFormsController extends Controller
     {
         $user = auth()->user();
 
+        $form = Form::findOrFail($form);
+
+        $message = $user->firstName .' '. $user->lastName. ': ' .$request->feedback;
 
        if(Hash::check($request->confirmPass, $user->password)){
-           dd("Good");
+                $form->update(
+            [
+                'status'=> "Denied",
+                'remarks'=> $message,
+            ]
+        );
+                
+            return redirect('submittedForms');
        }
        else{
 

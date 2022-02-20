@@ -18,7 +18,7 @@ class CreateRequisitionItemsTable extends Migration
             $table->foreignId('requisition_id')->constrained();
             $table->integer('quantity');
             $table->string('purpose');
-            $table->decimal('unitCost', 8, 2);
+            $table->decimal('unitCost', $precision = 8, $scale = 2);
             $table->timestamps();
         });
     }

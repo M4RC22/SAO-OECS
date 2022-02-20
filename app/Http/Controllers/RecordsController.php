@@ -22,26 +22,25 @@ class RecordsController extends Controller
 
         $searchTerm = $request->input('searchTerm');
         
-
         if($user->userType === "Professor" || $user->userType === "Student" ){
             if($user->studentOrg()->exists($user->id)){
                 $orgId = $user->studentOrg()->value('organization_id');
                 $orgName = DB::table('organizations')->where('id', $orgId)->pluck('orgName');
 
-                $records = DB::table('forms')
+                $searchRecords = DB::table('forms')
                                     ->where('orgName', $orgName)
-                                    ->where('status', 'Approved')
                                     ->where('eventTitle', 'LIKE', '%' . $searchTerm . '%')
                                     ->orWhere('orgName', 'LIKE', '%' . $searchTerm . '%')
                                     ->orWhere('formType', 'LIKE', '%' . $searchTerm . '%')
                                     ->get();
 
 
+                $records = $searchRecords->where('status', 'Approved');
+                
                 return view('tabs/records', compact('records')); 
-
-            
-                }
             }
+
+        }
             else if($user->userType === "NTP"){
                 $userPos = $user->userStaff()->value('staff.position');
                 $userDeptId = $user->userStaff()->value('staff.department_id');
@@ -50,41 +49,41 @@ class RecordsController extends Controller
                 if($userDept[0]->name === "Academic Services"){
                     if($userPos === "SAO Head"){
 
-                        $records = DB::table('forms')
+                        $searchRecords = DB::table('forms')
                                             ->where('saoIsApprove', true)
-                                            ->where('status', 'Approved')
-                                            ->where('status', 'Approved')
                                             ->where('eventTitle', 'LIKE', '%' . $searchTerm . '%')
                                             ->orWhere('orgName', 'LIKE', '%' . $searchTerm . '%')
                                             ->orWhere('formType', 'LIKE', '%' . $searchTerm . '%')
                                             ->get();
+
+                        $records = $searchRecords->where('status', 'Approved');
                      
                         return view('tabs/records', compact('records')); 
                     }
                     else{
 
-                        $records = DB::table('forms')
+                        $searchRecords = DB::table('forms')
                                             ->where('acadServIsApprove', true)
-                                            ->where('status', 'Approved')
-                                            ->where('status', 'Approved')
                                             ->where('eventTitle', 'LIKE', '%' . $searchTerm . '%')
                                             ->orWhere('orgName', 'LIKE', '%' . $searchTerm . '%')
                                             ->orWhere('formType', 'LIKE', '%' . $searchTerm . '%')
                                             ->get();
+
+                        $records = $searchRecords->where('status', 'Approved');
                     
                         return view('tabs/records', compact('records')); 
                     }
                 }
                 else if($userDept[0]->name === "Finance"){
 
-                    $records = DB::table('forms')
+                    $searchRecords = DB::table('forms')
                                             ->where('financeIsApprove', true)
-                                            ->where('status', 'Approved')
-                                            ->where('status', 'Approved')
                                             ->where('eventTitle', 'LIKE', '%' . $searchTerm . '%')
                                             ->orWhere('orgName', 'LIKE', '%' . $searchTerm . '%')
                                             ->orWhere('formType', 'LIKE', '%' . $searchTerm . '%')
                                             ->get();
+
+                    $records = $searchRecords->where('status', 'Approved');
                   
                     return view('tabs/records', compact('records'));
             }

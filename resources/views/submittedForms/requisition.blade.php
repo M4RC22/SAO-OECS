@@ -20,7 +20,7 @@
 
         <div class="form-group col-md-12 ">
             <p class="font-weight-bold">Control Number: <span class="text-break font-weight-normal">
-            {{$requisition -> controlNum}}</span></p>
+            {{$form -> controlNumber}}</span></p>
         </div>
         <div class="form-group col-md-12 ">
             <p class="font-weight-bold">Type: <span class="text-break font-weight-normal">
@@ -74,24 +74,17 @@
             </table>
         </div>
 
-            {{-- ----------Button---------- --}}
-
-            <div class="form-group col-md-12 ">
-                <p class="font-weight-bold">Remarks: <span class="text-break font-weight-normal">
-                {{$requisition -> remarks}}</span></p>
-            </div>
-                
-            <div class="row">
-                <div class="col-md-12">
-                    <button type="button" class="btn btn-primary col-md-2 mt-4" onclick="window.location.href='/submittedForms/details/{{$form->id}}';">
-                        Approve
-                    </button>
-                    <button type="button" class="btn btn-danger col-md-2 mt-4" type="submit">
-                        Deny
-                    </button>
-                </div>
-            </div>  
+        <div class="form-group col-md-12 ">
+            <p class="font-weight-bold">Remarks: <span class="text-break font-weight-normal">
+            {{$requisition -> remarks}}</span></p>
         </div>
+            
+        {{-- ------Row 11(Approve and Deny Button)------ --}}
+        <div class="row">
+            <div class="col-md-12">
+               @include('layouts.modal')
+            </div>
+        </div>   
     </div>
 </div>
 @endsection

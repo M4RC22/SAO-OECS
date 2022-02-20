@@ -4,15 +4,19 @@
    
 <div class="container">
         
-        <h3>Budget Requisition Form</h3>
+    <h3>Budget Requisition Form</h3>
 
-        <hr style="height:3px;">
+    <hr style="height:3px;">
     
     <div class="container shadow p-3 mb-5 bg-#fff rounded mt-3">
 
+    <div class="alert alert-warning" role="alert">
+        <p style="color:black;">{{$form -> remarks}}</p>
+    </div>
+
         {{-- --------- FORM ---------- --}}
     
-        <form action="{{ route('requisitionAdd') }}" id="reqForms" method="POST">
+        <form action="/RequisitionUpdate/{{ $form -> id }}" id="reqForms" method="POST">
             {{ csrf_field() }}
             
 
@@ -20,17 +24,8 @@
             <div class="row g-3">
                 <div class="form-group col-md-6">
                     <label for="eventTitle">Event Title</label>
-                    <select class="form-control  @error('eventTitle') is-invalid @enderror" name="eventTitle">
-                        <option selected disabled>Select One</option>
-                        @foreach($orgForms as $eventTitle)
-                        <option value="{{$eventTitle -> eventTitle}}">{{$eventTitle -> eventTitle}}</option>
-                        @endforeach
-                    </select>
-                    @error('eventTitle')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                    <input type="text" class="form-control" id="eventTitle" value="{{$form -> eventTitle}}" name="dateFiled" disabled>
+                    
                 </div>
 
                 <div class="form-group col-md-6">
@@ -101,12 +96,12 @@
             <div class="row g-3">
                 <div class="form-group form-floating col-md-12">
                     <label for="remarks">Remarks</label>
-                    <textarea class="form-control" id="remarks" style="height: 150px" name="remarks"></textarea>
+                    <textarea class="form-control" id="remarks" style="height: 150px" name="remarks">{{$requisition -> remarks}}</textarea>
                 </div>
 
                 <div class="form-group col-md-4">
                     <label for="chargeTo">Charge to</label>
-                    <input type="text" class="form-control @error('chargeTo') is-invalid @enderror" id="chargeTo" name="chargeTo">
+                    <input type="text" class="form-control @error('chargeTo') is-invalid @enderror" id="chargeTo" name="chargeTo" value="{{$requisition -> chargedDepartment}}">
                     @error('chargeTo')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

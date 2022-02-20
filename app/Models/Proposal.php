@@ -23,6 +23,8 @@ class Proposal extends Model
         'rationale',
         'primaryAudience',
         'numPrimaryAudience',
+        'secondaryAudience',
+        'numSecondaryAudience',
     ];
 
     public static function boot(){
@@ -82,8 +84,4 @@ class Proposal extends Model
         return $this->belongsToMany(ExternalCoorganizer::class);
     }
 
-    public function requisition()
-    {
-        return $this->hasMany(Requisition::class);
-    }
 }

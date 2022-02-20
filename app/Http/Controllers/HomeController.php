@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Organizations;
 use App\Models\User;
-
+use App\Models\Form;
+use App\Models\Proposal;
+use App\Models\LogisiticalNeed;
 class HomeController extends Controller
 {
     /**
@@ -33,8 +35,8 @@ class HomeController extends Controller
              //Get Student Organization User
             $userOrg = $user->studentOrg()->value("organizations.orgName");
             $userPos = auth()->user()->studentOrg()->value("organization_user.position");
-            $dispForm = DB::table('forms')->where('orgName', $userOrg)->where('status', 'pending')->get();
-   
+            $dispForm = DB::table('forms')->where('orgName', $userOrg)->where('status', 'Pending')->orWhere('status', 'Denied')->get();
+ 
             return view('/tabs/dashboard', compact('user', 'userOrg', 'userPos', 'dispForm'));
         }
         elseif($user->userType === "Professor"){
@@ -87,12 +89,13 @@ class HomeController extends Controller
 
     public function requisition()
     {
-        return view('/tabs/forms/requisition');
-    }
-    public function requisitionAdd(Request $request)
-    {
-        dd($request->all());
+        $user = auth()->user();
 
+        $org = $user->studentOrg;
+
+        $orgForms = DB::table('forms')->where('orgName', $org[0]->orgName)->where('formType', 'APF')->get();
+
+        return view('/tabs/forms/requisition', compact('orgForms'));
     }
 
     public function narrative()
@@ -104,16 +107,7 @@ class HomeController extends Controller
     {
         return view('/tabs/forms/liquidation');
     }
-    public function liquidationAdd(Request $request)
-    {
-        dd($request->all());
-    }
 
-
-    public function records()
-    {
-        return view('/tabs/records');
-    }
 
 
 

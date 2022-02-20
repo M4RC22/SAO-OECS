@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLogisticsTable extends Migration
+class CreateOrgApplicationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreateLogisticsTable extends Migration
      */
     public function up()
     {
-        Schema::create('logistics', function (Blueprint $table) {
+        Schema::create('org_applications', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('faculty_id');
+            $table->string('proposedOrgName');
+            $table->string('presidentEmail');
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ class CreateLogisticsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('logistics');
+        Schema::dropIfExists('org_applications');
     }
 }

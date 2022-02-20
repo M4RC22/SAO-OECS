@@ -20,6 +20,7 @@ class Form extends Model
         'saoIsApprove',
         'acadServIsApprove',
         'financeIsApprove',
+        'remarks',
     ];
 
 
@@ -48,7 +49,15 @@ class Form extends Model
                     'secondaryAudience' => $request->secondaryAud,
                     'numSecondaryAudience' => $request->secondaryNum,
                 ]);
-            }else if($form->formType === 'Narrative'){
+            }else if($form->formType === 'Requisition'){
+                $form->requisition()->create([
+                    'type' => $request->paymentMethod,
+                    'remarks' => $request->remarks,
+                    'chargedDepartment' => $request->chargeTo,
+                ]);
+            }
+                
+            else if($form->formType === 'Narrative'){
 
                 $form->narrative()->create([
                     'narration' => $request->narration,
@@ -56,7 +65,8 @@ class Form extends Model
                     'eventDate' => $request->eventDate,              
                  ]);
 
-            }else if($form->formType === 'Liquidation'){
+            }
+            else if($form->formType === 'Liquidation'){
                 $form->liquidation()->create([
                     'eventDate' => $request->eventDate,
                     'cashAdvance' => $request->cashAdvance,
@@ -64,6 +74,7 @@ class Form extends Model
                     'deduct' => $request->deduct
                 ]);
             }
+            
         });
 
     }

@@ -16,9 +16,7 @@ class CreateRequisitionsTable extends Migration
         Schema::create('requisitions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('form_id')->constrained();
-            $table->foreignId('proposal_id')->constrained();
             $table->string('type');
-            $table->integer('controlNum');
             $table->string('remarks');
             $table->string('chargedDepartment');
             $table->timestamps();

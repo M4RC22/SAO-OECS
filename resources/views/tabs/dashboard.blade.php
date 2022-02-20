@@ -14,6 +14,7 @@
                 <th scope="col">Submitted By:</th>
                 <th scope="col">Status</th>
                 <th scope="col">Current Approver</th>
+                <th scope="col">Action</th>
                 
                 </tr>
             </thead>
@@ -26,6 +27,11 @@
                     <td>Sample President</td>
                     <td>{{$item -> status}}</td>
                     <td>{{$item -> currApprover}}</td>
+                    @if($item -> status === 'Pending')
+                    <td><a href=" ">Track<a></td>
+                    @else
+                    <td><a href="/{{$item -> formType}}/{{$item -> id}}/edit">Edit<a></td>
+                    @endif
                 </tr>
                 @endforeach
             </tbody>   

@@ -28,14 +28,19 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Activity Proposal
 Route::get('/activityProposal', [App\Http\Controllers\HomeController::class, 'activityProposal'])->name('activityProposal');
 Route::post('/activityProposalAdd', [App\Http\Controllers\FormValidationController::class, 'activityProposalAdd'])->name('activityProposalAdd');
+// Route::get('/activityProposal{formId}/edit', [App\Http\Controllers\HomeController::class, 'activityProposalEdit'])->name('activityProposalEdit');
 
 //Requisition
 Route::get('/requisition', [App\Http\Controllers\HomeController::class, 'requisition'])->name('requisition');
 Route::post('/requisitionAdd', [App\Http\Controllers\FormValidationController::class, 'requisitionAdd'])->name('requisitionAdd');
+Route::get('/Requisition/{formId}/edit', [App\Http\Controllers\EditFormController::class, 'requisitionEdit'])->name('requisitionEdit');
+Route::post('/RequisitionUpdate/{formId}', [App\Http\Controllers\EditFormController::class, 'requisitionUpdate'])->name('requisitionUpdate');
 
 //Narrative
 Route::get('/narrative', [App\Http\Controllers\HomeController::class, 'narrative'])->name('narrative');
 Route::post('/narrativeAdd', [App\Http\Controllers\FormValidationController::class, 'narrativeAdd'])->name('narrativeAdd');
+Route::get('/Narrative/{formId}/edit', [App\Http\Controllers\EditFormController::class, 'narrativeEdit'])->name('narrativeEdit');
+Route::post('/NarrativeUpdate/{formId}', [App\Http\Controllers\EditFormController::class, 'narrativeUpdate'])->name('narrativeUpdate');
 
 //Liquidation
 Route::get('/liquidation', [App\Http\Controllers\HomeController::class, 'liquidation'])->name('liquidation');

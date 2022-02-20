@@ -91,9 +91,8 @@ $(window).ready(() => {
             `
            <tr>
                <td><input class="form-control" name="qty[]" type="number" id="qty"/></td>
-               <td><input class="form-control" name="particulars[]" type="text" id="particulars"></td>
+               <td><input class="form-control" name="purpose[]" type="text" id="purpose"></td>
                <td><input class="form-control" name="cost[]" type="number" step="0.01" id="cost" ></td>
-               <td></td>
                <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
