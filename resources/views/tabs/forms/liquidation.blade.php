@@ -82,7 +82,7 @@
                         <tr>
                             <th scope="col">Date Bought</th>
                             <th scope="col">Particular</th>
-                            <th scope="col">Amonunt/Day</th>
+                            <th scope="col">Amount/Day</th>
                             <th scope="col" class="text-right"><a href="javascript:void(0)" class="btn btn-success" id="liqAddBtn"><i class="fas fa-plus"></i></a></th>
                         </tr>
                     </thead>

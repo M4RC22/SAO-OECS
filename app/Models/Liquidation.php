@@ -17,6 +17,10 @@ class Liquidation extends Model
         'deduct',
     ];
 
+    protected $dates = [
+        'eventDate',
+    ];
+
     protected static function boot()
     {
         parent::boot();

@@ -36,8 +36,18 @@ class HomeController extends Controller
             $userOrg = $user->studentOrg()->value("organizations.orgName");
             $userPos = auth()->user()->studentOrg()->value("organization_user.position");
             $dispForm = DB::table('forms')->where('orgName', $userOrg)->where('status', 'Pending')->orWhere('status', 'Denied')->get();
- 
-            return view('/tabs/dashboard', compact('user', 'userOrg', 'userPos', 'dispForm'));
+
+            $creators = [];
+        
+            foreach($dispForm as $userId){
+                $creator = DB::table('users')->where('id', $userId->createdBy)->get();
+    
+                array_push($creators, $creator);
+            }
+
+
+        
+            return view('/tabs/dashboard', compact('user', 'userOrg', 'userPos', 'dispForm', 'creators'));
         }
         elseif($user->userType === "Professor"){
             if($user->studentOrg()->exists($user->id)){
@@ -108,10 +118,24 @@ class HomeController extends Controller
         return view('/tabs/forms/liquidation');
     }
 
-
-
-
     public function applicants(){
         return view('/tabs/applicants');
     }
+
+    public function apply(Request $request, $userId){
+
+            
+        
     }
+
+    public function trackForm($form)
+    {
+
+        $form = Form::findOrFail($form);
+
+       return view ('tracking/tracking', compact('form'));
+
+    }
+
+
+}

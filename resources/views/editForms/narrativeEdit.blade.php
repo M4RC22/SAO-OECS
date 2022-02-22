@@ -13,7 +13,7 @@
         <p style="color:black;">{{$form -> remarks}}</p>
     </div>
 
-        <form action="{{ route('narrativeAdd') }}" method="POST" id="narrativeForms" enctype="multipart/form-data">
+        <form action="/NarrativeUpdate/{{$form  -> id}}" method="POST" id="narrativeForms" enctype="multipart/form-data">
             {{ csrf_field() }}
 
 
@@ -27,7 +27,7 @@
 
                 <div class="form-group col-md-6">
                     <label for="eventDate" class="form-label">Event Date</label>
-                    <input type="date" class="form-control @error('eventDate') is-invalid @enderror" id="eventDate" value="<?php echo date('Y-m-d'); ?>" name="eventDate">
+                    <input type="date" class="form-control @error('eventDate') is-invalid @enderror" id="eventDate" name="eventDate" value="{{$narrative -> eventDate -> format('Y-m-d')}}">
                     @error('eventDate')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -65,7 +65,14 @@
                         </tr>
                     </thead>
                     <tbody id="programsItem">
-                        {{-- Generated Items --}}
+                    @foreach($programs as $program)
+                    <tr>
+                        <td><input class="form-control w-100" id="actTitle" type="text" value="{{$program -> activity}}" name="actTitle[]" required/></td>
+                        <td><input class="form-control w-100" id="startDate" type="date" value="{{$program->startDate->format('Y-m-d')}}" name="startDate[]" required/></td>
+                        <td><input class="form-control w-100" id="endDate" type="date" value="{{$program->endDate->format('Y-m-d')}}" name="endDate[]" required/></td>
+                        <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
+                    </tr>      
+                    @endforeach
                     </tbody>
                 </table>
             </div>
@@ -91,7 +98,15 @@
                         </tr>
                     </thead>
                     <tbody id="participantsItem">
-                        {{-- Generated items --}}
+                    @foreach($participants as $participant)
+                    <tr>
+                        <td><input class="form-control" id="firstName" type="text" name="firstName[]" value="{{$participant ->firstName}}" required/></td>
+                        <td><input class="form-control" id="lastName" type="text" name="lastName[]" value="{{$participant ->lastName}}" required/></td>
+                        <td><input class="form-control" id="section" type="text" name="section[]" value="{{$participant ->section}}" required/></td>
+                        <td><input class="form-control w-100" id="participatedDate" type="date" name="participatedDate[]" value="{{$participant ->participatedDate -> format('Y-m-d')}}" required/></td>
+                        <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
+                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
@@ -106,24 +121,31 @@
                             
                 <div class="mb-5 mt-2 py-1">
                     <p for="officialposter" class="fst-italic text-secondary" >Upload a photo. (.jpg .png)</p>
-                    <input type="file" class="form-control-sm w-100"  name="poster[]" id="poster" required=""multiple/>
+                    <input type="file" class="form-control-sm w-100"  name="poster[]" id="poster" multiple/>
                 </div>
 
                 <div class="row" id="posterHolder">
+                    @foreach($posters as $poster)
+                    <div class="col-md-3">
+                        <img src="/storage/{{$poster -> image}}" class="w-100"/>
+                        <button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button>
+                    </div>
+                    @endforeach
                                     
-                </div>
-
-                <div class="h3 form-title">
-                    Photos
                 </div>
 
                 <div class="mb-5 mt-2 py-1">
                     <p for="uploadPhotos" class="fst-italic text-secondary">Upload a photo. (.jpg .png)</p>
-                    <input class="form-control-sm w-100" type="file" name="photos[]" id="photos" required=""multiple/>
+                    <input class="form-control-sm w-100" type="file" name="photos[]" id="photos" multiple/>
                 </div>
 
                 <div class="row" id="photosHolder">
-                            
+                    @foreach($eventImages as $photo)
+                    <div class="col-md-3">
+                        <img src="/storage/{{$photo -> image}}" class="w-100"/>
+                        <button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button>
+                    </div>
+                    @endforeach      
                 </div>
             
             </div>
@@ -143,7 +165,12 @@
                         </tr>
                     </thead>
                     <tbody id="commentItems">
-                        {{-- Generated Items --}}
+                        @foreach($comments as $comment)
+                        <tr>
+                            <td><textarea class="form-control" id="comments" type="text" name="comments[]" required>{{$comment -> message}}</textarea></td>comment
+                            <td class="d-flex justify-content-center"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -164,7 +191,12 @@
                         </tr>
                     </thead>
                     <tbody id="suggestionItems">
-                        {{-- Generated Items --}}
+                       @foreach($suggestions as $suggestion)
+                       <tr>
+                            <td><textarea class="form-control" id="suggestions" type="text" name="suggestions[]" required>{{$suggestion -> message}}</textarea></td>
+                            <td class="d-flex justify-content-center"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                       @endforeach
                     </tbody>
                 </table>
             </div>
@@ -175,7 +207,7 @@
                 <div class="col-md-12">
                     <div class="form-group col-md-2">
                         <label for="rating" class="form-label">Rating</label>
-                        <input type="number" class="form-control  @error('rating') is-invalid @enderror" id="rating" min="0" max="5" name="rating">
+                        <input type="number" class="form-control  @error('rating') is-invalid @enderror" id="rating" min="0" max="5" name="rating" value="{{$narrative -> evalRating }}">
                         @error('rating')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

@@ -5,6 +5,28 @@
 
     <h3>Requisition Report - For Checking</h3>
 
+        @if(session()->has('errorInApproval'))
+    <script>
+        $(window).ready(() => {
+            $('#modalApprove').modal('show');
+            $("#closeModalApprove").on('click', function(){
+                $("#modalApprove").modal('hide');
+            });
+        });
+    </script>
+    @elseif(session()->has('errorInDeny'))
+    <script>
+
+        $(window).ready(() => {
+            $('#modalDeny').modal('show');
+
+            $("#closeModalDeny").on('click', function(){
+                $("#modalDeny").modal('hide');
+            });
+        });
+    </script>
+    @endif
+
     <hr style="height:3px;">
 
     <div class="container shadow p-3 mb-5 bg-#fff rounded mt-3">

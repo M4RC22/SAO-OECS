@@ -21,6 +21,7 @@ Auth::routes();
 
 //Dashboard
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/trackForm/{formId}', [App\Http\Controllers\HomeController::class, 'trackForm'])->name('trackForm');
 
 
 //---------------Start - Forms---------------//
@@ -28,7 +29,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Activity Proposal
 Route::get('/activityProposal', [App\Http\Controllers\HomeController::class, 'activityProposal'])->name('activityProposal');
 Route::post('/activityProposalAdd', [App\Http\Controllers\FormValidationController::class, 'activityProposalAdd'])->name('activityProposalAdd');
-// Route::get('/activityProposal{formId}/edit', [App\Http\Controllers\HomeController::class, 'activityProposalEdit'])->name('activityProposalEdit');
+Route::get('/APF/{formId}/edit', [App\Http\Controllers\EditFormController::class, 'apfEdit'])->name('apfEdit');
+Route::post('/APFUpdate/{formId}', [App\Http\Controllers\EditFormController::class, 'apfUpdate'])->name('apfUpdate');
 
 //Requisition
 Route::get('/requisition', [App\Http\Controllers\HomeController::class, 'requisition'])->name('requisition');
@@ -45,6 +47,8 @@ Route::post('/NarrativeUpdate/{formId}', [App\Http\Controllers\EditFormControlle
 //Liquidation
 Route::get('/liquidation', [App\Http\Controllers\HomeController::class, 'liquidation'])->name('liquidation');
 Route::post('/liquidationAdd', [App\Http\Controllers\FormValidationController::class, 'liquidationAdd'])->name('liquidationAdd');
+Route::get('/Liquidation/{formId}/edit', [App\Http\Controllers\EditFormController::class, 'liquidationEdit'])->name('liquidationEdit');
+Route::post('/LiquidationUpdate/{formId}', [App\Http\Controllers\EditFormController::class, 'liquidationUpdate'])->name('liquidationUpdate');
 
 
 //---------------End - Forms---------------//
@@ -52,24 +56,24 @@ Route::post('/liquidationAdd', [App\Http\Controllers\FormValidationController::c
 //Submitted Forms
 Route::get('/submittedForms', [App\Http\Controllers\SubmittedFormsController::class, 'index'])->name('submittedForms');
 
-
-
 //Roles
 Route::get('/roles', [App\Http\Controllers\RolesController::class, 'index'])->name('roles');
+Route::post('/assignPosition', [App\Http\Controllers\RolesController::class, 'assignPosition'])->name('assignPosition');
+Route::get('/removeMember/{id}', [App\Http\Controllers\RolesController::class, 'removeMember'])->name('removeMember');
+
 
 //Applicants
 Route::get('/applicants', [App\Http\Controllers\HomeController::class, 'applicants'])->name('applicants');
 
 //Applications
 Route::get('/applications', [App\Http\Controllers\HomeController::class, 'applications'])->name('applications');
+Route::post('/apply/{userId}', [App\Http\Controllers\HomeController::class, 'apply'])->name('apply');
 
 
 
 //---------------Start - Submitted Forms---------------//
 
-//APF
 Route::get('/submittedForms/details/{formId}/si/Kenneth/Lang/Pogi/Sa/bHuOnG/w0rlD', [App\Http\Controllers\SubmittedFormsController::class,'show'])->name('apf');   
-
 
 //Forms Approve and Deny
 Route::get('/submittedForms/details/{formId}/approve', [App\Http\Controllers\SubmittedFormsController::class,'approve'])->name('approve');
@@ -92,7 +96,5 @@ Route::get('/records/downloadForm/{formId}', [App\Http\Controllers\RecordsContro
 
 
 //---------------End - Generate Forms---------------//
-
-
 
 Route::post('/search', [App\Http\Controllers\RecordsController::class, 'activityProposalAdd'])->name('search');

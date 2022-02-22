@@ -187,7 +187,7 @@ $(window).ready(() => {
             `
            <tr>
                <td><textarea class="form-control" id="comments" type="text" name="comments[]" required></textarea></td>comment
-               <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
+               <td class="d-flex justify-content-center"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
         );

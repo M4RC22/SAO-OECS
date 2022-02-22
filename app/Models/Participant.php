@@ -16,6 +16,10 @@ class Participant extends Model
         'participatedDate',
     ];
 
+    protected $dates = [
+            'participatedDate',
+    ];
+
     public function narrative()
     {
         return $this->belongsTo(Narrative::class);

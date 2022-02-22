@@ -46,6 +46,7 @@
 
                 <div class="form-group col-md-6">
                     <label for="dateNeeded" class="form-label">Date Needed</label>
+                    {{-- Add Date Needed --}}
                     <input type="date" class="form-control @error('dateNeeded') is-invalid @enderror" id="dateNeeded" name="dateNeeded">
                     @error('dateNeeded')
                         <span class="invalid-feedback" role="alert">
@@ -58,8 +59,8 @@
                     <label for="paymentMethod">Payment</label>
                     <select class="form-control @error('paymentMethod') is-invalid @enderror" name="paymentMethod">
                         <option selected disabled>Select One</option>
-                        <option value="payment">Payment</option>
-                        <option value="purchase">Purchase</option>
+                        <option value="payment" {{$requisition -> type === 'payment' ? 'Selected' : ''}}>Payment</option>
+                        <option value="purchase"{{$requisition -> type === 'purchase' ? 'Selected' : ''}}>Purchase</option>
                     </select>
                     @error('paymentMethod')
                         <span class="invalid-feedback" role="alert">
@@ -83,7 +84,14 @@
                         </tr>
                     </thead>
                     <tbody id="reqItems">
-                            {{-- Holder --}}
+                          @foreach($requisitionItem as $item)
+                          <tr>
+                            <td><input class="form-control" name="qty[]" type="number" id="qty" value="{{$item -> quantity}}"/></td>
+                            <td><input class="form-control" name="purpose[]" type="text" id="purpose" value="{{$item -> purpose}}"></td>
+                            <td><input class="form-control" name="cost[]" type="number" step="0.01" id="cost" value="{{$item -> unitCost}}"></td>
+                            <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
+                          </tr>
+                          @endforeach
                     </tbody>
                 </table>
             </div>

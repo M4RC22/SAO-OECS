@@ -15,6 +15,11 @@ class LiquidationItem extends Model
         'amountPerDay',
     ];
 
+
+    protected $dates = [
+        'dateBought'
+    ];
+
     public function liquidation()
     {
         return $this->belongsTo(Liquidation::class);

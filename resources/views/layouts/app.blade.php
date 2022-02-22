@@ -17,6 +17,7 @@
 
     <link rel="stylesheet" href="{{URL::asset('dist/css/adminlte.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('plugins/fontawesome-free/css/all.min.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('css/progressBar.css')}}">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 <style>

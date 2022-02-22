@@ -15,6 +15,10 @@ class LogisticalNeed extends Model
             'venue',
     ];
 
+    protected $dates = [
+        'dateNeeded',
+    ];
+
     public function proposal()
     {
         return $this->belongsTo(Proposal::class);

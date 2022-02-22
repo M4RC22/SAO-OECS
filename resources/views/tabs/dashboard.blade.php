@@ -19,18 +19,26 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($dispForm as $item)
+                @foreach($dispForm as $key => $item)
                 <tr>
                     <td>{{$item -> eventTitle}}</th>
                     <td>{{$item -> formType}}</td>
                     <td>{{ \Carbon\Carbon::parse($item->created_at)->format('F d, Y  - h:i A') }}</td>
-                    <td>Sample President</td>
+                    <td>{{$creators[$key][0] -> firstName}} {{$creators[$key][0] -> lastName}}</td>
                     <td>{{$item -> status}}</td>
-                    <td>{{$item -> currApprover}}</td>
+                    @if($item -> currApprover === 'adviser')
+                        <td>Adviser</td>
+                    @elseif($item -> currApprover === 'saoHead')
+                        <td>SAO Head</td>
+                    @elseif($item -> currApprover === 'acadServ')
+                        <td>Academic Services</td>
+                    @elseif($item -> currApprover === 'finance')
+                        <td>Finance</td>
+                    @endif
                     @if($item -> status === 'Pending')
-                    <td><a href=" ">Track<a></td>
+                    <td><a href="/trackForm/{{$item -> id}}" class="btn btn-info" >Track</a></td>
                     @else
-                    <td><a href="/{{$item -> formType}}/{{$item -> id}}/edit">Edit<a></td>
+                    <td><a href="/{{$item -> formType}}/{{$item -> id}}/edit" class="btn btn-warning">Edit<a></td>
                     @endif
                 </tr>
                 @endforeach
@@ -96,5 +104,4 @@
 </div>
 
 @endif
-
 @endsection 

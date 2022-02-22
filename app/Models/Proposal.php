@@ -27,6 +27,10 @@ class Proposal extends Model
         'numSecondaryAudience',
     ];
 
+    protected $dates = [
+        'targetDate'
+    ];
+
     public static function boot(){
 
         parent::boot();

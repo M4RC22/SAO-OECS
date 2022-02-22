@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Form;
+use Illuminate\Support\Facades\Storage;
 use PDF;
 
 
@@ -124,7 +125,8 @@ class RecordsController extends Controller
             $requisition = $form->requisition;
             $requisitionItem = $requisition->requisitionItem;
 
-            return view('submittedForms/requisition', compact('form', 'requisition', 'requisitionItem'));
+            // $pdf = PDF::loadView('/pdf/activityProposalPDF', compact('form', 'proposal', 'logisticalNeeds', 'activities', 'externalCoorganizers','organizer', 'adviser', 'saoHead', 'acadServ', 'finance'));
+            // return $pdf->download($form->formType.' - '.$form->orgName.' - '.$form->eventTitle.'.pdf');
             
         }
         elseif ($form->formType === 'Narrative'){
@@ -136,15 +138,47 @@ class RecordsController extends Controller
             $comments = $narrative->commentSuggestion->where('type', 'comment');
             $suggestions = $narrative->commentSuggestion->where('type', 'suggestion');
 
-            return view ('submittedForms/narrative', compact('form', 'narrative', 'programs', 'participants', 'posters', 'eventImages', 'comments', 'suggestions'));
+              //Get Spefic Column in proposal table
+              $organizerId = $narrative->organizer;
+              $adviserId = $form -> adviserFacultyId;
+              $saoHeadId = $form -> saoFacultyId;
+              $acadServId = $form -> acadServFacultyId; //It should be Staff
+              $fianceId =  $form -> financeStaffId;
+  
+              //Get Details 
+              $adviser = DB::table('users')->where('id', $adviserId)->get();
+              $saoHead = DB::table('users')->where('id', $saoHeadId)->get();
+              $organizer = DB::table('users')->where('id', $organizerId)->get();
+  
+
+
+            $pdf = PDF::loadView('/pdf/narrativePDF', compact('form', 'narrative', 'programs', 'participants', 'posters', 'eventImages', 'comments', 'suggestions', 'adviser', 'saoHead'));
+            return $pdf->download($form->formType.' - '.$form->orgName.' - '.$form->eventTitle.'.pdf');
+            // Storage::put(public_path('/storage/pdf/sample.pdf'), $pdf->output());
+
         }
         else if($form->formType === 'Liquidation'){
             $liquidation = $form->liquidation;
             $liquidationItems = $liquidation->liquidationItem;
             $proofOfPayments = $liquidation->proofOfPayment;
 
-            return view('submittedForms/liquidation', compact('form', 'liquidation', 'liquidationItems', 'proofOfPayments'));
-    
+              //Get Spefic Column in proposal table
+              $organizerId = $liquidation->organizer;
+              $adviserId = $form -> adviserFacultyId;
+              $saoHeadId = $form -> saoFacultyId;
+              $acadServId = $form -> acadServFacultyId; //It should be Staff
+              $fianceId =  $form -> financeStaffId;
+  
+              //Get Details 
+              $adviser = DB::table('users')->where('id', $adviserId)->get();
+              $saoHead = DB::table('users')->where('id', $saoHeadId)->get();
+              $acadServ = DB::table('users')->where('id', $acadServId)->get();
+              $finance = DB::table('users')->where('id', $fianceId)->get();
+              $organizer = DB::table('users')->where('id', $organizerId)->get();
+  
+
+            $pdf = PDF::loadView('/pdf/liquidationPDF', compact('form', 'liquidation', 'liquidationItems', 'proofOfPayments', 'adviser', 'saoHead', 'acadServ', 'finance'));
+            return $pdf->download($form->formType.' - '.$form->orgName.' - '.$form->eventTitle.'.pdf');
         }
     
     }

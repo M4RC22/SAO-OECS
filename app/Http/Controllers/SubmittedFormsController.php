@@ -9,9 +9,18 @@ use App\Models\Form;
 use App\Models\ProposalForm\Activity;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-
 use App\Models\Proposal;
 use App\Models\LogisiticalNeed;
+use Illuminate\Support\Facades\Mail;
+
+use App\Mail\notificationEmail;
+use App\Mail\notificationLiquidationEmail;
+use App\Mail\notificationNarrativeEmail;
+
+use App\Mail\notificationForwardFormEmail;
+use App\Mail\notificationFormApprovedEmail;
+use App\Mail\approvedFormEmail;
+use App\Mail\notificationDeniedFormEmail;
 
 class SubmittedFormsController extends Controller
 {
@@ -122,6 +131,12 @@ class SubmittedFormsController extends Controller
                     $form->adviserIsApprove = 1;
                     $form->adviserDateApproved = $dateTime;
                     $form->save();
+
+                    //email to Sender and Next Approver
+                    //Sender
+                    Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationFormApprovedEmail());
+                    //Next Approver
+                    Mail::to('sampleSaoHead@outlook.com')->send(new notificationForwardFormEmail());
             
                     return redirect('submittedForms');
                 }
@@ -139,14 +154,22 @@ class SubmittedFormsController extends Controller
                         $form->saoDateApproved = $dateTime;
 
                         if($form->formType === "Narrative"){
-                            dd('Im Narrative');
                             $form->status = 'Approved';
                             $form->currApprover = "saoHead";
                             $form->save();
+
+                            //email to Sender ONLY
+                            Mail::to('mericahuerta@student.apc.edu.ph')->send(new approvedFormEmail());
                         }
                         else{
                             $form->currApprover = "acadServ";
                             $form->save();
+
+                            //email to Sender and Next Approver
+                            //Sender
+                            Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationFormApprovedEmail());
+                            //Next Approver
+                            Mail::to('sampleAcadServ@outlook.com')->send(new notificationForwardFormEmail());
                         }
 
                         return redirect('submittedForms');
@@ -158,6 +181,12 @@ class SubmittedFormsController extends Controller
                         $form->acadServIsApprove = 1;
                         $form->acadServDateApproved = $dateTime;
                         $form->save();
+
+                        //email to Sender and Next Approver
+                        //Sender
+                        Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationFormApprovedEmail());
+                        //Next Approver
+                        Mail::to('sampleFinance@outlook.com')->send(new notificationForwardFormEmail());
     
                         return redirect('submittedForms');
                         
@@ -171,6 +200,9 @@ class SubmittedFormsController extends Controller
                     $form->financeIsApprove = 1;
                     $form->financeDateApproved = $dateTime;
                     $form->save();
+
+                    //email to Sender ONLY
+                    Mail::to('mericahuerta@student.apc.edu.ph')->send(new approvedFormEmail());
     
                     return redirect('submittedForms');
                 }    
@@ -196,6 +228,8 @@ class SubmittedFormsController extends Controller
                 'remarks'=> $message,
             ]
         );
+            //email to Sender ONLY
+            Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationDeniedFormEmail());
                 
             return redirect('submittedForms');
        }

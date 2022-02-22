@@ -16,6 +16,10 @@ class Narrative extends Model
         'eventDate',
     ];
 
+    protected $dates = [
+        'eventDate',
+    ];
+
     protected static function boot()
     {
         parent::boot();

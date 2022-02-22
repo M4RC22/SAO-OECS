@@ -15,6 +15,11 @@ class Activity extends Model
         'endDate'
     ];
 
+    protected $dates = [
+        'startDate',
+        'endDate',
+    ];
+
     public function proposal()
     {
         return $this->belongsTo(Proposal::class);      

@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Models\Form;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\notificationForwardFormEmail;
+use App\Mail\notificationEmail;
+use App\Mail\notificationLiquidationEmail;
+use App\Mail\notificationNarrativeEmail;
 
 class FormValidationController extends Controller
 {
@@ -73,6 +78,11 @@ class FormValidationController extends Controller
             'financeIsApprove' => 0,
 
         ]);
+
+        //Next Approver
+        Mail::to('sampleAdviser@outlook.com')->send(new notificationForwardFormEmail($data));
+        //Sender
+        Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationEmail($data));
         
         return redirect('/home');
     }
@@ -171,47 +181,56 @@ class FormValidationController extends Controller
            
         }
 
-        public function liquidationAdd(Request $request){
+    public function liquidationAdd(Request $request){
 
-            $form = new Form;
+        $form = new Form;
 
-            $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-            $pin = mt_rand(10000, 99999)
-                . mt_rand(10000, 99999)
-                . $characters[rand(0, strlen($characters) - 1)]
-                . $characters[rand(0, strlen($characters) - 1)]
-                . $characters[rand(0, strlen($characters) - 1)]
-                . $characters[rand(0, strlen($characters) - 1)]
-                . $characters[rand(0, strlen($characters) - 1)];
-    
-            $controlNumber = str_shuffle($pin);
+        $pin = mt_rand(10000, 99999)
+            . mt_rand(10000, 99999)
+            . $characters[rand(0, strlen($characters) - 1)]
+            . $characters[rand(0, strlen($characters) - 1)]
+            . $characters[rand(0, strlen($characters) - 1)]
+            . $characters[rand(0, strlen($characters) - 1)]
+            . $characters[rand(0, strlen($characters) - 1)];
 
-            // $validate = $request->validate([
-            //     'eventTitle' => 'required|45',
-            //     'eventDate' => 'required|date|date_format:Y-m-d',
-            //     'cashAdvance' => 'required|numeric|between:0,99999.99',
-            //     'cvNumber' => 'required',
-            //     'deduct' => 'required',
-            //     'qty' => 'required|min:1',
-            //     'particulars' => 'required|max:45',
-            //     'amount' => 'required',
-            // ]);
+        $controlNumber = str_shuffle($pin);
 
-            $form->create([
-                'createdBy' => auth()->user()->id,
-                'formType' => 'Liquidation',
-                'orgName' =>  auth()->user()->studentOrg[0]->orgName,
-                'controlNumber' => $controlNumber,
-                'eventTitle' => $request['eventTitle'],
-                'currApprover' => 'adviser',
-                'status' => 'Pending',
-                'adviserIsApprove' => 0,
-                'saoIsApprove' => 0,
-                'acadServIsApprove' => 0,
-                'financeIsApprove' => 0,
-            ]);
-            
-            return redirect('/home');
-        }
+        // $validate = $request->validate([
+        //     'eventTitle' => 'required|45',
+        //     'eventDate' => 'required|date|date_format:Y-m-d',
+        //     'cashAdvance' => 'required|numeric|between:0,99999.99',
+        //     'cvNumber' => 'required',
+        //     'deduct' => 'required',
+        //     'qty' => 'required|min:1',
+        //     'particulars' => 'required|max:45',
+        //     'amount' => 'required',
+        // ]);
+
+        $form->create([
+            'createdBy' => auth()->user()->id,
+            'formType' => 'Liquidation',
+            'orgName' =>  auth()->user()->studentOrg[0]->orgName,
+            'controlNumber' => $controlNumber,
+            'eventTitle' => $request['eventTitle'],
+            'currApprover' => 'adviser',
+            'status' => 'Pending',
+            'adviserIsApprove' => 0,
+            'saoIsApprove' => 0,
+            'acadServIsApprove' => 0,
+            'financeIsApprove' => 0,
+        ]);
+
+        $data = [
+            'formType' => 'Liquidation',
+            ];
+
+        //Next Approver
+        Mail::to('sampleAdviser@outlook.com')->send(new notificationForwardFormEmail($data));
+        //Sender
+        Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationLiquidationEmail($data));
+        
+        return redirect('/home');
+    }
 }

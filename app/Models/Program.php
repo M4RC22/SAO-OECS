@@ -14,6 +14,12 @@ class Program extends Model
         'startDate',
         'endDate',
     ];
+
+    protected $dates = [
+        'startDate',
+        'endDate',
+    ];
+        
     public function narrative()
     {
         return $this->belongsTo(Narrative::class);
