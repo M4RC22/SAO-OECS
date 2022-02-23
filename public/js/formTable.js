@@ -44,9 +44,9 @@ $(window).ready(() => {
         $("#programmeItems").append(
             `
            <tr>
-               <td><input class="form-control" id="programme" type="text" name="programme[]"/></td>
-               <td><input type="date" class="form-control" id="progStartDate" value="${eventDate.val()};" name="progStartDate[]" ></td>
-               <td><input type="date" class="form-control" id="progEndDate" value="${eventDate.val()};" name="progEndDate[]"></td>
+               <td><input class="form-control" id="programme" type="text" name="programme[]" required></td>
+               <td><input type="date" class="form-control" id="progStartDate" value="${eventDate.val()};" name="progStartDate[]" required></td>
+               <td><input type="date" class="form-control" id="progEndDate" value="${eventDate.val()};" name="progEndDate[]" required></td>
                <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
@@ -64,7 +64,7 @@ $(window).ready(() => {
 
     $("#apfForms").on("click", "#apfLogisticsAddBtn", function (e) {
         $("#logisticsItems").append(
-        `
+            `
         <tr>
             <td><input type="text" class="form-control" id="service" name="service[]" required/></td>
             <td><input type="date" class="form-control" id="dateNeeded" name="dateNeeded[]" required/></td>
@@ -90,9 +90,10 @@ $(window).ready(() => {
         $("#reqItems").append(
             `
            <tr>
-               <td><input class="form-control" name="qty[]" type="number" id="qty"/></td>
-               <td><input class="form-control" name="purpose[]" type="text" id="purpose"></td>
-               <td><input class="form-control" name="cost[]" type="number" step="0.01" id="cost" ></td>
+               <td><input class="form-control" name="qty[]" type="number" id="qty" required></td>
+               <td><input class="form-control" name="purpose[]" type="text" id="purpose" required></td>
+               <td><input class="form-control" name="cost[]" type="number" step="0.01" id="cost" required ></td>
+               <td></td>
                <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
@@ -122,6 +123,8 @@ $(window).ready(() => {
                <td><input class="form-control" id="dateBought" type="date" name="dateBought[]" "${eventDate.val()};" required /></td>
                <td><input type="text" class="form-control" id="particulars" name="particulars[]" required></td>
                <td><input type="number" step="0.01"class="form-control" name="amount[]" id="amount" required></td>
+               <td></td>
+               <td></td>
                <<td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
@@ -197,7 +200,6 @@ $(window).ready(() => {
         });
     });
 
-
     //Narrative Suggestions
     $("#narrativeForms").on("click", "#suggestionAddBtn", function (e) {
         $("#suggestionItems").append(
@@ -250,5 +252,4 @@ $(window).ready(() => {
         }
         return totalCost;
     }
-
 });
