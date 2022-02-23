@@ -1,30 +1,27 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
-
     <h3>Narrative Report</h3>
-
     <hr style="height:3px;">
 
     <div class="container shadow p-3 mb-5 bg-#fff rounded mt-3">
 
-        <form action="{{ route('narrativeAdd') }}" method="POST" id="narrativeForms">
+        <form action="{{ route('narrativeAdd') }}" method="POST" id="narrativeForms" enctype="multipart/form-data">
             {{ csrf_field() }}
 
 
             {{-- ----------R1---------- --}}
-            {{-- Event --}}
             <div class="row g-3">
 
-                {{-- <div class="form-group col-md-3">
+                <div class="form-group col-md-6">
                     <label for="eventTitle">Event Title</label>
-                    <select class="form-control" name="chargeTo">
-                        @foreach($eventTitle as $event)
-                        <option>{{$event[0] -> eventName}}</option>
-                        @endforeach 
-                    </select>
-                </div> --}}
+                    <input type="text" class="form-control @error('eventTitle') is-invalid @enderror" id="eventTitle" name="eventTitle"/>
+                    @error('eventTitle')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
 
                 <div class="form-group col-md-6">
                     <label for="eventDate" class="form-label">Event Date</label>
@@ -48,13 +45,10 @@
                     @enderror
                 </div>
             </div>
-
-
             {{-- ----------Table: Programs Table---------- --}}
             
             <h3 class="col-md-12">Programs</h3>
             <hr>
-
             <div id="table-wrapper" class="pre-scrollable mt-3">
                 <table class="table table-hover col-md-12">
                     <thead class="table-light sticky-top">
@@ -72,14 +66,11 @@
             </div>
             <hr>
             {{-- ----------End of Programs table---------- --}}
-
             
-
             {{-- ----------Table: Participants Table---------- --}}
             
             <h3 class="col-md-12">Participants</h3>
             <hr>
-
             <div id="table-wrapper" class="pre-scrollable mt-3">
                 <table class="table table-hover col-md-12">
                     <thead class="table-light sticky-top">
@@ -98,20 +89,19 @@
             </div>
             <hr>
             {{-- ----------End of Participants table---------- --}}
-
             {{-- ----------IMAGE SECTION---------- --}}
             <div class="d-block col-md-12">
                 <div class="h3 form-title mt-5">
                     Official Poster
                 </div>
-                            
+
                 <div class="mb-5 mt-2 py-1">
-                    <p for="officialposter" class="fst-italic text-secondary">Upload a photo. (.jpg .png)</p>
-                    <input class="form-control-sm w-100" id="officialPoster" type="file" onchange="image_selectPoster()" multiple/>
+                    <p for="officialposter" class="fst-italic text-secondary" >Upload a photo. (.jpg .png)</p>
+                    <input type="file" class="form-control-sm w-100"  name="poster[]" id="poster" required=""multiple/>
                 </div>
 
-                <div class="row" id="poster">
-                                    
+                <div class="row" id="posterHolder">
+
                 </div>
 
                 <div class="h3 form-title">
@@ -120,19 +110,19 @@
 
                 <div class="mb-5 mt-2 py-1">
                     <p for="uploadPhotos" class="fst-italic text-secondary">Upload a photo. (.jpg .png)</p>
-                    <input class="form-control-sm w-100" id="uploadPhotos" type="file" onchange="image_selectPhotos()" multiple/>
+                    <input class="form-control-sm w-100" type="file" name="photos[]" id="photos" required=""multiple/>
                 </div>
 
-                <div class="row" id="photos">
-                            
+                <div class="row" id="photosHolder">
+
                 </div>
-            
+
             </div>
 
 
-            {{-- ----------Table: Programs Table---------- --}}
-            
-            <h3 class="col-md-12">Comments/Suggestion</h3>
+            {{-- ----------Table: Comments Table---------- --}}
+
+            <h3 class="col-md-12">Comments</h3>
             <hr>
 
             <div id="table-wrapper" class="pre-scrollable mt-3">
@@ -140,17 +130,37 @@
                     <thead class="table-light sticky-top">
                         <tr>
                             <th scope="col">Message</th>
-                            <th scope="col">Type</th>
-                            <th scope="col" class="text-right"><a href="javascript:void(0)" class="btn btn-success" id="messageAddBtn"><i class="fas fa-plus"></i></a></th>
+                            <th scope="col" class="text-right"><a href="javascript:void(0)" class="btn btn-success" id="commentAddBtn"><i class="fas fa-plus"></i></a></th>
                         </tr>
                     </thead>
-                    <tbody id="messageItem">
+                    <tbody id="commentItems">
                         {{-- Generated Items --}}
                     </tbody>
                 </table>
             </div>
             <hr>
-            {{-- ----------End of Programs table---------- --}}
+            {{-- ----------End of Comments table---------- --}}
+
+            {{-- ----------Table: Suggestions Table---------- --}}
+
+            <h3 class="col-md-12">Suggestions</h3>
+            <hr>
+
+            <div id="table-wrapper" class="pre-scrollable mt-3">
+                <table class="table table-hover col-md-12">
+                    <thead class="table-light sticky-top">
+                        <tr>
+                            <th scope="col">Message</th>
+                            <th scope="col" class="text-right"><a href="javascript:void(0)" class="btn btn-success" id="suggestionAddBtn"><i class="fas fa-plus"></i></a></th>
+                        </tr>
+                    </thead>
+                    <tbody id="suggestionItems">
+                        {{-- Generated Items --}}
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+            {{-- ----------End of Suggestions table---------- --}}
 
             <div class="row g-3">
                 <div class="col-md-12">
@@ -173,6 +183,4 @@
         </form>
     </div>
 </div>
-
-
 @endsection

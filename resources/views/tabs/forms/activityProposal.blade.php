@@ -28,13 +28,14 @@
 
                 <div class="form-group col-md-3 ">
                     <div class="row g-3">
-                        <label for="durationVal" class="form-label col-md-12">Duration of Event</label>
-                        <input type="number" class="form-control col-md-5 @error('durationVal') is-invalid @enderror" id="durationVal" min="0" name="durationVal">
-                    {{-- Days Weeks or Months --}}
-                    <select class="form-control col-md-7  @error('durationVal') is-invalid @enderror" id="durationUnit" name="durationUnit">
-                        <option value="days">Days</option>
-                        <option value="weeks">Weeks</option>
-                        <option value="months">Months</option>
+
+                       <label for="durationVal" class="form-label col-md-12">Duration of Event</label>
+                    <input type="number" class="form-control col-md-5 @error('durationVal') is-invalid @enderror"  id="durationVal" min="0" name="durationVal">
+                    <select class="form-control col-md-7 @error('durationVal') is-invalid @enderror" id="durationUnit" name="durationUnit">
+                        <option value="day(s)">Day(s)</option>
+                        <option value="week(s)">Week(s)</option>
+                        <option value="month(s)">Month(s)</option>
+
                         </select>
                         @error('durationVal')
                         <span class="invalid-feedback" role="alert">
@@ -56,12 +57,12 @@
 
             {{-- ----------R2---------- --}}
 
-                <div class="form-group col-md-4">
-                    <label for="eventTitle" class="form-label">Event Title</label>
-                    <input type="text" class="form-control @error('eventTitle') is-invalid @enderror" id="eventTitle" name="eventTitle" value="{{ old('eventTitle') }}">
-                    @error('eventTitle')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+            <div class="form-group col-md-4">
+                <label for="eventTitle" class="form-label">Event Title</label>
+                <input type="text" class="form-control @error('eventTitle') is-invalid @enderror" id="eventTitle" name="eventTitle"  >
+                @error('eventTitle')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
                         </span>
                     @enderror
                 </div>
@@ -71,15 +72,6 @@
                     <input type="text" class="form-control" id="orgName" name="orgName" value="{{$org[0] -> orgName}}" disabled/>
                 </div>
 
-                <div class="form-group col md-4">
-                    <label for="dateSubmitted" class="form-label">Date Submitted</label>
-                    <input type="date" class="form-control @error('dateSubmitted') is-invalid @enderror" id="dateSubmitted" value="<?php echo date('Y-m-d'); ?>" name="dateSubmitted">
-                    @error('dateSubmitted')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
 
                 {{-- ----------R3---------- --}}
 
@@ -88,7 +80,7 @@
                     <select class="form-control @error('organizer') is-invalid @enderror" id="organizer" name="organizer">
                         <option selected disabled>Select one</option>
                         @foreach($orgMembers as $member)
-                        <option>{{$member[0] -> firstName}} {{$member[0] -> lastName}}</option>
+                        <option value="{{$member[0] -> id}}">{{$member[0] -> firstName}} {{$member[0] -> lastName}}</option>
                         @endforeach
                     </select>
                     @error('organizer')
@@ -144,7 +136,7 @@
                     </div>
 
                     <div class="form-group col-md-4 ml-3">
-                        <label for="actClassificationA">Activity Classification</label>
+                        <label for="actClassificationA">Activity Location</label>
                             <select class="form-control @error('actClassificationA') is-invalid @enderror" name="actClassificationA">
                                 <option selected disabled>Select Here</option>
                                 <option value="In-Campus">In-Campus</option>
