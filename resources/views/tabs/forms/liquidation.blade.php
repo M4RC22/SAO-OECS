@@ -8,7 +8,7 @@
         <hr style="height:3px;">
 
     <div class="container shadow p-3 mb-5 bg-#fff rounded mt-3">
-        <form action="{{ route('liquidationAdd') }}" method="POST" id="liqForms" enctype="multipart/form-data">
+        <form action="{{ route('liquidationAdd') }}" method="POST" id="liqForms">
             {{ csrf_field() }}
 
             {{-- ----------R1---------- --}}
@@ -16,16 +16,15 @@
             {{-- Event --}}
             <div class="row g-3">
 
-            <div class="form-group col-md-4">
-                    <label for="enddate" class="form-label">Event Title</label>
-                    <input type="text" class="form-control w-100 @error('eventTitle') is-invalid @enderror" id="eventTitle" name="eventTitle">
-                    @error('eventTitle')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-    
+                {{-- <div class="form-group col-md-4">
+                    <label for="eventTitle">Event Title</label>
+                    <select class="form-control" name="chargeTo">
+                         @foreach($eventTitle as $event)
+                        <option>{{$event[0] -> eventName}}</option>
+                        @endforeach 
+                    </select>
+                </div>  --}}
+
                 
                 <div class="form-group col-md-4">
                     <label for="enddate" class="form-label">Event Date</label>
@@ -80,9 +79,11 @@
                 <table class="table table-hover col-md-12">
                     <thead class="table-light sticky-top">
                         <tr>
-                            <th scope="col">Date Bought</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Quantity</th>
                             <th scope="col">Particular</th>
-                            <th scope="col">Amount/Day</th>
+                            <th scope="col">Amonunt/Day</th>
+                            <th scope="col">Total Expense</th>
                             <th scope="col" class="text-right"><a href="javascript:void(0)" class="btn btn-success" id="liqAddBtn"><i class="fas fa-plus"></i></a></th>
                         </tr>
                     </thead>
@@ -92,13 +93,14 @@
                     <tfoot class="table-light" style="position: sticky;
                         bottom: 0;
                         z-index: 1;">
-                           {{--  <tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td class="text-right"><strong>Total:</strong></td>
                                 <td><span>&#8369;</span><span id="totalExpense">0</span></td>
                                 <td></td>
-                            </tr> 
-                            --}}
+                            </tr>
                         </tfoot>
                 </table>
             </div>
@@ -116,10 +118,10 @@
                     
                     <div class="mb-5 mt-2 py-1 col-md-12">
                         <p for="uploadReceipt" class="fst-italic text-secondary">Upload a photo. (.jpg .png)</p>
-                        <input class="form-control-sm w-100" id="receipt" type="file" name="receipt[]"multiple/>
+                        <input class="form-control-sm w-100" id="uploadReceipt" type="file" onchange="image_selectReceipt()" multiple/>
                     </div>
 
-                    <div class="row" id="receiptHolder">
+                    <div class="row" id="imageReceipt">
                     
                     </div>
                     

@@ -18,31 +18,47 @@
 
                 <div class="form-group col-md-3">
                     <label for="eventDate" class="form-label">Target Date of Event</label>
-                    <input type="date" class="form-control" id="eventDate" value="<?php echo date('Y-m-d'); ?>" name="eventDate">
+                    <input type="date" class="form-control @error('eventDate') is-invalid @enderror" id="eventDate" value="<?php echo date('Y-m-d'); ?>" name="eventDate">
+                    @error('eventDate')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
 
                 <div class="form-group col-md-3 ">
                     <div class="row g-3">
-                    <label for="durationVal" class="form-label col-md-12">Duration of Event</label>
-                    <input type="number" class="form-control col-md-5" id="durationVal" min="0" name="durationVal">
-                    <select class="form-control col-md-7" id="durationUnit" name="durationUnit">
-                        <option value="day(s)">Day(s)</option>
-                        <option value="week(s)">Week(s)</option>
-                        <option value="month(s)">Month(s)</option>
+                        <label for="durationVal" class="form-label col-md-12">Duration of Event</label>
+                        <input type="number" class="form-control col-md-5 @error('durationVal') is-invalid @enderror" id="durationVal" min="0" name="durationVal">
+                    {{-- Days Weeks or Months --}}
+                    <select class="form-control col-md-7  @error('durationVal') is-invalid @enderror" id="durationUnit" name="durationUnit">
+                        <option value="days">Days</option>
+                        <option value="weeks">Weeks</option>
+                        <option value="months">Months</option>
                         </select>
+                        @error('durationVal')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                     </div>
                 </div>
 
                 <div class="form-group col-md-6">
                     <label for="venue" class="form-label">Venue</label>
-                    <input type="text" class="form-control" id="venue" name="venue">
+                    <input type="text" class="form-control @error('venue') is-invalid @enderror" id="venue" name="venue">
+                    @error('venue')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
 
             {{-- ----------R2---------- --}}
 
                 <div class="form-group col-md-4">
                     <label for="eventTitle" class="form-label">Event Title</label>
-                    <input type="text" class="form-control @error('eventTitle') is-invalid @enderror" id="eventTitle" name="eventTitle"  >
+                    <input type="text" class="form-control @error('eventTitle') is-invalid @enderror" id="eventTitle" name="eventTitle" value="{{ old('eventTitle') }}">
                     @error('eventTitle')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -55,16 +71,31 @@
                     <input type="text" class="form-control" id="orgName" name="orgName" value="{{$org[0] -> orgName}}" disabled/>
                 </div>
 
+                <div class="form-group col md-4">
+                    <label for="dateSubmitted" class="form-label">Date Submitted</label>
+                    <input type="date" class="form-control @error('dateSubmitted') is-invalid @enderror" id="dateSubmitted" value="<?php echo date('Y-m-d'); ?>" name="dateSubmitted">
+                    @error('dateSubmitted')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+
                 {{-- ----------R3---------- --}}
 
                 <div class="form-group col-md-4 ">
                     <label for="organizerName" class="form-label">Name of Organizer</label>
-                    <select class="form-control" id="organizer" name="organizer">
+                    <select class="form-control @error('organizer') is-invalid @enderror" id="organizer" name="organizer">
                         <option selected disabled>Select one</option>
                         @foreach($orgMembers as $member)
-                        <option value="{{$member[0] -> id}}">{{$member[0] -> firstName}} {{$member[0] -> lastName}}</option>
+                        <option>{{$member[0] -> firstName}} {{$member[0] -> lastName}}</option>
                         @endforeach
                     </select>
+                    @error('organizer')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
             </div>
 
@@ -91,28 +122,39 @@
             <hr>
         {{-- ----------End of Coorg table---------- --}}
 
+
             {{-- ----------R6---------- --}}
             <div class="row g-3">
                 <div class="col-md-12 d-flex row">
                     <div class="form-group col-md-4">
                     <label for="actClassificationB">Activity Classification</label>
-                        <select class="form-control" name="actClassificationB">
-                            <option hidden>Select Here</option>
+                        <select class="form-control @error('actClassificationB') is-invalid @enderror" name="actClassificationB">
+                            <option selected disabled>Select Here</option>
                             <option value="t1">Workshop/Seminar/Training/Symposium/Forum/Team Building</option>
                             <option value="t2">Games/Competition</option>
                             <option value="t3">Social Event/Party/Celebration</option>
                             <option value="t4">CSR/Community Service</option>
                             <option value="t5">Marketing</option>
                         </select>
+                        @error('actClassificationB')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                     </div>
 
                     <div class="form-group col-md-4 ml-3">
-                        <label for="actClassificationA">Activty  Location</label>
-                            <select class="form-control" name="actClassificationA">
-                                <option hidden>Select Here</option>
+                        <label for="actClassificationA">Activity Classification</label>
+                            <select class="form-control @error('actClassificationA') is-invalid @enderror" name="actClassificationA">
+                                <option selected disabled>Select Here</option>
                                 <option value="In-Campus">In-Campus</option>
                                 <option value="Off-Campus">Off-Campus</option>
                             </select>
+                            @error('actClassificationA')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                     </div>
                 </div>
             </div>
@@ -157,7 +199,12 @@
 
                 <div class="form-group form-floating col-md-12">
                     <label for="rationale">Rationale</label>
-                    <textarea class="form-control" id="rationale" style="height: 150px" name="rationale"></textarea>
+                    <textarea class="form-control @error('rationale') is-invalid @enderror"  id="rationale" style="height: 150px" name="rationale"></textarea>
+                    @error('rationale')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
 
 
@@ -165,7 +212,12 @@
 
                 <div class="form-group form-floating col-md-12">
                     <label for="outcome">Outcome</label>
-                    <textarea class="form-control" id="outcome" style="height: 150px" name="outcome"></textarea>
+                    <textarea class="form-control @error('outcome') is-invalid @enderror" id="outcome" style="height: 150px" name="outcome"></textarea>
+                    @error('outcome')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
 
                 <p class="col-md-12 fst-italic text-secondary">*If it is classified as a Workshop/Training/Seminar/Symposium/Forum/Team Building, Learning outcomes or objectives should be written here.<br></p>
@@ -174,13 +226,23 @@
 
                 <div class="col-md-12 d-flex row">
                     <div class="form-group col-md-4 ">
-                        <label for="primaryAud" class="form-label">Primary target audience/beneficiary</label>
-                        <input type="text" class="form-control" id="primaryAud" placeholder="e.g. Students" name="primaryAud">
+                        <label for="primaryAud" class="form-label ">Primary target audience/beneficiary</label>
+                        <input type="text" class="form-control @error('primaryAud') is-invalid @enderror" id="primaryAud" placeholder="e.g. Students" name="primaryAud">
+                        @error('primaryAud')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                     </div>
 
                     <div class="form-group col-md-3 ">
                         <label for="primaryNum" class="form-label">Number of participants/beneficiary</label>
-                        <input type="number" class="form-control" id="primaryNum" name="primaryNum">
+                        <input type="number" class="form-control @error('primaryNum') is-invalid @enderror" id="primaryNum" name="primaryNum">
+                        @error('primaryNum')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                     </div>
                 </div>
 
@@ -189,12 +251,22 @@
                 <div class="col-md-12 d-flex row">
                     <div class="form-group col-md-4 ">
                         <label for="secondaryAud" class="form-label">Secondary target audience/beneficiary</label>
-                        <input type="text" class="form-control" id="secondaryAud" placeholder="e.g. Students" name="secondaryAud">
+                        <input type="text" class="form-control @error('secondaryAud') is-invalid @enderror" id="secondaryAud" placeholder="e.g. Students" name="secondaryAud">
+                        @error('secondaryAud')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                     </div>
 
                     <div class="form-group col-md-3 ">
                         <label for="secondaryNum" class="form-label">Number of participants/beneficiary</label>
-                        <input type="number" class="form-control" id="secondaryNum" name="secondaryNum">
+                        <input type="number" class="form-control @error('secondaryNum') is-invalid @enderror" id="secondaryNum" name="secondaryNum">
+                        @error('secondaryNum')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                     </div>
                 </div>
             </div>

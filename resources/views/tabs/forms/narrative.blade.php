@@ -9,17 +9,22 @@
 
     <div class="container shadow p-3 mb-5 bg-#fff rounded mt-3">
 
-        <form action="{{ route('narrativeAdd') }}" method="POST" id="narrativeForms" enctype="multipart/form-data">
+        <form action="{{ route('narrativeAdd') }}" method="POST" id="narrativeForms">
             {{ csrf_field() }}
 
 
             {{-- ----------R1---------- --}}
+            {{-- Event --}}
             <div class="row g-3">
 
-                <div class="form-group col-md-6">
+                {{-- <div class="form-group col-md-3">
                     <label for="eventTitle">Event Title</label>
-                    <input type="text" class="form-control" id="eventTitle" name="eventTitle"/>
-                </div>
+                    <select class="form-control" name="chargeTo">
+                        @foreach($eventTitle as $event)
+                        <option>{{$event[0] -> eventName}}</option>
+                        @endforeach 
+                    </select>
+                </div> --}}
 
                 <div class="form-group col-md-6">
                     <label for="eventDate" class="form-label">Event Date</label>
@@ -101,11 +106,11 @@
                 </div>
                             
                 <div class="mb-5 mt-2 py-1">
-                    <p for="officialposter" class="fst-italic text-secondary" >Upload a photo. (.jpg .png)</p>
-                    <input type="file" class="form-control-sm w-100"  name="poster[]" id="poster" required=""multiple/>
+                    <p for="officialposter" class="fst-italic text-secondary">Upload a photo. (.jpg .png)</p>
+                    <input class="form-control-sm w-100" id="officialPoster" type="file" onchange="image_selectPoster()" multiple/>
                 </div>
 
-                <div class="row" id="posterHolder">
+                <div class="row" id="poster">
                                     
                 </div>
 
@@ -115,19 +120,19 @@
 
                 <div class="mb-5 mt-2 py-1">
                     <p for="uploadPhotos" class="fst-italic text-secondary">Upload a photo. (.jpg .png)</p>
-                    <input class="form-control-sm w-100" type="file" name="photos[]" id="photos" required=""multiple/>
+                    <input class="form-control-sm w-100" id="uploadPhotos" type="file" onchange="image_selectPhotos()" multiple/>
                 </div>
 
-                <div class="row" id="photosHolder">
+                <div class="row" id="photos">
                             
                 </div>
             
             </div>
 
 
-            {{-- ----------Table: Comments Table---------- --}}
+            {{-- ----------Table: Programs Table---------- --}}
             
-            <h3 class="col-md-12">Comments</h3>
+            <h3 class="col-md-12">Comments/Suggestion</h3>
             <hr>
 
             <div id="table-wrapper" class="pre-scrollable mt-3">
@@ -135,37 +140,17 @@
                     <thead class="table-light sticky-top">
                         <tr>
                             <th scope="col">Message</th>
-                            <th scope="col" class="text-right"><a href="javascript:void(0)" class="btn btn-success" id="commentAddBtn"><i class="fas fa-plus"></i></a></th>
+                            <th scope="col">Type</th>
+                            <th scope="col" class="text-right"><a href="javascript:void(0)" class="btn btn-success" id="messageAddBtn"><i class="fas fa-plus"></i></a></th>
                         </tr>
                     </thead>
-                    <tbody id="commentItems">
+                    <tbody id="messageItem">
                         {{-- Generated Items --}}
                     </tbody>
                 </table>
             </div>
             <hr>
-            {{-- ----------End of Comments table---------- --}}
-
-            {{-- ----------Table: Suggestions Table---------- --}}
-            
-            <h3 class="col-md-12">Suggestions</h3>
-            <hr>
-
-            <div id="table-wrapper" class="pre-scrollable mt-3">
-                <table class="table table-hover col-md-12">
-                    <thead class="table-light sticky-top">
-                        <tr>
-                            <th scope="col">Message</th>
-                            <th scope="col" class="text-right"><a href="javascript:void(0)" class="btn btn-success" id="suggestionAddBtn"><i class="fas fa-plus"></i></a></th>
-                        </tr>
-                    </thead>
-                    <tbody id="suggestionItems">
-                        {{-- Generated Items --}}
-                    </tbody>
-                </table>
-            </div>
-            <hr>
-            {{-- ----------End of Suggestions table---------- --}}
+            {{-- ----------End of Programs table---------- --}}
 
             <div class="row g-3">
                 <div class="col-md-12">
