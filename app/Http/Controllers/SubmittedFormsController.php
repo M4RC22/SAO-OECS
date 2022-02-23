@@ -12,11 +12,9 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Proposal;
 use App\Models\LogisiticalNeed;
 use Illuminate\Support\Facades\Mail;
-
 use App\Mail\notificationEmail;
 use App\Mail\notificationLiquidationEmail;
 use App\Mail\notificationNarrativeEmail;
-
 use App\Mail\notificationForwardFormEmail;
 use App\Mail\notificationFormApprovedEmail;
 use App\Mail\approvedFormEmail;
@@ -37,7 +35,6 @@ class SubmittedFormsController extends Controller
             if($user->studentOrg()->exists($user->id)){
                 $orgId = $user->studentOrg()->value('organization_id');
                 $orgName = DB::table('organizations')->where('id', $orgId)->pluck('orgName');
-
                 $forms = DB::table('forms')->where('currApprover', 'adviser')->where('orgName', $orgName)->where('status', 'Pending')->get();
 
                     return view('/tabs/submittedForms', compact('forms'));

@@ -13,14 +13,14 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach($applications as $key => $item)
                 <tr>
-
-                    <td><?php ?></td>
-                    <td><?php ?></td>
-                    <td><?php ?></td>
-                    <td><a href="#">View Details</a></td>
-                
+                    <td>{{$advisers[$key][0] -> firstName}} {{$advisers[$key][0] -> lastName}}</td>
+                    <td>{{$item -> proposedOrgName}}</td>
+                    <td>{{ \Carbon\Carbon::parse($item -> created_at)->format('F d, Y  - h:i A') }}</td>
+                    <td><a href="/application/viewDetails/{{$item -> id}}">View Details</a></td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div> 

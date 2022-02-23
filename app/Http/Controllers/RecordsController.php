@@ -27,16 +27,14 @@ class RecordsController extends Controller
             if($user->studentOrg()->exists($user->id)){
                 $orgId = $user->studentOrg()->value('organization_id');
                 $orgName = DB::table('organizations')->where('id', $orgId)->pluck('orgName');
-
+                
                 $searchRecords = DB::table('forms')
-                                    ->where('orgName', $orgName)
                                     ->where('eventTitle', 'LIKE', '%' . $searchTerm . '%')
                                     ->orWhere('orgName', 'LIKE', '%' . $searchTerm . '%')
                                     ->orWhere('formType', 'LIKE', '%' . $searchTerm . '%')
                                     ->get();
 
-
-                $records = $searchRecords->where('status', 'Approved');
+                $records = $searchRecords->where('status', 'Approved')->where('orgName', $orgName[0]);
                 
                 return view('tabs/records', compact('records')); 
             }
@@ -51,26 +49,24 @@ class RecordsController extends Controller
                     if($userPos === "SAO Head"){
 
                         $searchRecords = DB::table('forms')
-                                            ->where('saoIsApprove', true)
                                             ->where('eventTitle', 'LIKE', '%' . $searchTerm . '%')
                                             ->orWhere('orgName', 'LIKE', '%' . $searchTerm . '%')
                                             ->orWhere('formType', 'LIKE', '%' . $searchTerm . '%')
                                             ->get();
 
-                        $records = $searchRecords->where('status', 'Approved');
+                        $records = $searchRecords->where('status', 'Approved')->where('saoIsApprove', true);
                      
                         return view('tabs/records', compact('records')); 
                     }
                     else{
 
                         $searchRecords = DB::table('forms')
-                                            ->where('acadServIsApprove', true)
                                             ->where('eventTitle', 'LIKE', '%' . $searchTerm . '%')
                                             ->orWhere('orgName', 'LIKE', '%' . $searchTerm . '%')
                                             ->orWhere('formType', 'LIKE', '%' . $searchTerm . '%')
                                             ->get();
 
-                        $records = $searchRecords->where('status', 'Approved');
+                        $records = $searchRecords->where('status', 'Approved')->where('acadServIsApprove', true);
                     
                         return view('tabs/records', compact('records')); 
                     }
@@ -78,13 +74,12 @@ class RecordsController extends Controller
                 else if($userDept[0]->name === "Finance"){
 
                     $searchRecords = DB::table('forms')
-                                            ->where('financeIsApprove', true)
                                             ->where('eventTitle', 'LIKE', '%' . $searchTerm . '%')
                                             ->orWhere('orgName', 'LIKE', '%' . $searchTerm . '%')
                                             ->orWhere('formType', 'LIKE', '%' . $searchTerm . '%')
                                             ->get();
 
-                    $records = $searchRecords->where('status', 'Approved');
+                    $records = $searchRecords->where('status', 'Approved')->where('financeIsApprove', true);
                   
                     return view('tabs/records', compact('records'));
             }
@@ -125,8 +120,20 @@ class RecordsController extends Controller
             $requisition = $form->requisition;
             $requisitionItem = $requisition->requisitionItem;
 
-            // $pdf = PDF::loadView('/pdf/activityProposalPDF', compact('form', 'proposal', 'logisticalNeeds', 'activities', 'externalCoorganizers','organizer', 'adviser', 'saoHead', 'acadServ', 'finance'));
-            // return $pdf->download($form->formType.' - '.$form->orgName.' - '.$form->eventTitle.'.pdf');
+            //Get Spefic Column in proposal table
+            $adviserId = $form -> adviserFacultyId;
+            $saoHeadId = $form -> saoFacultyId;
+            $acadServId = $form -> acadServFacultyId; //It should be Staff
+            $fianceId =  $form -> financeStaffId;
+
+            //Get Details 
+            $adviser = DB::table('users')->where('id', $adviserId)->get();
+            $saoHead = DB::table('users')->where('id', $saoHeadId)->get();
+            $acadServ = DB::table('users')->where('id', $acadServId)->get();
+            $finance = DB::table('users')->where('id', $fianceId)->get();
+
+            $pdf = PDF::loadView('/pdf/requisitionPDF', compact('form', 'requisition', 'requisitionItem', 'adviser', 'saoHead', 'acadServ', 'finance'));
+            return $pdf->download($form->formType.' - '.$form->orgName.' - '.$form->eventTitle.'.pdf');
             
         }
         elseif ($form->formType === 'Narrative'){
@@ -139,7 +146,6 @@ class RecordsController extends Controller
             $suggestions = $narrative->commentSuggestion->where('type', 'suggestion');
 
               //Get Spefic Column in proposal table
-              $organizerId = $narrative->organizer;
               $adviserId = $form -> adviserFacultyId;
               $saoHeadId = $form -> saoFacultyId;
               $acadServId = $form -> acadServFacultyId; //It should be Staff
@@ -147,8 +153,7 @@ class RecordsController extends Controller
   
               //Get Details 
               $adviser = DB::table('users')->where('id', $adviserId)->get();
-              $saoHead = DB::table('users')->where('id', $saoHeadId)->get();
-              $organizer = DB::table('users')->where('id', $organizerId)->get();
+              $saoHead = DB::table('users')->where('id', $saoHeadId)->get(); 
   
 
 
@@ -163,7 +168,6 @@ class RecordsController extends Controller
             $proofOfPayments = $liquidation->proofOfPayment;
 
               //Get Spefic Column in proposal table
-              $organizerId = $liquidation->organizer;
               $adviserId = $form -> adviserFacultyId;
               $saoHeadId = $form -> saoFacultyId;
               $acadServId = $form -> acadServFacultyId; //It should be Staff
@@ -174,16 +178,11 @@ class RecordsController extends Controller
               $saoHead = DB::table('users')->where('id', $saoHeadId)->get();
               $acadServ = DB::table('users')->where('id', $acadServId)->get();
               $finance = DB::table('users')->where('id', $fianceId)->get();
-              $organizer = DB::table('users')->where('id', $organizerId)->get();
   
 
             $pdf = PDF::loadView('/pdf/liquidationPDF', compact('form', 'liquidation', 'liquidationItems', 'proofOfPayments', 'adviser', 'saoHead', 'acadServ', 'finance'));
             return $pdf->download($form->formType.' - '.$form->orgName.' - '.$form->eventTitle.'.pdf');
         }
     
-    }
-
-    public function search(){
-
     }
 }

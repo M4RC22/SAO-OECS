@@ -49,59 +49,127 @@
 @else
 <div class="wrapper">
     <div class="row d-flex- justify-content-lg-around">
-        <div class="col-lg-7 shadow mb-5 bg-#fff rounded mt-3" style="border-bottom: 5px solid #e7ae41;">
+        <div class="col-lg-7 shadow bg-#fff rounded mt-3" style="border-bottom: 5px solid #e7ae41;">
             <div class="response"></div>
             <div id='calendar'></div>  
         </div>
 
         @if($user->userType === "NTP")
-        
-        <div class="col-lg-4 shadow p-3 mb-5 bg-#fff rounded mt-3" style="border-bottom: 5px solid  #e7ae41;">
+        <div class="col-lg-4 shadow p-3  bg-#fff rounded mx-1 mt-3" style="border-bottom: 5px solid  #e7ae41;">
             <h1 class="mt-3">Events <span style="color:#6C757D; font-size:18px;">Student Organizations</span></h1>
 
-            {{-- R1 --}}
+            {{-- ------Events------ --}}
+            @foreach($proposals as $key => $proposal)
             <div class="row mt-3">
                 <div class="col-sm-3 d-flex py-2 px-1 align-items-center flex-column" style="background-color:#e7ae41; border-radius:5px;">
-                    <h5 class="m-0 d-flex justify-content-center" style="font-weight: bold; color:white;">15</h5>
-                    <p class="m-0 d-flex justify-content-center" style="color:#6C757D;">Nov</p>
+                    <h5 class="m-0 d-flex justify-content-center" style="font-weight: bold; color:white;"> {{\Carbon\Carbon::parse($proposal[0] -> targetDate)->format('d')}}</h5>
+                    <p class="m-0 d-flex justify-content-center" style="color:#6C757D;">{{\Carbon\Carbon::parse($proposal[0] -> targetDate)->format('M')}}</p>
                 </div>
 
                 <div class="col-sm-9 py-2 px-3">
-                    <p class="m-0" style="font-weight: bold;">High Street Dance Competition 2021</p>
-                    <p class="m-0" style="color:#6C757D;">APC Dance Conpany</p>
+                    <p class="m-0" style="font-weight: bold;">{{$events[$key][0] -> eventTitle}}</p>
+                    <p class="m-0" style="color:#6C757D;">{{$events[$key][0] -> orgName}}</p>
                 </div>
             </div>
-
-            {{-- R2 --}}
-            <div class="row mt-3">
-                <div class="col-sm-3 d-flex py-2 px-1 align-items-center flex-column" style="background-color:#e7ae41; border-radius:5px;">
-                    <h5 class="m-0 d-flex justify-content-center" style="font-weight: bold; color:white;">15</h5>
-                    <p class="m-0 d-flex justify-content-center" style="color:#6C757D;">Nov</p>
-                </div>
-
-                <div class="col-sm-9 py-2 px-3">
-                    <p class="m-0" style="font-weight: bold;">High Street Dance Competition 2021</p>
-                    <p class="m-0" style="color:#6C757D;">APC Dance Conpany</p>
-                </div>
-            </div>
-
-            {{-- R3 --}}
-            <div class="row mt-3">
-                <div class="col-sm-3 d-flex py-2 px-1 align-items-center flex-column" style="background-color:#e7ae41; border-radius:5px;">
-                    <h5 class="m-0 d-flex justify-content-center" style="font-weight: bold; color:white;">15</h5>
-                    <p class="m-0 d-flex justify-content-center" style="color:#6C757D;">Nov</p>
-                </div>
-
-                <div class="col-sm-9 py-2 px-3">
-                    <p class="m-0" style="font-weight: bold;">High Street Dance Competition 2021</p>
-                    <p class="m-0" style="color:#6C757D;">APC Dance Conpany</p>
-                </div>
-            </div>
+            @endforeach
         </div>
-        @endif
     </div>
+    {{-- ------Summary------ --}}
+    <div class="row px-4">
+        <div class="container col-md-12 shadow p-3 bg-#fff rounded mt-5" style="border-bottom: 5px solid  #e7ae41;">
+            {{-- ------Row1------ --}}
 
+            <h4 class="mb-3">Summary Reports</h4>
+               
+            <div class="row d-flex justify-content-between">
+                <div class="col-md-2">
+                    <p><b>Organization Name</b></p>
+                </div>
+                <div class="col-md-2 text-center">
+                    <p><b>Total Submitted Forms</b></p>
+                </div>
+                <div class="col-md-2 text-center">
+                    <p><b>Narrative</b> </p>
+                </div>
+                <div class="col-md-2 text-center">
+                    <p><b>Liquidation</b></p>
+                </div> 
+                <div class="col-md-2 text-center">
+                    <p><b>Pending</b> </p>
+                </div>
+                <div class="col-md-2 text-center">
+                    <p><b>Approved</b></p>
+                </div>  
+            </div>  
+            
+            @foreach($organizations as $key=> $organization)
+            <div class="row d-flex justify-content-between">
+                <div class="col-md-2">
+                    <p>{{$organization -> orgName}}</p>
+                </div>
+                <div class="col-md-2 text-center">
+                    <p>{{$submittedForms[$key]}}</p>
+                </div>
+                <div class="col-md-2 text-center">
+                    <p>{{$narrativeForms[$key]}}</p>
+                </div>
+                <div class="col-md-2 text-center">
+                    <p>{{$liquidationForms[$key]}}</p>
+                </div> 
+                <div class="col-md-2 text-center">
+                    <p>{{$pendingForms[$key]}}</p>
+                </div> 
+                <div class="col-md-2 text-center">
+                    <p style="color:#e7ae41;">{{$approvedForms[$key]}}</p>
+                </div> 
+            </div>  
+            @endforeach
+        </div>
+    </div>
+    {{-- ------Charts------ --}}
+    <div class="row">
+        <div class="container col-md-6 shadow p-3 mb-5 bg-#fff rounded mt-5" style="border-bottom: 5px solid  #e7ae41;">
+            <h4>Liquidation Reports</h4>
+            <div class="col" id="liquidationChartContainer">
+                <!-- Liquidation -->
+            </div>
+            <p><b>Approved:</b> {{$liquidationApproved}}</p>
+            <p><b>Pending:</b> {{$liquidationPending}}</p>
+        </div>
+        <div class="container col-md-5 shadow p-3 mb-5 bg-#fff rounded mt-5" style="border-bottom: 5px solid  #e7ae41;">
+            <h4>Narrative Reports</h4>
+            <div class="col" id="narrativeChartContainer">
+                <!-- Narrative -->
+            </div>
+            <p><b>Approved:</b> {{$narrativePending}}</p>
+            <p><b>Pending:</b> {{$narrativePending}}</p>
+        </div>
+    </div>
+    @endif
 </div>
+
+
+@push('js')
+        <script>
+            const liquidationChart = new Chartisan({
+                el: '#liquidationChartContainer',
+                url: "@chart('liquidation_chart')",
+                hooks: new ChartisanHooks()
+                .datasets('doughnut')
+                .pieColors(['#009900', '#e7ae41']),
+            })
+        </script>
+         <script>
+            const narrativeChart = new Chartisan({
+                el: '#narrativeChartContainer',
+                url: "@chart('narrative_chart')",
+                hooks: new ChartisanHooks()
+                .datasets('doughnut')
+                .pieColors(['#009900', '#e7ae41']),
+            })
+        </script>
+@endpush   
+
 
 @endif
 @endsection 

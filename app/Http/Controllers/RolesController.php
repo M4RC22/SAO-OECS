@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\notificationRolesAddMemberEmail;
+use App\Mail\notificationRolesRemoveEmail;
 
 class RolesController extends Controller
 {
@@ -74,7 +77,7 @@ class RolesController extends Controller
     
                     return redirect('roles');
                 }
-                else if(DB::table('organization_user')->where('position', $request->role)->exists()){
+                else if(DB::table('organization_user')->where('position', $request->position)->exists()){
 
                     return back()->with('errorRoleTaken', 'Uh-oh! '.$request->role .' Role is already taken.');
                     
@@ -82,6 +85,17 @@ class RolesController extends Controller
                 else{
                     //For Member With Position
                     $data = [['user_id' => $userCred[0]->id , 'organization_id' => $orgId, 'position' => $request->position]];
+
+                    $recipient = $request->email;
+
+                    $emailData = [
+
+                        'position' => $request->position,
+
+                    ];
+
+                    //Email of the Sender
+                    Mail::to($recipient)->send(new notificationRolesAddMemberEmail($emailData));
 
                     DB::table('organization_user')->insert($data);
 

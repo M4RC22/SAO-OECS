@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\Form;
 use App\Models\Proposal;
 use App\Models\LogisiticalNeed;
+use Carbon\Carbon;
+
 class HomeController extends Controller
 {
     /**
@@ -45,13 +47,11 @@ class HomeController extends Controller
                 array_push($creators, $creator);
             }
 
-
-        
             return view('/tabs/dashboard', compact('user', 'userOrg', 'userPos', 'dispForm', 'creators'));
         }
         elseif($user->userType === "Professor"){
             if($user->studentOrg()->exists($user->id)){
-             //Get Faculty Department
+                //Get Faculty Department
                 $userPos = $user->userFaculty()->value('faculties.position');
                 $userDeptId = $user->userFaculty()->value('faculties.department_id');
                 $userOrg = $user->studentOrg()->value("organizations.orgName");
@@ -60,7 +60,14 @@ class HomeController extends Controller
                 return view('/tabs/dashboard', compact('user', 'userPos', 'userDept', 'userOrg'));
 
             }else{
-                return view('tabs/application');
+                if(DB::table('org_applications')->where('faculty_id', $user->id)->exists()){
+                    $submitted = true;
+                    return view('tabs/application', compact('submitted'));
+                }
+                else{
+                    $submitted = false;
+                    return view('tabs/application', compact('submitted'));
+                }  
             }
         }
         elseif($user->userType === "NTP"){
@@ -69,7 +76,76 @@ class HomeController extends Controller
             $userDeptId = $user->userStaff()->value('staff.department_id');
             $userDept = DB::select('select * from departments where id = ?', [$userDeptId]);
 
-            return view('tabs/dashboard', compact('user', 'userPos', 'userDept'));
+              //Charts
+                //1.Calender
+
+                //2.Events
+
+                $proposals = [];
+                $events = [];
+
+                $getApprovedAPF = DB::table('forms')->where('status','Approved')->where('formType', 'APF')->get();
+
+                foreach($getApprovedAPF as $APF){
+                    $proposal = DB::table('proposals')->where('form_id', $APF->id)->orderBy('targetDate', 'asc')->get();
+
+                    array_push($proposals, $proposal);
+                }    
+                
+                foreach($proposals as $proposal){
+                    $approvedForm = DB::table('forms')->where('id', $proposal[0]->form_id)->get();
+
+                    array_push($events, $approvedForm);
+                }   
+
+                //3.Summary
+
+                $submittedForms = [];
+                $narrativeForms = [];
+                $liquidationForms = [];
+                $pendingForms = [];
+                $approvedForms = [];
+
+                $organizations = DB::table('organizations')->get();
+                //Total Number of submitted Forms
+                foreach($organizations as $organization)
+                {
+                    $submittedForm = DB::table('forms')->where('orgName', $organization->orgName)->count();
+                    array_push($submittedForms, $submittedForm);
+                }
+                //Total Number of Narrative Forms
+                foreach($organizations as $organization)
+                {
+                    $narrativeForm = DB::table('forms')->where('orgName', $organization->orgName)->where('formType', 'Narrative')->count();
+                    array_push($narrativeForms, $narrativeForm);
+                }
+                //Total Number of Liquidation Forms
+                foreach($organizations as $organization)
+                {
+                    $liquidationForm = DB::table('forms')->where('orgName', $organization->orgName)->where('formType', 'Liquidation')->count();
+                    array_push($liquidationForms, $liquidationForm);
+                }
+                //Total Number of Pending Forms
+                foreach($organizations as $organization)
+                {
+                    $pendingForm = DB::table('forms')->where('orgName', $organization->orgName)->where('status', 'Pending')->count();
+                    array_push($pendingForms, $pendingForm);
+                }
+                //Total Number of Approved Forms
+                foreach($organizations as $organization)
+                {
+                    $approvedForm = DB::table('forms')->where('orgName', $organization->orgName)->where('status', 'Approved')->count();
+                    array_push($approvedForms, $approvedForm);
+                }
+
+                //4.Charts
+                $liquidationApproved = DB::table('forms')->where('status', 'Approved')->where('formType', 'Liquidation')->count();
+                $liquidationPending = DB::table('forms')->where('status', 'Pending')->where('formType', 'Liquidation')->count();
+                $narrativeApprove = DB::table('forms')->where('status', 'Approved')->where('formType', 'Narrative')->count();
+                $narrativePending = DB::table('forms')->where('status', 'Pending')->where('formType', 'Narrative')->count();
+    
+         
+            return view('tabs/dashboard', compact('user', 'userPos', 'userDept', 'organizations', 'events' ,'proposals', 'submittedForms', 'narrativeForms', 'liquidationForms', 'pendingForms', 'approvedForms', 'liquidationApproved', 'liquidationPending', 'narrativeApprove', 'narrativePending'));
 
         }
         else{
@@ -118,22 +194,13 @@ class HomeController extends Controller
         return view('/tabs/forms/liquidation');
     }
 
-    public function applicants(){
-        return view('/tabs/applicants');
-    }
-
-    public function apply(Request $request, $userId){
-
-            
-        
-    }
 
     public function trackForm($form)
     {
 
         $form = Form::findOrFail($form);
 
-       return view ('tracking/tracking', compact('form'));
+       return view ('/tabs/tracking', compact('form'));
 
     }
 

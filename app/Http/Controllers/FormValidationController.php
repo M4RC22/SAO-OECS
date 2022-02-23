@@ -11,6 +11,7 @@ use App\Mail\notificationForwardFormEmail;
 use App\Mail\notificationEmail;
 use App\Mail\notificationLiquidationEmail;
 use App\Mail\notificationNarrativeEmail;
+use App\Mail\notificationRequisitionEmail;
 
 class FormValidationController extends Controller
 {
@@ -80,9 +81,9 @@ class FormValidationController extends Controller
         ]);
 
         //Next Approver
-        Mail::to('sampleAdviser@outlook.com')->send(new notificationForwardFormEmail($data));
+        Mail::to('sampleAdviser@outlook.com')->send(new notificationForwardFormEmail());
         //Sender
-        Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationEmail($data));
+        Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationEmail());
         
         return redirect('/home');
     }
@@ -132,6 +133,11 @@ class FormValidationController extends Controller
 
         ]);
 
+        //Next Approver
+        Mail::to('sampleAdviser@outlook.com')->send(new notificationForwardFormEmail());
+        //Sender
+        Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationRequisitionEmail());
+
         return redirect('/home');
     }
 
@@ -176,6 +182,12 @@ class FormValidationController extends Controller
                 'acadServIsApprove' => 0,
                 'financeIsApprove' => 0,
             ]);
+
+            //Next Approver
+
+            Mail::to('sampleAdviser@outlook.com')->send(new notificationForwardFormEmail());
+            //Sender
+            Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationNarrativeEmail());
 
             return redirect('/home');
            

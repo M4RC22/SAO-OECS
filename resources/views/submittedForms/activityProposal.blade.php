@@ -46,9 +46,7 @@
             </div>
             <div class="col-md-5">
                 <p><b>Activity Classification:</b> {{$proposal -> actClassificationB}} ({{$proposal -> actClassificationA}})</p>
-            </div>
-            
-            
+            </div> 
         </div>  
 
         {{-- ------Row2------ --}}

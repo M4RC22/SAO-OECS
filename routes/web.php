@@ -53,48 +53,56 @@ Route::post('/LiquidationUpdate/{formId}', [App\Http\Controllers\EditFormControl
 
 //---------------End - Forms---------------//
 
-//Submitted Forms
-Route::get('/submittedForms', [App\Http\Controllers\SubmittedFormsController::class, 'index'])->name('submittedForms');
 
-//Roles
+//---------------Start - Roles---------------//
+
 Route::get('/roles', [App\Http\Controllers\RolesController::class, 'index'])->name('roles');
 Route::post('/assignPosition', [App\Http\Controllers\RolesController::class, 'assignPosition'])->name('assignPosition');
 Route::get('/removeMember/{id}', [App\Http\Controllers\RolesController::class, 'removeMember'])->name('removeMember');
 
+//---------------End - Roles---------------//
+
+//---------------Start - OrgCreation---------------//
 
 //Applicants
-Route::get('/applicants', [App\Http\Controllers\HomeController::class, 'applicants'])->name('applicants');
+Route::get('/applicants', [App\Http\Controllers\OrgCreationController::class, 'applicants'])->name('applicants');
 
 //Applications
-Route::get('/applications', [App\Http\Controllers\HomeController::class, 'applications'])->name('applications');
-Route::post('/apply/{userId}', [App\Http\Controllers\HomeController::class, 'apply'])->name('apply');
+Route::post('/apply/{userId}', [App\Http\Controllers\OrgCreationController::class, 'apply'])->name('apply');
+Route::get('/application/viewDetails/{applicationId}', [App\Http\Controllers\OrgCreationController::class, 'viewDetails'])->name('viewDetails');
+Route::get('/application/approve/{applicationId}', [App\Http\Controllers\OrgCreationController::class, 'approve'])->name('approve');
+Route::post('/application/deny/{applicationId}', [App\Http\Controllers\OrgCreationController::class, 'approve'])->name('approve');
 
+
+//---------------Start - OrgCreation---------------//
 
 
 //---------------Start - Submitted Forms---------------//
 
+Route::get('/submittedForms', [App\Http\Controllers\SubmittedFormsController::class, 'index'])->name('submittedForms');
 Route::get('/submittedForms/details/{formId}/si/Kenneth/Lang/Pogi/Sa/bHuOnG/w0rlD', [App\Http\Controllers\SubmittedFormsController::class,'show'])->name('apf');   
-
 //Forms Approve and Deny
 Route::get('/submittedForms/details/{formId}/approve', [App\Http\Controllers\SubmittedFormsController::class,'approve'])->name('approve');
-
 Route::get('/submittedForms/details/{formId}/deny', [App\Http\Controllers\SubmittedFormsController::class,'deny'])->name('deny');
 
 
 //---------------End - Submitted Forms---------------//
 
 
-
-
 //---------------Start - Generate Forms---------------//
 
 //Records
 Route::get('/records', [App\Http\Controllers\RecordsController::class, 'index'])->name('records');
-
 //Generate Forms
 Route::get('/records/downloadForm/{formId}', [App\Http\Controllers\RecordsController::class, 'downloadForm'])->name('downloadForm');
 
 
 //---------------End - Generate Forms---------------//
 
-Route::post('/search', [App\Http\Controllers\RecordsController::class, 'activityProposalAdd'])->name('search');
+
+
+//---------------Start - Charts---------------//
+
+
+
+

@@ -2,7 +2,7 @@
 # You received a form.
 
 @component('mail::panel')
-There was a form that needs an approval.
+There is a form that needs an approval.
 
 <br>
 <br>
