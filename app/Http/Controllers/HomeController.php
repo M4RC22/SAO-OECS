@@ -57,7 +57,33 @@ class HomeController extends Controller
                 $userOrg = $user->studentOrg()->value("organizations.orgName");
                 $userDept = DB::select('select * from departments where id = ?', [$userDeptId]);
 
-                return view('/tabs/dashboard', compact('user', 'userPos', 'userDept', 'userOrg'));
+                //Events
+                $proposals = [];
+                $events = [];
+
+                $getApprovedAPF = DB::table('forms')->where('status','Approved')->where('formType', 'APF')->where('orgName', $userOrg)->get();
+
+                foreach($getApprovedAPF as $APF){
+                    $proposal = DB::table('proposals')->where('form_id', $APF->id)->orderBy('targetDate', 'asc')->get();
+
+                    array_push($proposals, $proposal);
+                }    
+                
+                foreach($proposals as $proposal){
+                    $approvedForm = DB::table('forms')->where('id', $proposal[0]->form_id)->get();
+
+                    array_push($events, $approvedForm);
+                }   
+
+
+                //5.Finance
+                $adviserAPF = DB::table('forms')->where('adviserFacultyId', $user->id)->where('formType', 'APF')->count();
+                $adviserRF = DB::table('forms')->where('adviserFacultyId', $user->id)->where('formType', 'Requisition')->count();
+                $adviserNR = DB::table('forms')->where('adviserFacultyId', $user->id)->where('formType', 'Narrative')->count();
+                $adviserLF = DB::table('forms')->where('adviserFacultyId', $user->id)->where('formType', 'Liquidation')->count();
+                $adviserTotal = $adviserAPF +  $adviserRF + $adviserLF + $adviserNR;
+                
+                return view('/tabs/dashboard', compact('user', 'userPos', 'userDept', 'userOrg', 'proposals', 'events', 'adviserAPF', 'adviserRF', 'adviserNR', 'adviserLF', 'adviserTotal'));
 
             }else{
                 if(DB::table('org_applications')->where('faculty_id', $user->id)->exists()){
@@ -70,11 +96,13 @@ class HomeController extends Controller
                 }  
             }
         }
-        elseif($user->userType === "NTP"){
+        elseif($user->userType === "NTP"  || $user->userType === "Professor"){
             //Get Staff Department
             $userPos = $user->userStaff()->value('staff.position');
             $userDeptId = $user->userStaff()->value('staff.department_id');
             $userDept = DB::select('select * from departments where id = ?', [$userDeptId]);
+
+            
 
               //Charts
                 //1.Calender
@@ -100,52 +128,83 @@ class HomeController extends Controller
 
                 //3.Summary
 
-                $submittedForms = [];
-                $narrativeForms = [];
-                $liquidationForms = [];
-                $pendingForms = [];
-                $approvedForms = [];
+                $orgNarrativePending = [];
+                $orgNarrativeApproved = [];
+                $orgLiquidationPending = [];
+                $orgLiquidationApproved = [];
+                $pending = [];
+                $totalSubmittedForms = [];
+                $totalApprovedForms = [];
 
                 $organizations = DB::table('organizations')->get();
-                //Total Number of submitted Forms
+             
                 foreach($organizations as $organization)
                 {
-                    $submittedForm = DB::table('forms')->where('orgName', $organization->orgName)->count();
-                    array_push($submittedForms, $submittedForm);
+                    $narrativeForm = DB::table('forms')->where('orgName', $organization->orgName)->where('formType', 'Narrative')->where('status', 'Pending')->count();
+                    array_push($orgNarrativePending, $narrativeForm);
                 }
-                //Total Number of Narrative Forms
+                //Org Narrative Approved
                 foreach($organizations as $organization)
                 {
-                    $narrativeForm = DB::table('forms')->where('orgName', $organization->orgName)->where('formType', 'Narrative')->count();
-                    array_push($narrativeForms, $narrativeForm);
+                    $narrativeForm = DB::table('forms')->where('orgName', $organization->orgName)->where('formType', 'Narrative')->where('status', 'Approved')->count();
+                    array_push($orgNarrativeApproved, $narrativeForm);
                 }
-                //Total Number of Liquidation Forms
+                //Org Liquidation Pending
                 foreach($organizations as $organization)
                 {
-                    $liquidationForm = DB::table('forms')->where('orgName', $organization->orgName)->where('formType', 'Liquidation')->count();
-                    array_push($liquidationForms, $liquidationForm);
+                    $liquidationForm = DB::table('forms')->where('orgName', $organization->orgName)->where('formType', 'Liquidation')->where('status', 'Pending')->count();
+
+                    array_push($orgLiquidationPending, $liquidationForm);
+                }
+                //Org Liquidation Approved
+                foreach($organizations as $organization)
+                {
+                    $liquidationForm = DB::table('forms')->where('orgName', $organization->orgName)->where('formType', 'Liquidation')->where('status', 'Approved')->count();
+
+                    array_push($orgLiquidationApproved, $liquidationForm);
                 }
                 //Total Number of Pending Forms
                 foreach($organizations as $organization)
                 {
                     $pendingForm = DB::table('forms')->where('orgName', $organization->orgName)->where('status', 'Pending')->count();
-                    array_push($pendingForms, $pendingForm);
+                    array_push($pending, $pendingForm);
+                }
+                //Total Number of submitted Forms
+                foreach($organizations as $organization)
+                {
+                    $submittedForm = DB::table('forms')->where('orgName', $organization->orgName)->count();
+                    array_push($totalSubmittedForms, $submittedForm);
                 }
                 //Total Number of Approved Forms
                 foreach($organizations as $organization)
                 {
                     $approvedForm = DB::table('forms')->where('orgName', $organization->orgName)->where('status', 'Approved')->count();
-                    array_push($approvedForms, $approvedForm);
+                    array_push($totalApprovedForms, $approvedForm);
                 }
 
                 //4.Charts
                 $liquidationApproved = DB::table('forms')->where('status', 'Approved')->where('formType', 'Liquidation')->count();
                 $liquidationPending = DB::table('forms')->where('status', 'Pending')->where('formType', 'Liquidation')->count();
-                $narrativeApprove = DB::table('forms')->where('status', 'Approved')->where('formType', 'Narrative')->count();
+                $narrativeApproved = DB::table('forms')->where('status', 'Approved')->where('formType', 'Narrative')->count();
                 $narrativePending = DB::table('forms')->where('status', 'Pending')->where('formType', 'Narrative')->count();
+
+
+                //5.AcadServ
+                $acadServAPF = DB::table('forms')->where('acadServIsApprove', true)->where('formType', 'APF')->count();
+                $acadServRF = DB::table('forms')->where('acadServIsApprove', true)->where('formType', 'Requisition')->count();
+                $acadServLF = DB::table('forms')->where('acadServIsApprove', true)->where('formType', 'Liquidation')->count();
+                $acadServTotal = $acadServAPF +  $acadServRF + $acadServLF;
+
+                 //5.Finance
+                 $financeAPF = DB::table('forms')->where('financeIsApprove', true)->where('formType', 'APF')->count();
+                 $financeRF = DB::table('forms')->where('financeIsApprove', true)->where('formType', 'Requisition')->count();
+                 $financeLF = DB::table('forms')->where('financeIsApprove', true)->where('formType', 'Liquidation')->count();
+                 $financeTotal = $financeAPF +  $financeRF + $financeLF;
+
+                 
+
     
-         
-            return view('tabs/dashboard', compact('user', 'userPos', 'userDept', 'organizations', 'events' ,'proposals', 'submittedForms', 'narrativeForms', 'liquidationForms', 'pendingForms', 'approvedForms', 'liquidationApproved', 'liquidationPending', 'narrativeApprove', 'narrativePending'));
+            return view('tabs/dashboard', compact('user', 'userPos', 'userDept', 'organizations', 'events' ,'proposals', 'orgNarrativePending', 'orgNarrativeApproved', 'orgLiquidationPending', 'orgLiquidationApproved', 'pending','totalSubmittedForms', 'totalApprovedForms',   'liquidationApproved', 'liquidationPending', 'narrativeApproved', 'narrativePending', 'acadServAPF', 'acadServRF', 'acadServLF', 'acadServTotal', 'financeAPF', 'financeRF', 'financeLF', 'financeTotal'));
 
         }
         else{

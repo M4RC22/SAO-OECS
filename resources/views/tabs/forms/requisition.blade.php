@@ -46,7 +46,6 @@
             </div>
 
             {{-- ----------R1---------- --}}
-
             <div class="row g-3">
 
                 <div class="form-group col-md-6">
@@ -84,12 +83,20 @@
                             <th scope="col">Quantity</th>
                             <th scope="col">Particulars/Purpose</th>
                             <th scope="col">Price</th>
-                            <th scope="col" class="text-right"><a href="javascript:void(0)" class="btn btn-success" id="reqAddBtn"><i class="fas fa-plus"></i></a></th>
+                            <th scope="col" class="text-right"><button type="button" class="btn btn-success" id="reqAddBtn"><i class="fas fa-plus"></i></button></th>
                         </tr>
                     </thead>
                     <tbody id="reqItems">
                             {{-- Holder --}}
                     </tbody>
+                    <tfoot class="table-light" style="position: sticky; bottom: 0; z-index: 1;">
+                        <tr>
+                            <td></td>
+                            <td class="text-right"><strong>Total:</strong></td>
+                            <td>&#8369;<span id="totalCost"> 0</span></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
             <hr>

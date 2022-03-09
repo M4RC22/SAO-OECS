@@ -100,8 +100,8 @@ class RecordsController extends Controller
              //Get Spefic Column in proposal table
             $organizerId = $proposal->organizer;
             $adviserId = $form -> adviserFacultyId;
-            $saoHeadId = $form -> saoFacultyId;
-            $acadServId = $form -> acadServFacultyId; //It should be Staff
+            $saoHeadId = $form -> saoStaffId;
+            $acadServId = $form -> acadServStaffId; //It should be Staff
             $fianceId =  $form -> financeStaffId;
 
             //Get Details 
@@ -122,8 +122,8 @@ class RecordsController extends Controller
 
             //Get Spefic Column in proposal table
             $adviserId = $form -> adviserFacultyId;
-            $saoHeadId = $form -> saoFacultyId;
-            $acadServId = $form -> acadServFacultyId; //It should be Staff
+            $saoHeadId = $form -> saoStaffId;
+            $acadServId = $form -> acadServStaffId; //It should be Staff
             $fianceId =  $form -> financeStaffId;
 
             //Get Details 
@@ -147,8 +147,8 @@ class RecordsController extends Controller
 
               //Get Spefic Column in proposal table
               $adviserId = $form -> adviserFacultyId;
-              $saoHeadId = $form -> saoFacultyId;
-              $acadServId = $form -> acadServFacultyId; //It should be Staff
+              $saoHeadId = $form -> saoStaffId;
+              $acadServId = $form -> acadServStaffId; //It should be Staff
               $fianceId =  $form -> financeStaffId;
   
               //Get Details 
@@ -169,8 +169,8 @@ class RecordsController extends Controller
 
               //Get Spefic Column in proposal table
               $adviserId = $form -> adviserFacultyId;
-              $saoHeadId = $form -> saoFacultyId;
-              $acadServId = $form -> acadServFacultyId; //It should be Staff
+              $saoHeadId = $form -> saoStaffId;
+              $acadServId = $form -> acadServStaffId; //It should be Staff
               $fianceId =  $form -> financeStaffId;
   
               //Get Details 

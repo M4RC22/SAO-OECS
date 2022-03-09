@@ -71,7 +71,7 @@ Route::get('/applicants', [App\Http\Controllers\OrgCreationController::class, 'a
 Route::post('/apply/{userId}', [App\Http\Controllers\OrgCreationController::class, 'apply'])->name('apply');
 Route::get('/application/viewDetails/{applicationId}', [App\Http\Controllers\OrgCreationController::class, 'viewDetails'])->name('viewDetails');
 Route::get('/application/approve/{applicationId}', [App\Http\Controllers\OrgCreationController::class, 'approve'])->name('approve');
-Route::post('/application/deny/{applicationId}', [App\Http\Controllers\OrgCreationController::class, 'approve'])->name('approve');
+Route::get('/application/deny/{applicationId}', [App\Http\Controllers\OrgCreationController::class, 'deny'])->name('deny');
 
 
 //---------------Start - OrgCreation---------------//
@@ -80,7 +80,7 @@ Route::post('/application/deny/{applicationId}', [App\Http\Controllers\OrgCreati
 //---------------Start - Submitted Forms---------------//
 
 Route::get('/submittedForms', [App\Http\Controllers\SubmittedFormsController::class, 'index'])->name('submittedForms');
-Route::get('/submittedForms/details/{formId}/si/Kenneth/Lang/Pogi/Sa/bHuOnG/w0rlD', [App\Http\Controllers\SubmittedFormsController::class,'show'])->name('apf');   
+Route::get('/submittedForms/details/{formId}', [App\Http\Controllers\SubmittedFormsController::class,'show'])->name('apf');   
 //Forms Approve and Deny
 Route::get('/submittedForms/details/{formId}/approve', [App\Http\Controllers\SubmittedFormsController::class,'approve'])->name('approve');
 Route::get('/submittedForms/details/{formId}/deny', [App\Http\Controllers\SubmittedFormsController::class,'deny'])->name('deny');

@@ -53,6 +53,7 @@ class Form extends Model
                 $form->requisition()->create([
                     'type' => $request->paymentMethod,
                     'remarks' => $request->remarks,
+                    'dateNeeded' => $request->dateNeeded,
                     'chargedDepartment' => $request->chargeTo,
                 ]);
             }

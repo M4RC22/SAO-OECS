@@ -13,7 +13,6 @@ class OrgCreationController extends Controller
 
     public function apply(Request $request, $userId){
 
-    
         if(DB::table('organizations')->where('orgName', $request->orgName)->exists()){
 
             return back()->with('errorInSubmission', 'Organization Name already exist!');
@@ -24,9 +23,10 @@ class OrgCreationController extends Controller
         $validate = $request->validate([
             'orgName' => 'required',
             'presidentEmail' => 'required|email',
+            'description' => 'required'
         ]);
 
-        $data = [['faculty_id' => $userId, 'proposedOrgName' =>$request->orgName , 'presidentEmail' => $request->presidentEmail, 'created_at' => $dateTime]];
+        $data = [['faculty_id' => $userId, 'proposedOrgName' => $request->orgName , 'presidentEmail' => $request->presidentEmail, 'description' => $request->description, 'created_at' => $dateTime]];
 
         DB::table('org_applications')->insert($data);
 
@@ -69,35 +69,31 @@ class OrgCreationController extends Controller
 
         $presidentId = DB::table('users')->where('email', $application[0]->presidentEmail)->get();
 
-      
-        if(Hash::check($request->confirmPass, $user->password)) {
 
-            $orgData = [['orgName' => $application[0]->proposedOrgName, 'created_at' => $dateTime]];
-            DB::table('organizations')->insert($orgData);
+        $orgData = [['orgName' => $application[0]->proposedOrgName, 'created_at' => $dateTime]];
+        DB::table('organizations')->insert($orgData);
 
-            $org = DB::table('organizations')->where('orgName', $application[0]->proposedOrgName)->get();
+        $org = DB::table('organizations')->where('orgName', $application[0]->proposedOrgName)->get();
 
-            $insertAdviser = [['user_id' => $application[0]->faculty_id, 'organization_id' => $org[0]->id, 'position' => 'Adviser', 'created_at' => $dateTime]];
+        $insertAdviser = [['user_id' => $application[0]->faculty_id, 'organization_id' => $org[0]->id, 'position' => 'Adviser', 'created_at' => $dateTime]];
 
-            $insertPresident = [['user_id' => $presidentId[0]->id, 'organization_id' => $org[0]->id, 'position' => 'President', 'created_at' => $dateTime]];
+        $insertPresident = [['user_id' => $presidentId[0]->id, 'organization_id' => $org[0]->id, 'position' => 'President', 'created_at' => $dateTime]];
 
-            DB::table('organization_user')->insert($insertAdviser);
+        DB::table('organization_user')->insert($insertAdviser);
 
-            DB::table('organization_user')->insert($insertPresident);
+        DB::table('organization_user')->insert($insertPresident);
 
-            DB::table('org_applications')->where('id', $application[0]->id)->delete();
+        DB::table('org_applications')->where('id', $application[0]->id)->delete();
 
-            return redirect('home');
-
-        }
-        else{
-            return back()->with('errorInApproval', 'Ooops! Your Password seems Incorrect.');
-        }
-
+        return redirect('home');
     }
 
-    public function deny($id){
-        dd($id);
+    public function deny($applicationId){
+
+        $application = DB::table('org_applications')->where('id', $applicationId)->delete();
+
+        return redirect('home');
+        
     }
 
     

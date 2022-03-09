@@ -47,7 +47,7 @@
                 <div class="form-group col-md-6">
                     <label for="dateNeeded" class="form-label">Date Needed</label>
                     {{-- Add Date Needed --}}
-                    <input type="date" class="form-control @error('dateNeeded') is-invalid @enderror" id="dateNeeded" name="dateNeeded">
+                    <input type="date" class="form-control @error('dateNeeded') is-invalid @enderror" id="dateNeeded" value="{{$requisition -> dateNeeded -> format('Y-m-d')}}" name="dateNeeded" >
                     @error('dateNeeded')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

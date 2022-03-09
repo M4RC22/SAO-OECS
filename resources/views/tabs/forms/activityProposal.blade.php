@@ -18,13 +18,13 @@
 
                 <div class="form-group col-md-3">
                     <label for="eventDate" class="form-label">Target Date of Event</label>
-                    <input type="date" class="form-control" id="eventDate" value="<?php echo date('Y-m-d'); ?>" name="eventDate">
+                    <input type="date" class="form-control" id="eventDate" value="<?php echo date('Y-m-d'); ?>" name="eventDate" required>
                 </div>
 
                 <div class="form-group col-md-3 ">
                     <div class="row g-3">
                     <label for="durationVal" class="form-label col-md-12">Duration of Event</label>
-                    <input type="number" class="form-control col-md-5" id="durationVal" min="0" name="durationVal">
+                    <input type="number" class="form-control col-md-5" id="durationVal" min="0" name="durationVal"  required>
                     <select class="form-control col-md-7" id="durationUnit" name="durationUnit">
                         <option value="day(s)">Day(s)</option>
                         <option value="week(s)">Week(s)</option>
@@ -35,14 +35,14 @@
 
                 <div class="form-group col-md-6">
                     <label for="venue" class="form-label">Venue</label>
-                    <input type="text" class="form-control" id="venue" name="venue">
+                    <input type="text" class="form-control" id="venue" name="venue" required>
                 </div>
 
             {{-- ----------R2---------- --}}
 
                 <div class="form-group col-md-4">
                     <label for="eventTitle" class="form-label">Event Title</label>
-                    <input type="text" class="form-control @error('eventTitle') is-invalid @enderror" id="eventTitle" name="eventTitle"  >
+                    <input type="text" class="form-control @error('eventTitle') is-invalid @enderror" id="eventTitle" name="eventTitle" required>
                     @error('eventTitle')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -145,7 +145,7 @@
             <div class="row g-3">
                 <div class="form-group form-floating col-md-12">
                     <label for="description">Description</label>
-                    <textarea class="form-control @error('description') is-invalid @enderror" id="description" style="height: 150px" name="description"></textarea>
+                    <textarea class="form-control @error('description') is-invalid @enderror" id="description" style="height: 150px" name="description" required></textarea>
                     @error('description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -157,7 +157,7 @@
 
                 <div class="form-group form-floating col-md-12">
                     <label for="rationale">Rationale</label>
-                    <textarea class="form-control" id="rationale" style="height: 150px" name="rationale"></textarea>
+                    <textarea class="form-control" id="rationale" style="height: 150px" name="rationale" required></textarea>
                 </div>
 
 
@@ -165,7 +165,7 @@
 
                 <div class="form-group form-floating col-md-12">
                     <label for="outcome">Outcome</label>
-                    <textarea class="form-control" id="outcome" style="height: 150px" name="outcome"></textarea>
+                    <textarea class="form-control" id="outcome" style="height: 150px" name="outcome" required></textarea>
                 </div>
 
                 <p class="col-md-12 fst-italic text-secondary">*If it is classified as a Workshop/Training/Seminar/Symposium/Forum/Team Building, Learning outcomes or objectives should be written here.<br></p>
@@ -175,12 +175,12 @@
                 <div class="col-md-12 d-flex row">
                     <div class="form-group col-md-4 ">
                         <label for="primaryAud" class="form-label">Primary target audience/beneficiary</label>
-                        <input type="text" class="form-control" id="primaryAud" placeholder="e.g. Students" name="primaryAud">
+                        <input type="text" class="form-control" id="primaryAud" placeholder="e.g. Students" name="primaryAud" required>
                     </div>
 
                     <div class="form-group col-md-3 ">
                         <label for="primaryNum" class="form-label">Number of participants/beneficiary</label>
-                        <input type="number" class="form-control" id="primaryNum" name="primaryNum">
+                        <input type="number" class="form-control" id="primaryNum" name="primaryNum" required>
                     </div>
                 </div>
 

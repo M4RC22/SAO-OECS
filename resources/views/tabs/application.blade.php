@@ -25,20 +25,25 @@
 
                 {{-- ----------R1---------- --}}
 
-                <div class="form-group col-md-5 ">
+                <div class="form-group col-md-6 ">
                     <label for="orgName" class="form-label">Organization Name</label>
                     <input type="text" class="form-control" id="orgName" name="orgName" required>
                 </div>
 
-                <div class="form-group col-md-4 ">
+                <div class="form-group col-md-6 ">
                     <label for="president" class="form-label">President</label>
                     <input type="email" class="form-control" id="presidentEmail" name="presidentEmail" required>
                     <h6 class="text-secondary">Note: *Please use APC Email.</h6>
                 </div>
 
+                <div class="form-group col-md-12 ">
+                    <label for="president" class="form-label">Organization Description</label>
+                    <textarea class="form-control" id="description" name="description" required></textarea>
+                </div>
+
                 {{-- ----------Apply Button---------- --}}
 
-                <div class="col-md-3 d-flex justify-content-around">
+                <div class="col-md-3">
                     <button type="submit" class="btn btn-success align-self-center">Apply</button>
                 </div>
             </form>

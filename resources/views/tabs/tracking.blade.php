@@ -15,7 +15,7 @@
             @elseif($form -> currApprover === 'acadServ')
             <p><b>Current Approver:</b> Academic Services</p>
             @elseif($form -> currApprover === 'finance')
-            <p><b>Current Approver:</b>Finance</p>
+            <p><b>Current Approver:</b> Finance</p>
             @endif
         </div>
         <div class="col-md-5">
@@ -23,6 +23,9 @@
         </div>
         <div class="col-md-5">
             <p><b>Status:</b> {{$form -> status}}</p>
+        </div>
+        <div class="col-md-5">
+            <p><b>Form Type: </b>{{$form -> formType}}</p>
         </div>
     </div>
 

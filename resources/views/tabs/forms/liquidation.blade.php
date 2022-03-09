@@ -89,17 +89,14 @@
                     <tbody id="liqItems">
                         {{-- Generated Items --}}
                     </tbody>
-                    <tfoot class="table-light" style="position: sticky;
-                        bottom: 0;
-                        z-index: 1;">
-                           {{--  <tr>
-                                <td></td>
-                                <td class="text-right"><strong>Total:</strong></td>
-                                <td><span>&#8369;</span><span id="totalExpense">0</span></td>
-                                <td></td>
-                            </tr> 
-                            --}}
-                        </tfoot>
+                    <tfoot class="table-light" style="position: sticky; bottom: 0; z-index: 1;">
+                        <tr>
+                            <td></td>
+                            <td class="text-right"><strong>Total:</strong></td>
+                            <td><span>&#8369;</span><span id="totalExpense">0</span></td>
+                            <td></td>
+                        </tr> 
+                    </tfoot>
                 </table>
             </div>
             <hr>

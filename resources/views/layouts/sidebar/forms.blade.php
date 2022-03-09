@@ -19,7 +19,7 @@
         <li class="nav-item ml-2">
             <a href="/activityProposal" class="nav-link">
                 <i class="fas fa-chevron-circle-right"></i></i>
-                <p class="ml-2">Activity Propsal Form</p>
+                <p class="ml-2">Activity Proposal Form</p>
             </a>
         </li>
 

@@ -12,7 +12,12 @@ class Requisition extends Model
     protected $fillable = [
         'type',
         'remarks',
+        'dateNeeded',
         'chargedDepartment',
+    ];
+
+    protected $dates = [
+        'dateNeeded'
     ];
 
 

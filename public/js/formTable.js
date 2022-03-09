@@ -1,16 +1,6 @@
 $(window).ready(() => {
     //--------------------------------------ACTIVITY PF----------------------------------------------
-
-    //For dates
-
-    var eventDate = $("#eventDate");
-
     //Activity Proposal Forms: Coorg Table
-    let coorgName = $("#coorgName");
-    let coorganizer = $("#coorganizer");
-    let coorgContactNum = $("#coorgContactNum");
-    let coorgEmail = $("#coorgEmail");
-
     $("#apfForms").on("click", "#apfCoorgAddBtn", function (e) {
         $("#coorgItems").append(
             `
@@ -34,12 +24,9 @@ $(window).ready(() => {
         });
     });
 
+    let eventDate = $("#eventDate");
+
     //Activity Proposal Forms: Activity Table
-
-    let programme = $("#programme");
-    let progStartDate = $("#progStartDate");
-    let progEndDate = $("#progEndDate");
-
     $("#apfForms").on("click", "#apfActAddBtn", function (e) {
         $("#programmeItems").append(
             `
@@ -57,11 +44,6 @@ $(window).ready(() => {
     });
 
     //Activity Proposal Forms: Logistics Table
-
-    let service = $("#service");
-    let dateNeeded = $("#dateNeeded");
-    let venue = $("#venue");
-
     $("#apfForms").on("click", "#apfLogisticsAddBtn", function (e) {
         $("#logisticsItems").append(
         `
@@ -81,48 +63,14 @@ $(window).ready(() => {
     //--------------------------------------REQUISITION----------------------------------------------
 
     //Requisitions
-
-    let qty = $("#qty");
-    let particulars = $("#particulars");
-    let cost = $("#cost");
-
     $("#reqForms").on("click", "#reqAddBtn", function (e) {
         $("#reqItems").append(
             `
            <tr>
-               <td><input class="form-control" name="qty[]" type="number" id="qty"/></td>
+               <td><input class="form-control itemQty" name="qty[]" type="number" id="qty"/></td>
                <td><input class="form-control" name="purpose[]" type="text" id="purpose"></td>
-               <td><input class="form-control" name="cost[]" type="number" step="0.01" id="cost" ></td>
-               <td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
-           </tr>
-           `
-        );
-
-        getTotalCost();
-
-        $(".removeBtn").on("click", function () {
-            $(this).closest("tr").remove();
-            getTotalCost();
-        });
-    });
-
-    //--------------------------------------lIQUIDATION----------------------------------------------
-
-    //Liquidation
-
-    let dateBought = $("#datebought");
-    let itemQty = $("#qty");
-    let items = $("#particulars");
-    let amount = $("#amount");
-
-    $("#liqForms").on("click", "#liqAddBtn", function (e) {
-        $("#liqItems").append(
-            `
-           <tr>
-               <td><input class="form-control" id="dateBought" type="date" name="dateBought[]" "${eventDate.val()};" required /></td>
-               <td><input type="text" class="form-control" id="particulars" name="particulars[]" required></td>
-               <td><input type="number" step="0.01"class="form-control" name="amount[]" id="amount" required></td>
-               <<td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
+               <td><input class="form-control itemCost" name="cost[]" type="number" step="0.01" id="cost" ></td>
+               <td class="float-right"><button class="btn removeBtn" type="button" style="color:red;"><i class="fas fa-trash"></i></button></td>
            </tr>
            `
         );
@@ -138,10 +86,6 @@ $(window).ready(() => {
     //--------------------------------------NARRATIVE----------------------------------------------
 
     //Narrative Programs
-    let actTitle = $("#actTitle");
-    let startDate = $("#startDate");
-    let endDate = $("#endDate");
-
     $("#narrativeForms").on("click", "#narrActAddBtn", function (e) {
         $("#programsItem").append(
             `
@@ -154,11 +98,9 @@ $(window).ready(() => {
            `
         );
 
-        getTotalCost();
 
         $(".removeBtn").on("click", function () {
             $(this).closest("tr").remove();
-            getTotalCost();
         });
     });
 
@@ -214,18 +156,54 @@ $(window).ready(() => {
         });
     });
 
+    //--------------------------------------lIQUIDATION----------------------------------------------
+
+    //Liquidation
+    $("#liqForms").on("click", "#liqAddBtn", function (e) {
+        $("#liqItems").append(
+            `
+           <tr>
+               <td><input class="form-control" id="dateBought" type="date" name="dateBought[]" "${eventDate.val()};" required /></td>
+               <td><input type="text" class="form-control" id="particulars" name="particulars[]" required></td>
+               <td><input type="number" step="0.01"class="form-control itemExpense" name="amount[]" id="amount" required></td>
+               <<td class="float-right"><button class="btn removeBtn" style="color:red;"><i class="fas fa-trash"></i></button></td>
+           </tr>
+           `
+        );
+
+        getTotalExpense();
+
+        $(".removeBtn").on("click", function () {
+            $(this).closest("tr").remove();
+            getTotalExpense();
+        });
+    });
+
     //--------------------------------------COMPUTE----------------------------------------------
 
     //For Requisition Form
     function getTotalCost() {
-        let items = [];
-
+        let itemCost = [];
+        let itemQty = [];
+        let total = []
+        
         $(".itemCost").each(function () {
-            if (this.textContent.length != 0) {
-                items.push(this.textContent);
+            if (!isNaN(this.value) && this.value.length != 0) {
+                itemCost.push(this.value);
             }
         });
-        $("#totalCost").html(computeTotal(items));
+
+        $(".itemQty").each(function () {
+            if(!isNaN(this.value) && this.value.length != 0) {
+                itemQty.push(this.value);
+            }
+        });
+
+        for(let i = 0; i < itemQty.length; i++){
+            total.push(itemQty[i] * itemCost[i]);
+        }
+
+        $("#totalCost").html(computeTotal(total));
     }
 
     //For Liquidation Form
@@ -233,11 +211,12 @@ $(window).ready(() => {
         let items = [];
 
         $(".itemExpense").each(function () {
-            if (this.textContent.length != 0) {
-                items.push(this.textContent);
+            if (!isNaN(this.value) && this.value.length != 0) {
+                items.push(this.value);
             }
         });
-        $("#totalExpense").html(computeTotal(itemsArray));
+
+        $("#totalExpense").html(computeTotal(items));
     }
 
     //Compute the sum of Items for requisition and liquidation table
@@ -248,6 +227,7 @@ $(window).ready(() => {
             let item = items[i] * 1;
             totalCost += item;
         }
+        
         return totalCost;
     }
 

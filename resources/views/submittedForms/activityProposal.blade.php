@@ -6,16 +6,7 @@
             
     <h3>Activity Proposal Form - For Checking</h3>
 
-    @if(session()->has('errorInApproval'))
-    <script>
-        $(window).ready(() => {
-            $('#modalApprove').modal('show');
-            $("#closeModalApprove").on('click', function(){
-                $("#modalApprove").modal('hide');
-            });
-        });
-    </script>
-    @elseif(session()->has('errorInDeny'))
+    @if(session()->has('errorInDeny'))
     <script>
 
         $(window).ready(() => {
@@ -44,9 +35,27 @@
             <div class="col-md-12">
                 <p><b>Duration of Event:</b> {{$proposal -> durationVal}} {{$proposal -> durationUnit}}</p>
             </div>
-            <div class="col-md-5">
-                <p><b>Activity Classification:</b> {{$proposal -> actClassificationB}} ({{$proposal -> actClassificationA}})</p>
-            </div> 
+            @if($proposal -> actClassificationB === 't1')
+            <div class="col-md-12">
+                <p><b>Activity Classification:</b> Workshop/Seminar/Training/Symposium/Forum/Team Building ({{$proposal -> actClassificationA}})</p>
+            </div>
+            @elseif ($proposal -> actClassificationB === 't2')
+            <div class="col-md-12">
+                <p><b>Activity Classification:</b> Games/Competition ({{$proposal -> actClassificationA}})</p>
+            </div>
+            @elseif ($proposal -> actClassificationB === 't3')
+            <div class="col-md-12">
+                <p><b>Activity Classification:</b> Social Event/Party/Celebration ({{$proposal -> actClassificationA}})</p>
+            </div>
+            @elseif ($proposal -> actClassificationB === 't4')
+            <div class="col-md-12">
+                <p><b>Activity Classification:</b> CSR/Community Service ({{$proposal -> actClassificationA}})</p>
+            </div>
+            @elseif ($proposal -> actClassificationB === 't5')
+            <div class="col-md-12">
+                <p><b>Activity Classification:</b> Marketing ({{$proposal -> actClassificationA}})</p>
+            </div>
+            @endif
         </div>  
 
         {{-- ------Row2------ --}}
@@ -160,8 +169,8 @@
                     @foreach($activities as $activity)
                     <tr>
                         <td>{{$activity -> activity}}</td>
-                        <td>{{$activity -> startDate}}</td>
-                        <td>{{$activity -> endDate}}</td>
+                        <td>{{\Carbon\Carbon::parse($activity -> startDate)->format('F d, Y')}}</td>
+                        <td>{{\Carbon\Carbon::parse($activity -> endDate)->format('F d, Y')}}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -188,7 +197,7 @@
                     <tr>
                         <td>{{$item -> service}}</td>
                         <td>{{$item -> venue}}</td>
-                        <td>{{$item -> dateNeeded}}</td>
+                        <td>{{\Carbon\Carbon::parse($item -> dateNeeded)->format('F d, Y')}}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -198,9 +207,138 @@
         {{-- ------Row 11(Approve and Deny Button)------ --}}
         <div class="row">
             <div class="col-md-12">
-               @include('layouts.modal')
+            <button type="btn" class="btn btn-primary col-md-3 mt-md-5" onclick="window.location='{{ url('/submittedForms/details/'.$form->id .'/approve') }}'">Approve</button>
+                <button type="btn" class="btn btn-danger col-md-3 mt-md-5" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#modalDeny">Deny</button>
             </div>
         </div>      
+    </div>
+
+    {{-- ------Tracking------ --}}
+    <div class="shadow mb-5 bg-#fff rounded mt-3">
+        @if($form -> currApprover === 'adviser')
+        <section>
+            <ul class="step-form-list">
+                <li class="step-form-item current-item">
+                    <span class="progress-count">1</span>
+                    <span class="progress-label">Adviser</span>
+                    <span class="progress-label"></span>
+                </li>
+                <li class="step-form-item ">
+                    <span class="progress-count">2</span>
+                    <span class="progress-label">SAO Head</span>
+                    <span class="progress-label"></span>
+                </li>
+                <li class="step-form-item">
+                    <span class="progress-count">3</span>
+                    <span class="progress-label">Academic Services</span>
+                </li>
+                <li class="step-form-item ">
+                    <span class="progress-count">4</span>
+                    <span class="progress-label">Finance</span>
+                </li>
+            </ul>
+        </section>
+        @elseif($form -> currApprover === 'saoHead')
+        <section>
+            <ul class="step-form-list">
+                <li class="step-form-item">
+                    <span class="progress-count">1</span>
+                    <span class="progress-label">Adviser</span>
+                    <span class="progress-label">{{\Carbon\Carbon::parse($form -> adviserDateApproved)->format('F d, Y - h:i A')}}</span>
+                </li>
+                <li class="step-form-item current-item">
+                    <span class="progress-count">2</span>
+                    <span class="progress-label">SAO Head</span>
+                    <span class="progress-label"></span>
+                </li>
+                <li class="step-form-item">
+                    <span class="progress-count">3</span>
+                    <span class="progress-label">Academic Services</span>
+                </li>
+                <li class="step-form-item ">
+                    <span class="progress-count">4</span>
+                    <span class="progress-label">Finance</span>
+                </li>
+            </ul>
+        </section>
+        @elseif($form -> currApprover === 'acadServ')
+        <section>
+            <ul class="step-form-list">
+                <li class="step-form-item">
+                    <span class="progress-count">1</span>
+                    <span class="progress-label">Adviser</span>
+                    <span class="progress-label">{{\Carbon\Carbon::parse($form -> adviserDateApproved)->format('F d, Y - h:i A')}}</span>
+                </li>
+                <li class="step-form-item">
+                    <span class="progress-count">2</span>
+                    <span class="progress-label">SAO Head</span>
+                    <span class="progress-label">{{\Carbon\Carbon::parse($form -> saoDateApproved)->format('F d, Y - h:i A')}}</span>
+                </li>
+                <li class="step-form-item current-item">
+                    <span class="progress-count">3</span>
+                    <span class="progress-label">Academic Services</span>
+                </li>
+                <li class="step-form-item ">
+                    <span class="progress-count">4</span>
+                    <span class="progress-label">Finance</span>
+                </li>
+            </ul>
+        </section>
+        @elseif($form -> currApprover === 'finance')
+        <section>
+            <ul class="step-form-list">
+                <li class="step-form-item">
+                    <span class="progress-count">1</span>
+                    <span class="progress-label">Adviser</span>
+                    <span class="progress-label">{{\Carbon\Carbon::parse($form -> adviserDateApproved)->format('F d, Y - h:i A')}}</span>
+                </li>
+                <li class="step-form-item">
+                    <span class="progress-count">2</span>
+                    <span class="progress-label">SAO Head</span>
+                    <span class="progress-label">{{\Carbon\Carbon::parse($form -> saoDateApproved)->format('F d, Y - h:i A')}}</span>
+                </li>
+                <li class="step-form-item">
+                    <span class="progress-count">3</span>
+                    <span class="progress-label">Academic Services</span>
+                    <span class="progress-label">{{\Carbon\Carbon::parse($form -> acadServDateApproved)->format('F d, Y - h:i A')}}</span>
+                </li>
+                <li class="step-form-item current-item">
+                    <span class="progress-count">4</span>
+                    <span class="progress-label">Finance</span>
+                </li>
+            </ul>
+        </section>
+        @endif
+    </div>
+</div>
+
+{{-- ------Deny------ --}}
+<div class="modal fade" id="modalDeny" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            {{-- ------Header------ --}}
+            <div class="modal-header" style="background: #e7ae41">
+                <h4 class="modal-title" id="myModalLabel" style="color: whitesmoke;">You're about to Deny the Form</i></h4>
+                <button type="button" id="closeModalDeny" class="close mx-1" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span>x</button>
+            </div>           
+            {{-- ------Body------ --}}
+            <div class="modal-body">
+                <form action="/submittedForms/details/{{$form->id}}/deny" id="passConfirmation" method="GET">
+                    <div class="header-btn">
+                        <div id="div-physical">
+                            <label for="feedback">Please give feedback:</label>
+                            <textarea class="form-control col-md-12" id="feedback" name="feedback"></textarea>
+                            @if(session()->has('errorInDeny'))
+                                <div class="alert alert-danger mt-2">
+                                    {{ session()->get('errorInDeny') }}
+                                </div>
+                            @endif
+                        </div>      
+                    </div>
+                    <button type="submit" class="btn btn-success col-md-3 mt-md-3 float-right">Confirm</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

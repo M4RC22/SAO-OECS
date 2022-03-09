@@ -28,11 +28,11 @@ class CreateFormsTable extends Migration
             $table->boolean('adviserIsApprove')->default(0);
             $table->dateTime('adviserDateApproved')->nullable();
             //SAO
-            $table->foreignId('saoFacultyId')->nullable();
+            $table->foreignId('saoStaffId')->nullable();
             $table->boolean('saoIsApprove')->default(0);
             $table->dateTime('saoDateApproved')->nullable();
             //Academic Services
-            $table->foreignId('acadServFacultyId')->nullable();
+            $table->foreignId('acadServStaffId')->nullable();
             $table->boolean('acadServIsApprove')->default(0);
             $table->dateTime('acadServDateApproved')->nullable();
             //Finance

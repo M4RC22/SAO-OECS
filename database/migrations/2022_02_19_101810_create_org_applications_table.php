@@ -18,6 +18,7 @@ class CreateOrgApplicationsTable extends Migration
             $table->unsignedBigInteger('faculty_id');
             $table->string('proposedOrgName');
             $table->string('presidentEmail');
+            $table->string('description');
             $table->timestamps();
         });
     }

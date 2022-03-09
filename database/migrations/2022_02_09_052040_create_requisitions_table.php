@@ -19,6 +19,7 @@ class CreateRequisitionsTable extends Migration
             $table->string('type');
             $table->string('remarks');
             $table->string('chargedDepartment');
+            $table->date('dateNeeded');
             $table->timestamps();
         });
     }

@@ -87,7 +87,9 @@ class SubmittedFormsController extends Controller
         else if($form->formType === 'Requisition'){
             $requisition = $form->requisition;
             $requisitionItem = $requisition->requisitionItem;
+            // $totalCost = $requisitionItem->unitCost;
 
+        
             return view('submittedForms/requisition', compact('form', 'requisition', 'requisitionItem'));
             
         }
@@ -118,95 +120,90 @@ class SubmittedFormsController extends Controller
         $dateTime = Carbon::now()->setTimezone('Asia/Manila')->format('y-m-d H:i');
 
         $form = Form::findOrFail($form); 
+      
+        if($user->userType === "Professor"){
+            if($user->studentOrg()->exists($user->id)){
 
-        if(Hash::check($request->confirmPass, $user->password)) {
-            if($user->userType === "Professor"){
-                if($user->studentOrg()->exists($user->id)){
-    
-                    $form->currApprover = "saoHead";
-                    $form->adviserFacultyId = $user->id;
-                    $form->adviserIsApprove = 1;
-                    $form->adviserDateApproved = $dateTime;
-                    $form->save();
+                $form->currApprover = "saoHead";
+                $form->adviserFacultyId = $user->id;
+                $form->adviserIsApprove = 1;
+                $form->adviserDateApproved = $dateTime;
+                $form->save();
 
-                    //email to Sender and Next Approver
-                    //Sender
-                    Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationFormApprovedEmail());
-                    //Next Approver
-                    Mail::to('sampleSaoHead@outlook.com')->send(new notificationForwardFormEmail());
-            
-                    return redirect('submittedForms');
-                }
+                //email to Sender and Next Approver
+                //Sender
+                Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationFormApprovedEmail());
+                //Next Approver
+                Mail::to('sampleSaoHead@outlook.com')->send(new notificationForwardFormEmail());
+        
+                return redirect('submittedForms');
             }
-            else if($user->userType === "NTP"){
-                $userPos = $user->userStaff()->value('staff.position');
-                $userDeptId = $user->userStaff()->value('staff.department_id');
-                $userDept = DB::select('select * from departments where id = ?', [$userDeptId]);
-    
-                if($userDept[0]->name === "Academic Services"){
-                    if($userPos === "SAO Head"){
+        }
+        else if($user->userType === "NTP"){
+            $userPos = $user->userStaff()->value('staff.position');
+            $userDeptId = $user->userStaff()->value('staff.department_id');
+            $userDept = DB::select('select * from departments where id = ?', [$userDeptId]);
 
-                        $form->saoFacultyId = $user->id;
-                        $form->saoISApprove = 1;
-                        $form->saoDateApproved = $dateTime;
+            if($userDept[0]->name === "Academic Services"){
+                if($userPos === "SAO Head"){
 
-                        if($form->formType === "Narrative"){
-                            $form->status = 'Approved';
-                            $form->currApprover = "saoHead";
-                            $form->save();
+                    $form->saoStaffId = $user->id;
+                    $form->saoISApprove = 1;
+                    $form->saoDateApproved = $dateTime;
 
-                            //email to Sender ONLY
-                            Mail::to('mericahuerta@student.apc.edu.ph')->send(new approvedFormEmail());
-                        }
-                        else{
-                            $form->currApprover = "acadServ";
-                            $form->save();
+                    if($form->formType === "Narrative"){
+                        $form->status = 'Approved';
+                        $form->currApprover = "saoHead";
+                        $form->save();
 
-                            //email to Sender and Next Approver
-                            //Sender
-                            Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationFormApprovedEmail());
-                            //Next Approver
-                            Mail::to('sampleAcadServ@outlook.com')->send(new notificationForwardFormEmail());
-                        }
-
-                        return redirect('submittedForms');
+                        //email to Sender ONLY
+                        Mail::to('mericahuerta@student.apc.edu.ph')->send(new approvedFormEmail());
                     }
                     else{
-    
-                        $form->currApprover = "finance";
-                        $form->acadServFacultyId = $user->id;
-                        $form->acadServIsApprove = 1;
-                        $form->acadServDateApproved = $dateTime;
+                        $form->currApprover = "acadServ";
                         $form->save();
 
                         //email to Sender and Next Approver
                         //Sender
                         Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationFormApprovedEmail());
                         //Next Approver
-                        Mail::to('sampleFinance@outlook.com')->send(new notificationForwardFormEmail());
-    
-                        return redirect('submittedForms');
-                        
+                        Mail::to('sampleAcadServ@outlook.com')->send(new notificationForwardFormEmail());
                     }
+
+                    return redirect('submittedForms');
                 }
-                else if($userDept[0]->name === "Finance"){
-    
+                else{
+
                     $form->currApprover = "finance";
-                    $form->status = 'Approved';
-                    $form->financeStaffId = $user->id;
-                    $form->financeIsApprove = 1;
-                    $form->financeDateApproved = $dateTime;
+                    $form->acadServStaffId = $user->id;
+                    $form->acadServIsApprove = 1;
+                    $form->acadServDateApproved = $dateTime;
                     $form->save();
 
-                    //email to Sender ONLY
-                    Mail::to('mericahuerta@student.apc.edu.ph')->send(new approvedFormEmail());
-    
+                    //email to Sender and Next Approver
+                    //Sender
+                    Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationFormApprovedEmail());
+                    //Next Approver
+                    Mail::to('sampleFinance@outlook.com')->send(new notificationForwardFormEmail());
+
                     return redirect('submittedForms');
-                }    
+                    
+                }
             }
-        }
-        else{  
-            return back()->with('errorInApproval', 'Ooops! Your Password seems Incorrect.');
+            else if($userDept[0]->name === "Finance"){
+
+                $form->currApprover = "finance";
+                $form->status = 'Approved';
+                $form->financeStaffId = $user->id;
+                $form->financeIsApprove = 1;
+                $form->financeDateApproved = $dateTime;
+                $form->save();
+
+                //email to Sender ONLY
+                Mail::to('mericahuerta@student.apc.edu.ph')->send(new approvedFormEmail());
+
+                return redirect('submittedForms');
+            }    
         }
     }
 
@@ -218,8 +215,9 @@ class SubmittedFormsController extends Controller
 
         $message = $user->firstName .' '. $user->lastName. ': ' .$request->feedback;
 
-       if(Hash::check($request->confirmPass, $user->password)){
-                $form->update(
+     
+       if($request->feedback != null){
+            $form->update(
             [
                 'status'=> "Denied",
                 'remarks'=> $message,
@@ -234,7 +232,7 @@ class SubmittedFormsController extends Controller
 
             $feedback = $request->feedback;
 
-            return redirect()->back()->with('errorInDeny', 'Ooops! Your Password seems Incorrect.')->with(compact('feedback'));
+            return redirect()->back()->with('errorInDeny', 'Ooops! Please Provide Feedback.')->with(compact('feedback'));
        }
     }
 }

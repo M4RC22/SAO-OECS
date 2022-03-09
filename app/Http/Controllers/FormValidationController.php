@@ -72,7 +72,7 @@ class FormValidationController extends Controller
             'controlNumber' => $controlNumber,
             'eventTitle' => $request['eventTitle'],
             'currApprover' => 'adviser',
-            'status' => 'pending',
+            'status' => 'Pending',
             'adviserIsApprove' => 0,
             'saoIsApprove' => 0,
             'acadServIsApprove' => 0,
@@ -105,18 +105,16 @@ class FormValidationController extends Controller
 
         $controlNumber = str_shuffle($pin);
 
-        $validate = $request->validate([
-            // 'eventTitle' => 'required|45',
-            // 'controlNum' => 'required',
-            // 'dateFiled' => 'required|date|date_format:Y-m-d|after_or_equal:today',
-            // 'dateNeeded' => 'required|date|date_format:Y-m-d|after_or_equal:today',
-            // 'paymentMethod' => 'required',
-            // 'qty' => 'required|min:1',
-            // 'particulars' => 'required|max:45',
-            // 'cost' => 'required|numeric|between:0,99999.99',
-            // 'remarks' => 'required|max:100',
-            // 'chargeTo' => 'required|max:45',
-        ]);
+        // $validate = $request->validate([
+        //     'eventTitle' => 'required|max:45',
+        //     'dateNeeded' => 'required|date|date_format:Y-m-d|after_or_equal:today',
+        //     'paymentMethod' => 'required',
+        //     'qty' => 'required|min:1',
+        //     'particulars' => 'required|max:45',
+        //     'cost' => 'required|numeric|between:0,99999.99',
+        //     'remarks' => 'required|max:100',
+        //     'chargeTo' => 'required|max:45',
+        // ]);
 
         $form->create([
             'createdBy' => auth()->user()->id,
