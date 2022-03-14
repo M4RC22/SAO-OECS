@@ -105,23 +105,17 @@ class FormValidationController extends Controller
 
         $controlNumber = str_shuffle($pin);
 
-        // $validate = $request->validate([
-        //     'eventTitle' => 'required|max:45',
-        //     'dateNeeded' => 'required|date|date_format:Y-m-d|after_or_equal:today',
-        //     'paymentMethod' => 'required',
-        //     'qty' => 'required|min:1',
-        //     'particulars' => 'required|max:45',
-        //     'cost' => 'required|numeric|between:0,99999.99',
-        //     'remarks' => 'required|max:100',
-        //     'chargeTo' => 'required|max:45',
-        // ]);
+      
+        $data = $request->validate([
+            'eventTitle' => 'required|max:45',
+        ]);
 
         $form->create([
             'createdBy' => auth()->user()->id,
             'formType' => 'Requisition',
             'orgName' =>  auth()->user()->studentOrg[0]->orgName,
             'controlNumber' => $controlNumber,
-            'eventTitle' => $request['eventTitle'],
+            'eventTitle' => $data['eventTitle'],
             'currApprover' => 'adviser',
             'status' => 'Pending',
             'adviserIsApprove' => 0,

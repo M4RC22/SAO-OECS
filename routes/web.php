@@ -102,6 +102,7 @@ Route::get('/records/downloadForm/{formId}', [App\Http\Controllers\RecordsContro
 
 
 //---------------Start - Charts---------------//
+Route::get('/home/calendar', [App\Http\Controllers\CalendarController::class, 'index']);
 
 
 

@@ -28,7 +28,7 @@ class Requisition extends Model
         static::created(function ($requisition){
 
             $request = request();  
-
+  
             for($i = 0; $i < count($request->qty); $i++){
 
                 $requisition->requisitionItem()->create([

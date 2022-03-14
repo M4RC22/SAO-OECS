@@ -3,6 +3,7 @@
 @section('content')
 
 @if($user->userType === "Student")
+
 <div class="container">
     <div id="table-wrapper" class="shadow mb-5 rounded-0 mt-3">
         <table class="table table-striped">
@@ -43,10 +44,11 @@
                 </tr>
                 @endforeach
             </tbody>   
-        </table>
+        </table>    
     </div>
 </div>
 @else
+{{-- Calendar --}}
 <div class="wrapper">
     <div class="row d-flex- justify-content-lg-around">
         <div class="col-lg-7 shadow bg-#fff rounded mt-3" style="border-bottom: 5px solid #e7ae41;">
@@ -344,26 +346,55 @@
      @endif
 </div>
 
-
+<script>
+    $(document).ready(function() {
+    
+        var data = @json($data);
+  
+        $('#calendar').fullCalendar({
+            height: 550 ,
+            contentHeight:"auto",
+            themeSystem: 'bootstrap',
+            initialView: 'dayGridWeek',
+            events: data,
+            displayEventTime: false,
+            eventColor: '#e7ae41',
+            header: {
+                left:   'title',
+                center: 'hello world',
+                right:  'today, prev,next myCustomButton'
+            },
+            eventRender: function(data, element) {
+                $(element).tooltip({title: data .title});      
+                $(element).css('cursor','pointer');       
+            },
+            eventClick: function(data) {
+                window.location = "/submittedForms";
+            }      
+        });
+        
+    });
+</script>
 @push('js')
-        <script>
-            const liquidationChart = new Chartisan({
-                el: '#liquidationChartContainer',
-                url: "@chart('liquidation_chart')",
-                hooks: new ChartisanHooks()
-                .datasets('doughnut')
-                .pieColors(['#009900', '#e7ae41']),
-            })
-        </script>
-         <script>
-            const narrativeChart = new Chartisan({
-                el: '#narrativeChartContainer',
-                url: "@chart('narrative_chart')",
-                hooks: new ChartisanHooks()
-                .datasets('doughnut')
-                .pieColors(['#009900', '#e7ae41']),
-            })
-        </script>
+    <script>
+        const liquidationChart = new Chartisan({
+            el: '#liquidationChartContainer',
+            url: "@chart('liquidation_chart')",
+            hooks: new ChartisanHooks()
+            .datasets('doughnut')
+            .pieColors(['#009900', '#e7ae41']),
+        })
+    </script>
+
+    <script>
+        const narrativeChart = new Chartisan({
+            el: '#narrativeChartContainer',
+            url: "@chart('narrative_chart')",
+            hooks: new ChartisanHooks()
+            .datasets('doughnut')
+            .pieColors(['#009900', '#e7ae41']),
+        })
+    </script>
 @endpush   
 
 

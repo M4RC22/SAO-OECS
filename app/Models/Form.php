@@ -50,11 +50,18 @@ class Form extends Model
                     'numSecondaryAudience' => $request->secondaryNum,
                 ]);
             }else if($form->formType === 'Requisition'){
+
+                $data = $request->validate([
+                    'paymentMethod' => 'required',
+                    'remarks' => 'required|max:100',
+                    'dateNeeded' => 'required|date|date_format:Y-m-d|after_or_equal:today',
+                    'chargeTo' => 'required|max:45',
+                ]);
                 $form->requisition()->create([
-                    'type' => $request->paymentMethod,
-                    'remarks' => $request->remarks,
-                    'dateNeeded' => $request->dateNeeded,
-                    'chargedDepartment' => $request->chargeTo,
+                    'type' => $data['paymentMethod'],
+                    'remarks' => $data['remarks'],
+                    'dateNeeded' => $data['dateNeeded'],
+                    'chargedDepartment' => $data['chargeTo'],
                 ]);
             }
                 

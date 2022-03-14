@@ -21,11 +21,20 @@
     <link rel="stylesheet" href="{{URL::asset('css/progressBarForms.css')}}">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css" rel="stylesheet" />
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js"></script>
+    <!-- <div id="calendar"></div> -->
+
 <style>
     .sidebar-light-pink .nav-sidebar > .nav-item > .nav-link.active {
     background-color: #e83e8c;
     color: #fff;
     }
+    .hover-end{padding:0;margin:0;font-size:75%;text-align:center;position:absolute;bottom:0;width:100%;opacity:.8}
 </style>
 </head>
 
@@ -155,7 +164,7 @@
 <!-- Wrapper End -->
 
 <!-- REQUIRED SCRIPTS -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
     <script src="{{ asset('js/formTable.js')}}"></script>
     <script src="{{ asset('js/imageUploading.js')}}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
@@ -165,8 +174,8 @@
     <script src="https://unpkg.com/@chartisan/chartjs@^2.1.0/dist/chartisan_chartjs.umd.js"></script>
 
     @stack('js')
-    <script type="text/javascript" src="{{ URL::asset('plugins/jquery/jquery.min.js') }} "></script>
-    <script type="text/javascript" src="{{ URL::asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }} "></script>
+    <!-- <script type="text/javascript" src="{{ URL::asset('plugins/jquery/jquery.min.js') }} "></script>
+    <script type="text/javascript" src="{{ URL::asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }} "></script> -->
     <script type="text/javascript" src="{{ URL::asset('dist/js/adminlte.min.js') }} "></script>
 </body>
 </html>
