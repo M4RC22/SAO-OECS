@@ -99,7 +99,7 @@
                 @foreach($orgMembers as $key=>$member)
                     <tr>
                     <td class="p-4 d-block d-sm-table-cell">{{$member[0]-> firstName}} {{$member[0]->lastName}}</th>
-                    <td class="p-4 d-block d-sm-table-cell">{{$member[1]->position}}</td>
+                    <td class="p-4 d-block d-sm-table-cell">{{$member[1]}}</td>
                     @if($userPos === "President" or $userPos === "Adviser")
                     <td class="p-4 d-block d-sm-table-cell"><a href="/removeMember/{{$member[0]->id}}" class="text-decoration-none">Remove</a></td>
                     @endif
@@ -212,3 +212,4 @@
 </div>
 
 @endsection
+        

@@ -112,7 +112,7 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label for="chargeTo">Charge to</label>
+                    <label for="chargeTo">Charge To</label>
                     <input type="text" class="form-control @error('chargeTo') is-invalid @enderror" id="chargeTo" name="chargeTo">
                     @error('chargeTo')
                         <span class="invalid-feedback" role="alert">

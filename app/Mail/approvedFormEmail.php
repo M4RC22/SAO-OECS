@@ -10,15 +10,16 @@ use Illuminate\Queue\SerializesModels;
 class approvedFormEmail extends Mailable
 {
     use Queueable, SerializesModels;
+    public $formType;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($formType)
     {
-        //
+        $this -> formType = $formType;
     }
 
     /**

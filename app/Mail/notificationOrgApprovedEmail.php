@@ -7,22 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class notificationRolesAddMemberEmail extends Mailable
+class notificationOrgApprovedEmail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $emailData;
-    public $orgName;
-
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($emailData, $orgName)
+    public function __construct()
     {
-        $this -> emailData= $emailData;
-        $this -> orgName= $orgName;
+        //
     }
 
     /**
@@ -32,8 +28,8 @@ class notificationRolesAddMemberEmail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.rolesAddMemberNotif')
-                    ->subject('Added in the Student Organization')
+        return $this->markdown('emails.orgApprovedNotif')
+                    ->subject('Organization Application Approved')
                     ->from('lmbinotapa@student.apc.edu.ph');
     }
 }

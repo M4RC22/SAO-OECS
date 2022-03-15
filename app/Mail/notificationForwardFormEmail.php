@@ -11,14 +11,18 @@ class notificationForwardFormEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $formType;
+    public $orgName;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($formType, $orgName)
     {
-
+        $this -> formType = $formType;
+        $this -> orgName = $orgName;
     }
 
     /**

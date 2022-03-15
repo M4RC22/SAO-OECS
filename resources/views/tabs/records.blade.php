@@ -36,7 +36,7 @@
                 <td class="p-4 d-block d-sm-table-cell">{{$record -> formType}}</td>
                 <td class="p-4 d-block d-sm-table-cell">{{ \Carbon\Carbon::parse($record->created_at)->format('F d, Y  - h:i A') }}</td>
                 <td class="p-4 d-block d-sm-table-cell">{{ \Carbon\Carbon::parse($record->updated_at)->format('F d, Y  - h:i A') }}</td>
-                <td class="p-4 d-block d-sm-table-cell"><a href="/records/downloadForm/{{$record -> id}}" class="text-decoration-none">Generate</a></td>
+                <td class="p-4 d-block d-sm-table-cell"><a href="/records/downloadForm/{{$record -> id}}" class="text-decoration-none">Download PDF</a></td>
             </tr>
             @endforeach
         </tbody>   

@@ -1,8 +1,8 @@
 @component('mail::message')
-# The form was forwarded...
+# <p class="deny">We're sorry to say!</p>
 
 @component('mail::panel')
-Form was forwaded to the next approver.
+You have been removed from <b>{{$orgName[0]}}</b> as <b>{{$orgPos[0]}}</b>.
 @endcomponent
 
 Thanks,<br>

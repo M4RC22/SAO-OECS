@@ -23,9 +23,20 @@
     <div class="container shadow p-3 mb-5 bg-#fff rounded mt-3">
 
         {{-- ----------R1---------- --}}
-        <div class="d-flex justify-content-between col-md-8">
-            <p><b>Event Title: </b>{{$form -> eventTitle}}</p>
-            <p><b>Event Date: </b>{{\Carbon\Carbon::parse($narrative -> enventdate)->format('F d, Y ')}}</p>
+        <div class="row d-flex justify-content-between">
+
+            <div class="col-md-5">
+                <p><b>Event Title: </b>{{$form -> eventTitle}}</p>
+            </div>
+            <div class="col-md-5">
+                <p><b>Submitted Date: </b>{{\Carbon\Carbon::parse($narrative -> created_at)->format('F d, Y ')}}</p>
+            </div>
+            <div class="col-md-5">
+                <p><b>Organization Name: </b>{{$form -> orgName}}</p>
+            </div>
+            <div class="col-md-5">
+                <p><b>Event Date: </b>{{\Carbon\Carbon::parse($narrative -> enventdate)->format('F d, Y ')}}</p>
+            </div>
         </div>
             
         {{-- ----------R2---------- --}}
@@ -35,6 +46,8 @@
             <p class="font-weight-bold">Narration: <span class="text-break font-weight-normal">
             {{$narrative -> narration}}</span></p>
         </div>
+
+        <hr style="height:0.5px; width:100%; margin-top:0px;">
                 
 
         {{-- ----------Table: Activity---------- --}}
@@ -181,7 +194,7 @@
                 <span class="progress-count">1</span>
                 <span class="progress-label">Adviser</span>
             </li>
-            <li class="step-wizard-item">
+            <li class="step-form-item">
                 <span class="progress-count">2</span>
                 <span class="progress-label">SAO Head</span>
             </li>

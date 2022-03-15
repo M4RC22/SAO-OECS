@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Form;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\notificationForwardFormEmail;
 use App\Mail\notificationEmail;
@@ -18,6 +19,22 @@ class FormValidationController extends Controller
     public function activityProposalAdd(Request $request)
     {
         $form = new Form;
+
+        $user = auth()->user();
+
+        $formType = 'Activity Proposal';
+
+
+        $orgId = DB::table('organization_user')->where('user_id', $user->id)->get();
+        $orgName = DB::table('organizations')->where('id', $orgId[0]->organization_id)->pluck('orgName');
+
+        // use this to get user email and adviser
+        // $userEmail = $user->email;
+        // $orgQuery = $user->studentOrg()->get();
+        // $orgId = $orgQuery[0]->id;
+        // $adviserId = DB::table('organization_user')->where('organization_id', $orgId)->where('position', 'Adviser')->get();
+        // $adviserEmail = DB::table('users')->where('id', $adviserId[0]->user_id)->pluck('email');
+        
 
          // Available alpha caracters
          $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -81,7 +98,7 @@ class FormValidationController extends Controller
         ]);
 
         //Next Approver
-        Mail::to('sampleAdviser@outlook.com')->send(new notificationForwardFormEmail());
+        Mail::to('sampleAdviser@outlook.com')->send(new notificationForwardFormEmail($formType, $orgName[0]));
         //Sender
         Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationEmail());
         
@@ -92,6 +109,11 @@ class FormValidationController extends Controller
     public function requisitionAdd(Request $request)
     {
         $form = new Form;
+
+        $user = auth()->user();
+        $formType = 'Requisition';
+        $orgId = DB::table('organization_user')->where('user_id', $user->id)->get();
+        $orgName = DB::table('organizations')->where('id', $orgId[0]->organization_id)->pluck('orgName');
 
         $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -126,7 +148,7 @@ class FormValidationController extends Controller
         ]);
 
         //Next Approver
-        Mail::to('sampleAdviser@outlook.com')->send(new notificationForwardFormEmail());
+        Mail::to('sampleAdviser@outlook.com')->send(new notificationForwardFormEmail($formType, $orgName[0]));
         //Sender
         Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationRequisitionEmail());
 
@@ -136,6 +158,11 @@ class FormValidationController extends Controller
     public function narrativeAdd(Request $request){
         
         $form = new Form;
+
+        $user = auth()->user();
+        $formType = 'Requisition';
+        $orgId = DB::table('organization_user')->where('user_id', $user->id)->get();
+        $orgName = DB::table('organizations')->where('id', $orgId[0]->organization_id)->pluck('orgName');
 
         $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -177,7 +204,7 @@ class FormValidationController extends Controller
 
             //Next Approver
 
-            Mail::to('sampleAdviser@outlook.com')->send(new notificationForwardFormEmail());
+            Mail::to('sampleAdviser@outlook.com')->send(new notificationForwardFormEmail($formType, $orgName[0]));
             //Sender
             Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationNarrativeEmail());
 
@@ -188,6 +215,11 @@ class FormValidationController extends Controller
     public function liquidationAdd(Request $request){
 
         $form = new Form;
+
+        $user = auth()->user();
+        $formType = 'Requisition';
+        $orgId = DB::table('organization_user')->where('user_id', $user->id)->get();
+        $orgName = DB::table('organizations')->where('id', $orgId[0]->organization_id)->pluck('orgName');
 
         $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -231,9 +263,9 @@ class FormValidationController extends Controller
             ];
 
         //Next Approver
-        Mail::to('sampleAdviser@outlook.com')->send(new notificationForwardFormEmail($data));
+        Mail::to('sampleAdviser@outlook.com')->send(new notificationForwardFormEmail($formType, $orgName[0]));
         //Sender
-        Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationLiquidationEmail($data));
+        Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationLiquidationEmail());
         
         return redirect('/home');
     }

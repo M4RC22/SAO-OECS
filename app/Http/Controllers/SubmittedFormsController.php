@@ -16,9 +16,11 @@ use App\Mail\notificationEmail;
 use App\Mail\notificationLiquidationEmail;
 use App\Mail\notificationNarrativeEmail;
 use App\Mail\notificationForwardFormEmail;
-use App\Mail\notificationFormApprovedEmail;
 use App\Mail\approvedFormEmail;
 use App\Mail\notificationDeniedFormEmail;
+use App\Mail\notificationforwardSaoEmail;
+use App\Mail\notificationforwardAcadServEmail;
+use App\Mail\notificationforwardFinanceEmail;
 
 class SubmittedFormsController extends Controller
 {
@@ -87,10 +89,20 @@ class SubmittedFormsController extends Controller
         else if($form->formType === 'Requisition'){
             $requisition = $form->requisition;
             $requisitionItem = $requisition->requisitionItem;
-            // $totalCost = $requisitionItem->unitCost;
+            
+            $getTotal = [];
+            foreach($requisitionItem as $item){
+                $unitCost = (float)$item->unitCost;
+                $prod = $item->quantity * $unitCost;
+                array_push($getTotal,$prod);
+            }
 
-        
-            return view('submittedForms/requisition', compact('form', 'requisition', 'requisitionItem'));
+            (float)$totalCost = 0;
+            foreach($getTotal as $item){
+                $totalCost = $totalCost + $item;
+            }
+
+            return view('submittedForms/requisition', compact('form', 'requisition', 'requisitionItem', 'totalCost'));
             
         }
         elseif ($form->formType === 'Narrative'){
@@ -120,6 +132,14 @@ class SubmittedFormsController extends Controller
         $dateTime = Carbon::now()->setTimezone('Asia/Manila')->format('y-m-d H:i');
 
         $form = Form::findOrFail($form); 
+
+        $formType = $form->formType;
+
+        $orgName = $form->orgName;
+
+        if($formType === "APF") {
+            $formType = "Activity Proposal";
+        }
       
         if($user->userType === "Professor"){
             if($user->studentOrg()->exists($user->id)){
@@ -132,9 +152,9 @@ class SubmittedFormsController extends Controller
 
                 //email to Sender and Next Approver
                 //Sender
-                Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationFormApprovedEmail());
+                Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationforwardSaoEmail($formType));
                 //Next Approver
-                Mail::to('sampleSaoHead@outlook.com')->send(new notificationForwardFormEmail());
+                Mail::to('sampleSaoHead@outlook.com')->send(new notificationForwardFormEmail($formType, $orgName));
         
                 return redirect('submittedForms');
             }
@@ -157,7 +177,7 @@ class SubmittedFormsController extends Controller
                         $form->save();
 
                         //email to Sender ONLY
-                        Mail::to('mericahuerta@student.apc.edu.ph')->send(new approvedFormEmail());
+                        Mail::to('mericahuerta@student.apc.edu.ph')->send(new approvedFormEmail($formType));
                     }
                     else{
                         $form->currApprover = "acadServ";
@@ -165,9 +185,9 @@ class SubmittedFormsController extends Controller
 
                         //email to Sender and Next Approver
                         //Sender
-                        Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationFormApprovedEmail());
+                        Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationforwardAcadServEmail($formType));
                         //Next Approver
-                        Mail::to('sampleAcadServ@outlook.com')->send(new notificationForwardFormEmail());
+                        Mail::to('sampleAcadServ@outlook.com')->send(new notificationForwardFormEmail($formType, $orgName));
                     }
 
                     return redirect('submittedForms');
@@ -182,9 +202,9 @@ class SubmittedFormsController extends Controller
 
                     //email to Sender and Next Approver
                     //Sender
-                    Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationFormApprovedEmail());
+                    Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationforwardFinanceEmail($formType));
                     //Next Approver
-                    Mail::to('sampleFinance@outlook.com')->send(new notificationForwardFormEmail());
+                    Mail::to('sampleFinance@outlook.com')->send(new notificationForwardFormEmail($formType, $orgName));
 
                     return redirect('submittedForms');
                     
@@ -200,7 +220,7 @@ class SubmittedFormsController extends Controller
                 $form->save();
 
                 //email to Sender ONLY
-                Mail::to('mericahuerta@student.apc.edu.ph')->send(new approvedFormEmail());
+                Mail::to('mericahuerta@student.apc.edu.ph')->send(new approvedFormEmail($formType));
 
                 return redirect('submittedForms');
             }    
@@ -213,6 +233,16 @@ class SubmittedFormsController extends Controller
 
         $form = Form::findOrFail($form);
 
+        $formType = $form->formType;
+
+        $feedback = $request->feedback;
+
+        if($formType === "APF") {
+
+            $formType = "Activity Proposal";
+
+        }
+
         $message = $user->firstName .' '. $user->lastName. ': ' .$request->feedback;
 
      
@@ -224,7 +254,7 @@ class SubmittedFormsController extends Controller
             ]
         );
             //email to Sender ONLY
-            Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationDeniedFormEmail());
+            Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationDeniedFormEmail($formType, $feedback));
                 
             return redirect('submittedForms');
        }

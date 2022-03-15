@@ -47,7 +47,7 @@
 
             {{-- ----------Table: Programs Table---------- --}}
             
-            <h3 class="col-md-12">Programs</h3>
+            <h3 class="col-md-12">Program/s</h3>
             <hr>
 
             <div id="table-wrapper" class="pre-scrollable mt-3">
@@ -72,7 +72,7 @@
 
             {{-- ----------Table: Participants Table---------- --}}
             
-            <h3 class="col-md-12">Participants</h3>
+            <h3 class="col-md-12">Participant/s</h3>
             <hr>
 
             <div id="table-wrapper" class="pre-scrollable mt-3">
@@ -127,7 +127,7 @@
 
             {{-- ----------Table: Comments Table---------- --}}
             
-            <h3 class="col-md-12">Comments</h3>
+            <h3 class="col-md-12">Comment/s</h3>
             <hr>
 
             <div id="table-wrapper" class="pre-scrollable mt-3">
@@ -148,7 +148,7 @@
 
             {{-- ----------Table: Suggestions Table---------- --}}
             
-            <h3 class="col-md-12">Suggestions</h3>
+            <h3 class="col-md-12">Suggestion/s</h3>
             <hr>
 
             <div id="table-wrapper" class="pre-scrollable mt-3">

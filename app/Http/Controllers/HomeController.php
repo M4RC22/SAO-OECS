@@ -85,7 +85,7 @@ class HomeController extends Controller
                 
 
                 //Calendar
-                $formItem = DB::table('forms')->where('status', 'Pending')->where('currApprover', 'adviser')->get();
+                $formItem = DB::table('forms')->where('status', 'Pending')->where('currApprover', 'adviser')->where('orgName', $userOrg)->get();
                 $data = array();
 
                 foreach($formItem as $item){
@@ -96,6 +96,8 @@ class HomeController extends Controller
                         'id' => $item->id,
                         'title' => $item->eventTitle,
                         'start' => $deadline,
+                        'orgName' => $item->orgName,
+                        'formType' => $item->formType,
                     ];
                 }
                 
@@ -134,6 +136,8 @@ class HomeController extends Controller
                             'id' => $item->id,
                             'title' => $item->eventTitle,
                             'start' => $deadline,
+                            'orgName' => $item->orgName,
+                            'formType' => $item->formType,
                         ];
                     }
                 }
@@ -147,6 +151,8 @@ class HomeController extends Controller
                             'id' => $item->id,
                             'title' => $item->eventTitle,
                             'start' => $deadline,
+                            'orgName' => $item->orgName,
+                            'formType' => $item->formType,
                         ];
                     }
 
@@ -163,6 +169,8 @@ class HomeController extends Controller
                         'id' => $item->id,
                         'title' => $item->eventTitle,
                         'start' => $deadline,
+                        'orgName' => $item->orgName,
+                        'formType' => $item->formType,
                     ];
                 }
             }

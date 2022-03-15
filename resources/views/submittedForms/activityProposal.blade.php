@@ -32,8 +32,11 @@
             <div class="col-md-5">
                 <p><b>Date Submitted:</b> {{\Carbon\Carbon::parse($form -> created_at)->format('F d, Y - h:i A')}}</p>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-5">
                 <p><b>Duration of Event:</b> {{$proposal -> durationVal}} {{$proposal -> durationUnit}}</p>
+            </div>
+            <div class="col-md-5">
+                <p><b>Organization: </b> {{$form -> orgName}}</p>
             </div>
             @if($proposal -> actClassificationB === 't1')
             <div class="col-md-12">
@@ -63,17 +66,14 @@
         <hr style="height:3px; margin-top:0px">
 
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <p><b>Organizer:</b> {{$organizer[0] -> firstName}} {{$organizer[0] -> lastName}}</p>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <p><b>Email: </b> {{$organizer[0] -> email}}</p>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <p><b>Contact Number: </b> {{$organizer[0] -> phoneNumber}}</p>
-            </div>
-            <div class="col-md-3">
-                <p><b>Organization: </b> {{$form -> orgName}}</p>
             </div>
         </div>
 

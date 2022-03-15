@@ -107,7 +107,7 @@
                     </div>
 
                     <div class="form-group col-md-4 ml-3">
-                        <label for="actClassificationA">Activty  Location</label>
+                        <label for="actClassificationA">Activity Location</label>
                             <select class="form-control" name="actClassificationA">
                                 <option hidden>Select Here</option>
                                 <option value="In-Campus">In-Campus</option>

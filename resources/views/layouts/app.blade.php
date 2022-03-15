@@ -174,8 +174,8 @@
     <script src="https://unpkg.com/@chartisan/chartjs@^2.1.0/dist/chartisan_chartjs.umd.js"></script>
 
     @stack('js')
-    <!-- <script type="text/javascript" src="{{ URL::asset('plugins/jquery/jquery.min.js') }} "></script>
-    <script type="text/javascript" src="{{ URL::asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }} "></script> -->
+    <!-- <script type="text/javascript" src="{{ URL::asset('plugins/jquery/jquery.min.js') }} "></script> -->
+    <script type="text/javascript" src="{{ URL::asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }} "></script>
     <script type="text/javascript" src="{{ URL::asset('dist/js/adminlte.min.js') }} "></script>
 </body>
 </html>

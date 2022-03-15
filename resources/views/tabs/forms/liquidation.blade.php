@@ -49,7 +49,7 @@
                 {{-- ----------R2---------- --}}
         
                 <div class="form-group col-md-4">
-                    <label for="event" class="form-label">Cv Number</label>
+                    <label for="event" class="form-label">CV Number</label>
                     <input type="number" class="form-control w-100 @error('cvNumber') is-invalid @enderror" id="cvNumber" name="cvNumber">
                     @error('cvNumber')
                         <span class="invalid-feedback" role="alert">
@@ -72,8 +72,6 @@
 
 
             {{-- ----------Table: Expenses Table---------- --}}
-            
-            <h3 class="col-md-12">A. Pier Dem</h3>
             <hr>
 
             <div id="table-wrapper" class="pre-scrollable mt-3">
@@ -81,7 +79,7 @@
                     <thead class="table-light sticky-top">
                         <tr>
                             <th scope="col">Date Bought</th>
-                            <th scope="col">Particular</th>
+                            <th scope="col">Particular/s</th>
                             <th scope="col">Amount/Day</th>
                             <th scope="col" class="text-right"><a href="javascript:void(0)" class="btn btn-success" id="liqAddBtn"><i class="fas fa-plus"></i></a></th>
                         </tr>
@@ -108,7 +106,7 @@
             <div class="row g-3">
                 <div class="d-block">
                     <div class="h3 form-title mt-5 col-md-4">
-                        <h3 class="col-md-4">Receipt</h3>
+                        <h3 class="col-md-4">Receipt/s</h3>
                     </div>
                     
                     <div class="mb-5 mt-2 py-1 col-md-12">

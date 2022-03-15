@@ -7,22 +7,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class notificationRolesAddMemberEmail extends Mailable
+class notificationRolesRemoveEmail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $emailData;
     public $orgName;
-
+    public $orgPos;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($emailData, $orgName)
+    public function __construct($orgName, $orgPos)
     {
-        $this -> emailData= $emailData;
         $this -> orgName= $orgName;
+        $this -> orgPos= $orgPos;
     }
 
     /**
@@ -32,8 +31,8 @@ class notificationRolesAddMemberEmail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.rolesAddMemberNotif')
-                    ->subject('Added in the Student Organization')
+        return $this->markdown('emails.rolesRemoveNotif')
+                    ->subject('Removed in the Student Organization')
                     ->from('lmbinotapa@student.apc.edu.ph');
     }
 }

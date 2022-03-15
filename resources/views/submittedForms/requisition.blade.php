@@ -23,38 +23,47 @@
     <div class="container shadow p-3 mb-5 bg-#fff rounded mt-3">
 
         {{-- ----------R1---------- --}}
-        <div class="d-flex justify-content-between col-md-8">
-            <p><b>Event Title: </b>{{$form -> eventTitle}}</p>
-            <p><b>Date Submitted: </b>{{\Carbon\Carbon::parse($requisition -> created_at)->format('F d, Y ')}}</p>
-        </div>
+        <div class="d-flex justify-content-between">
+            <div class="col-md-5">
+                <p><b>Event Title: </b>{{$form -> eventTitle}}</p>
+            </div>
+            <div class="col-md-5">
+                <p><b>Date Submitted: </b>{{\Carbon\Carbon::parse($requisition -> created_at)->format('F d, Y ')}}</p>
+            </div>
             
+        </div>
         {{-- ----------R2---------- --}}
         <hr style="height:0.5px; width:100%; margin-top:0px;">
 
-        <div class="form-group col-md-12 ">
-            <p class="font-weight-bold">Control Number: <span class="text-break font-weight-normal">
-            {{$form -> controlNumber}}</span></p>
-        </div>
-        <div class="form-group col-md-12 ">
-            <p class="font-weight-bold">Type: <span class="text-break font-weight-normal">
-            {{$requisition -> type}}</span></p>
-        </div>
-        <div class="form-group col-md-12 ">
-            <p class="font-weight-bold">Date Needed: <span class="text-break font-weight-normal">
-            {{\Carbon\Carbon::parse($requisition -> dateNeeded)->format('F d, Y ')}}</span></p>
-        </div>
-        <div class="form-group col-md-12 ">
-            <p class="font-weight-bold">Charged Department: <span class="text-break font-weight-normal">
-            {{$requisition -> chargedDepartment}}</span></p>
-        </div>
 
+
+        <div class="row d-flex justify-content-between">
+            <div class="col-md-5">
+                <p class="font-weight-bold">Organization Name: <span class="text-break font-weight-normal">
+                {{$form -> orgName}}</span></p>
+            </div>
+            <div class="col-md-5">
+                <p class="font-weight-bold">Control Number: <span class="text-break font-weight-normal">
+                {{$form -> controlNumber}}</span></p>
+            </div>
+            <div class="col-md-5">
+                <p class="font-weight-bold">Type: <span class="text-break font-weight-normal">
+                {{$requisition -> type}}</span></p>
+            </div>
+            <div class="col-md-5">
+                <p class="font-weight-bold">Date Needed: <span class="text-break font-weight-normal">
+                {{\Carbon\Carbon::parse($requisition -> dateNeeded)->format('F d, Y ')}}</span></p>
+            </div>
+            <div class="col-md-5">
+                <p class="font-weight-bold">Charged Department: <span class="text-break font-weight-normal">
+                {{$requisition -> chargedDepartment}}</span></p>
+            </div>
+        </div>
 
 
         {{-- Table: Items --}}
 
         <hr style="height:3px;">
-
-        <h5 class="mb-3">A. Pier Dem</h5>
 
         <div id="table-wrapper" class="form-group row col-md-12 d-flex pre-scrollable mt-2">
             
@@ -81,7 +90,7 @@
                         <tr>
                             <td></td>
                             <td class="text-right"><strong>Total:</strong></td>
-                            <td><span>&#8369;</span><span id="totalExpense">{{$item -> unitCost}}</span></td>
+                            <td><span>&#8369;</span><span id="totalExpense">{{$totalCost}}</span></td>
                         </tr>
                     </tfoot>
             </table>

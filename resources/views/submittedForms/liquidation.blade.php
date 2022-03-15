@@ -29,6 +29,13 @@
                 <p><b>Event Title:</b> {{$form -> eventTitle}}</p>
             </div>
             <div class="col-md-5">
+                <p><b>Date Submitted:</b> {{\Carbon\Carbon::parse($form -> created_at)->format('F d, Y')}}</p>
+            </div>
+            <div class="col-md-5">
+                <p><b>Organization Name</b> {{$form -> orgName}}</p>
+            </div>
+
+            <div class="col-md-5">
                 <p><b>Date Submitted:</b> {{\Carbon\Carbon::parse($liquidation -> eventDate)->format('F d, Y')}}</p>
             </div>
         </div>  
@@ -60,8 +67,6 @@
         {{-- ----------Table: Activity---------- --}}
 
         <hr style="height:3px;">
-
-        <h5 class="mb-3">A. Pier Dem</h5>
 
         <div id="table-wrapper" class="form-group row col-md-12 d-flex pre-scrollable mt-2">
             

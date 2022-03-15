@@ -365,11 +365,11 @@
                 right:  'today, prev,next myCustomButton'
             },
             eventRender: function(data, element) {
-                $(element).tooltip({title: data .title});      
+                $(element).tooltip({title: (data.formType === 'APF' ? 'Activity Proposal' : data.formType) + (data.formType === 'Narrative' ? ' Report' : ' Form') + " - "+ data.title});      
                 $(element).css('cursor','pointer');       
             },
             eventClick: function(data) {
-                window.location = "/submittedForms";
+                window.location = "/submittedForms/details/"+data.id;
             }      
         });
         

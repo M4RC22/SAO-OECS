@@ -7,6 +7,10 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\notificationOrgApplicationEmail;
+use App\Mail\notificationOrgApprovedEmail;
+use App\Mail\notificationOrgDeniedEmail;
 
 class OrgCreationController extends Controller
 {
@@ -27,6 +31,9 @@ class OrgCreationController extends Controller
         ]);
 
         $data = [['faculty_id' => $userId, 'proposedOrgName' => $request->orgName , 'presidentEmail' => $request->presidentEmail, 'description' => $request->description, 'created_at' => $dateTime]];
+
+        //Email of the SaoHead
+        Mail::to('sampleSaoHead@outlook.com')->send(new notificationOrgApplicationEmail());
 
         DB::table('org_applications')->insert($data);
 
@@ -84,6 +91,10 @@ class OrgCreationController extends Controller
         DB::table('organization_user')->insert($insertPresident);
 
         DB::table('org_applications')->where('id', $application[0]->id)->delete();
+
+
+        //Email of the Applicant
+        Mail::to('mericahuerta@student.apc.edu.ph')->send(new notificationOrgApprovedEmail());
 
         return redirect('home');
     }
